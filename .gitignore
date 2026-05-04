@@ -26,6 +26,7 @@ venv/
 env/
 ENV/
 .env
+.conda/
 
 # IDE and OS files
 .vscode/
@@ -40,6 +41,8 @@ __MACOSX/
 # Notebook and caches
 .ipynb_checkpoints/
 .cache/
+.pytest_cache/
+.mypy_cache/
 
 # Model files and exports
 *.pth
@@ -54,25 +57,19 @@ weights/*.pt
 !weights/.gitkeep
 
 # Datasets: keep only the lightweight template structure.
-datasets/**
+datasets/**/
 !datasets/
 !datasets/sign_language/
 !datasets/sign_language/.gitkeep
 !datasets/sign_language/data.yaml
 !datasets/sign_language/train/
-!datasets/sign_language/train/images/
 !datasets/sign_language/train/images/.gitkeep
-!datasets/sign_language/train/labels/
 !datasets/sign_language/train/labels/.gitkeep
 !datasets/sign_language/valid/
-!datasets/sign_language/valid/images/
 !datasets/sign_language/valid/images/.gitkeep
-!datasets/sign_language/valid/labels/
 !datasets/sign_language/valid/labels/.gitkeep
 !datasets/sign_language/test/
-!datasets/sign_language/test/images/
 !datasets/sign_language/test/images/.gitkeep
-!datasets/sign_language/test/labels/
 !datasets/sign_language/test/labels/.gitkeep
 
 # Generated media and archives
@@ -92,21 +89,15 @@ datasets/**
 runs/
 wandb/
 tensorboard/
-output/
-results/
-/logs/
-checkpoints/
-outputs/images/*
+outputs/
+!outputs/.gitkeep
 !outputs/images/.gitkeep
-outputs/videos/*
 !outputs/videos/.gitkeep
-outputs/logs/*
 !outputs/logs/.gitkeep
-outputs/csv/*
 !outputs/csv/.gitkeep
-outputs/figures/*
 !outputs/figures/.gitkeep
 
 # Temporary files
 *.tmp
 *.temp
+*.log
