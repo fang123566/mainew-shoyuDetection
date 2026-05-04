@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# macOS
+__MACOSX/
+._*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyTorch / TensorFlow / CV 相关
+*.pth
+*.pt
+*.onnx
+*.pkl
+*.h5
+*.pb
+*.tflite
+*.mlmodel
+
+# 模型和数据
+logs/
+checkpoints/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.gif
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.zip
+*.rar
+
+# 训练输出
+output/
+results/
+runs/
+wandb/
+tensorboard/
+
+# 临时文件
+*.tmp
+*.temp
+.cache/

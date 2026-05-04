@@ -1,0 +1,1311 @@
+
+0: 640x640 (no detections), 14.0ms
+Speed: 14.5ms preprocess, 14.0ms inference, 15.9ms postprocess per image at shape (1, 3, 640, 640)
+[INFO] Model loaded on device: 0
+==================================================
+  手语检测 Web 服务
+  访问地址: http://localhost:5000
+==================================================
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.3.112:5000
+Press CTRL+C to quit
+ * Restarting with stat
+
+0: 640x640 (no detections), 5.8ms
+Speed: 3.3ms preprocess, 5.8ms inference, 1.4ms postprocess per image at shape (1, 3, 640, 640)
+ * Debugger is active!
+ * Debugger PIN: 551-159-715
+127.0.0.1 - - [04/May/2026 16:10:42] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/May/2026 16:10:42] "POST /detect_image HTTP/1.1" 400 -
+127.0.0.1 - - [04/May/2026 16:13:46] "GET /favicon.ico HTTP/1.1" 404 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a4931907e2a2472a9435a330b3d69f1b.jpg: 480x640 (no detections), 23.9ms
+Speed: 1.4ms preprocess, 23.9ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:54] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/863a057d690c42c39d8b77798ef9b856.jpg: 480x640 (no detections), 7.3ms
+Speed: 1.1ms preprocess, 7.3ms inference, 2.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:54] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a115c2641e214849b966e2eb688ccceb.jpg: 480x640 (no detections), 7.3ms
+Speed: 1.0ms preprocess, 7.3ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:55] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/05133e2da14147d5933c78964d3dcc8f.jpg: 480x640 1 door, 6.1ms
+Speed: 1.2ms preprocess, 6.1ms inference, 11.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:56] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/da1c9ce9a65a4c5c9e7fdf926431227d.jpg: 480x640 1 what, 7.9ms
+Speed: 1.3ms preprocess, 7.9ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:56] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/cbdcb841dff34f059bb2deb7d1f09bd4.jpg: 480x640 1 what, 6.0ms
+Speed: 0.9ms preprocess, 6.0ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:56] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/53080749496747358ce933af853d5d1d.jpg: 480x640 1 what, 6.5ms
+Speed: 1.1ms preprocess, 6.5ms inference, 2.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:57] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d3fd8aa59de145dd83700b5098b0eeee.jpg: 480x640 (no detections), 7.5ms
+Speed: 1.0ms preprocess, 7.5ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:57] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/635d41e68c9e4d1f9850da519a2ff055.jpg: 480x640 (no detections), 6.9ms
+Speed: 1.3ms preprocess, 6.9ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:58] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/dfeb0065e08b427291f4c09dcae2c7cf.jpg: 480x640 1 door, 8.1ms
+Speed: 1.0ms preprocess, 8.1ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c1752ac591db4f2db6ca16bbd41c1f09.jpg: 480x640 (no detections), 10.7ms
+Speed: 1.6ms preprocess, 10.7ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3c890349017b4e0a802f2ed7a75dc1dd.jpg: 480x640 (no detections), 6.1ms
+Speed: 1.0ms preprocess, 6.1ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/02de96b74c5b4bd9886a5a3dcf253c70.jpg: 480x640 (no detections), 6.0ms
+Speed: 0.9ms preprocess, 6.0ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d4029cf17f0949f5b93be4bfa5e74839.jpg: 480x640 (no detections), 5.7ms
+Speed: 1.0ms preprocess, 5.7ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/6a77c8edc88c4dde94c95ee30873bb20.jpg: 480x640 (no detections), 7.4ms
+Speed: 1.2ms preprocess, 7.4ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/94d9f39952684d518233bd2c1b011b6c.jpg: 480x640 (no detections), 6.9ms
+Speed: 0.9ms preprocess, 6.9ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a256027cac0c41278f0a3f7f4867754b.jpg: 480x640 1 door, 7.3ms
+Speed: 1.0ms preprocess, 7.3ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/17522583190d478dbe5c63a0e618c006.jpg: 480x640 (no detections), 10.8ms
+Speed: 1.6ms preprocess, 10.8ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:06] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/dfc26c8446ad44979a8c11fb62813bbb.jpg: 480x640 (no detections), 5.6ms
+Speed: 1.0ms preprocess, 5.6ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:06] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/4bda0098a6b745f0a23614e113dc6fbf.jpg: 480x640 (no detections), 6.3ms
+Speed: 1.0ms preprocess, 6.3ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:07] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/72795c3f490945a49626618935b63758.jpg: 480x640 (no detections), 9.2ms
+Speed: 1.2ms preprocess, 9.2ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:07] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/90b3f68e0dab467b828e8f0671d4aed5.jpg: 480x640 (no detections), 6.7ms
+Speed: 1.5ms preprocess, 6.7ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:08] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5d3a7285a1e94b678f82b8fe42ad5272.jpg: 480x640 (no detections), 6.8ms
+Speed: 1.1ms preprocess, 6.8ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:08] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a234c11362124acc8571513b43af1922.jpg: 480x640 (no detections), 7.6ms
+Speed: 0.9ms preprocess, 7.6ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:09] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/75a15081a99c4a609d83000ec1e110fe.jpg: 480x640 1 door, 8.4ms
+Speed: 1.0ms preprocess, 8.4ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:09] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/927e668d623a4d06b73f0ee05d248d4e.jpg: 480x640 1 door, 10.6ms
+Speed: 1.4ms preprocess, 10.6ms inference, 1.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:10] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d1213ab57dfa47e8bf329235529ddeeb.jpg: 480x640 1 door, 6.0ms
+Speed: 1.2ms preprocess, 6.0ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:10] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d099b1bcbc96421aafa39e2291d0cef8.jpg: 480x640 1 door, 7.3ms
+Speed: 1.2ms preprocess, 7.3ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:11] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/dd2373808baa44bd878a86a13b4f1084.jpg: 480x640 1 door, 5.6ms
+Speed: 0.9ms preprocess, 5.6ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:11] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/eeb0bd53da664eec88f0b4e57e060940.jpg: 480x640 1 door, 6.5ms
+Speed: 1.0ms preprocess, 6.5ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:12] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/238ad9d4614d401bb3968e7e650db8d8.jpg: 480x640 1 door, 6.7ms
+Speed: 0.9ms preprocess, 6.7ms inference, 2.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:12] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/dba7a4b794d14c2b896cd1cb21ba8f82.jpg: 480x640 1 door, 7.1ms
+Speed: 1.0ms preprocess, 7.1ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:13] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c8e28b51b0294d058b5683d3b7b80b78.jpg: 480x640 1 door, 7.8ms
+Speed: 1.2ms preprocess, 7.8ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:13] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/70d8fc5d16a5449f8c3f85e5b1ec6bcc.jpg: 480x640 1 door, 10.6ms
+Speed: 1.8ms preprocess, 10.6ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:14] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b0c38e8a894d46298b444f1bbd27c5d0.jpg: 480x640 1 door, 9.3ms
+Speed: 1.2ms preprocess, 9.3ms inference, 2.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:14] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c59bf4a3d0cf49e9ac2afc61601a6407.jpg: 480x640 1 door, 5.7ms
+Speed: 1.0ms preprocess, 5.7ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:15] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/0643347aa2454b789bfe4e4835ca833a.jpg: 480x640 1 door, 5.9ms
+Speed: 0.9ms preprocess, 5.9ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:15] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/ca96a76004d648bea9571c9269440994.jpg: 480x640 (no detections), 7.0ms
+Speed: 1.2ms preprocess, 7.0ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:16] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d9d91f11100c4f2b87ef36286d6dfc0f.jpg: 480x640 (no detections), 7.2ms
+Speed: 1.3ms preprocess, 7.2ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:16] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/6dfb972cf3134e7da1871fbd9c611147.jpg: 480x640 (no detections), 7.5ms
+Speed: 1.6ms preprocess, 7.5ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:17] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/61004003cd354108916d5e7465dc16b0.jpg: 480x640 (no detections), 10.7ms
+Speed: 1.6ms preprocess, 10.7ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:17] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c01c9bedcc1745909cf9da6a46cc540e.jpg: 480x640 (no detections), 5.9ms
+Speed: 1.0ms preprocess, 5.9ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:18] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a81cfd90d9234c7cb98cf2465e717484.jpg: 480x640 (no detections), 5.4ms
+Speed: 0.9ms preprocess, 5.4ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:18] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/0f4e979a2c334398ade405d04190ce80.jpg: 480x640 (no detections), 5.7ms
+Speed: 1.2ms preprocess, 5.7ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:19] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9c9c3f0e845a455fa8b9fca27a70d755.jpg: 480x640 (no detections), 6.8ms
+Speed: 1.1ms preprocess, 6.8ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:19] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fd12d073c30d4df8ade7162390d9daf5.jpg: 480x640 (no detections), 6.7ms
+Speed: 1.1ms preprocess, 6.7ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:20] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/930d07ab20cd4d3da96c2cdc2a5561ad.jpg: 480x640 (no detections), 7.7ms
+Speed: 1.4ms preprocess, 7.7ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:20] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/66797e49b7ec49f7b6329dd4deb5e4ad.jpg: 480x640 (no detections), 7.5ms
+Speed: 1.3ms preprocess, 7.5ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:18] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fa888a76709c47aaa6ae51f6484645d2.jpg: 480x640 (no detections), 7.4ms
+Speed: 1.3ms preprocess, 7.4ms inference, 1.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:19] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b5551021000b4bf291f9c1efda3435e8.jpg: 480x640 (no detections), 12.6ms
+Speed: 2.2ms preprocess, 12.6ms inference, 1.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:19] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5ef28d20dc8f44419d66d3d00682dc16.jpg: 480x640 (no detections), 6.4ms
+Speed: 1.1ms preprocess, 6.4ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:20] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c2ec4a9b36494c6bb9dd0b2c49547469.jpg: 480x640 1 door, 8.9ms
+Speed: 1.4ms preprocess, 8.9ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:20] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a9c4f4c5f2d04778b3cbaee9d167f80f.jpg: 480x640 (no detections), 4.3ms
+Speed: 0.9ms preprocess, 4.3ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:21] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f86e62bf41374bbe8ebf92c73e40dccb.jpg: 480x640 (no detections), 7.5ms
+Speed: 1.6ms preprocess, 7.5ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:21] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b6ddd245045545debd5fafaea180dfbb.jpg: 480x640 1 door, 5.4ms
+Speed: 0.9ms preprocess, 5.4ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:22] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/bb4c1925ea2d4c03b9da435934c8810c.jpg: 480x640 (no detections), 6.9ms
+Speed: 1.2ms preprocess, 6.9ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:22] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fa439c45e9ad4e37a157cb54c414fd93.jpg: 480x640 (no detections), 7.2ms
+Speed: 1.5ms preprocess, 7.2ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:26] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/37c53f7ed8d748009e6a87ff69bef60a.jpg: 480x640 (no detections), 5.6ms
+Speed: 0.9ms preprocess, 5.6ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:26] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/dc0475a63f4c4d1e87857e70e70daa0f.jpg: 480x640 (no detections), 8.9ms
+Speed: 1.7ms preprocess, 8.9ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:26] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7a258c12c0bf4ae69912c0f96b9111f1.jpg: 480x640 (no detections), 6.0ms
+Speed: 1.3ms preprocess, 6.0ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:27] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/74c3c8d4efeb491e807d32b981d3631e.jpg: 480x640 (no detections), 8.6ms
+Speed: 1.3ms preprocess, 8.6ms inference, 1.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:27] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/44dd985fc9234bea89bd7b5b6297138a.jpg: 480x640 1 door, 7.1ms
+Speed: 1.9ms preprocess, 7.1ms inference, 2.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:28] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/aba62e479d7d4d58b9d0db4ad66a08c7.jpg: 480x640 1 door, 9.0ms
+Speed: 1.7ms preprocess, 9.0ms inference, 2.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:29] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/af2559fcfad54b028036ecb4d75c0379.jpg: 480x640 1 door, 7.3ms
+Speed: 1.5ms preprocess, 7.3ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:29] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/62aeca47074c4bb0828ec70786399545.jpg: 480x640 (no detections), 8.0ms
+Speed: 1.4ms preprocess, 8.0ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:29] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/767268dfd71a462f8640586c10b15b25.jpg: 480x640 (no detections), 4.1ms
+Speed: 0.9ms preprocess, 4.1ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:30] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fd142074030f4544bc14f752b744c6a5.jpg: 480x640 1 door, 5.4ms
+Speed: 2.0ms preprocess, 5.4ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:30] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1f46523956d44ec7b011b18fd9c092f4.jpg: 480x640 (no detections), 4.5ms
+Speed: 1.2ms preprocess, 4.5ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:31] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/2c6a588cdf82450e8fe2408ea39f01cd.jpg: 480x640 (no detections), 4.9ms
+Speed: 1.1ms preprocess, 4.9ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:32] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b4227218d1b040e09438cd28022bc126.jpg: 480x640 (no detections), 4.8ms
+Speed: 0.9ms preprocess, 4.8ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:32] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fd06d8ac49ff455abdad7b483b660439.jpg: 480x640 (no detections), 7.7ms
+Speed: 1.4ms preprocess, 7.7ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:32] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c8b0755c9f1740dab0959e794718f795.jpg: 480x640 (no detections), 7.5ms
+Speed: 1.4ms preprocess, 7.5ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:33] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/0560eddfcdf44ce097e0201bc0222a0e.jpg: 480x640 (no detections), 7.5ms
+Speed: 1.6ms preprocess, 7.5ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:33] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/2cf1f29e92ee40c5ab6885772eefb7ed.jpg: 480x640 (no detections), 5.3ms
+Speed: 1.4ms preprocess, 5.3ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:34] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/76d98f4523e1458baa9cca04e1ea645d.jpg: 480x640 (no detections), 7.2ms
+Speed: 1.8ms preprocess, 7.2ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:35] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/4b1a4bd09bbd46e29b0246879ae81b1e.jpg: 480x640 (no detections), 6.5ms
+Speed: 1.1ms preprocess, 6.5ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:35] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5fa60ef076b64570be7259be8bb7c4da.jpg: 480x640 (no detections), 6.2ms
+Speed: 1.2ms preprocess, 6.2ms inference, 1.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:35] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c1b83c4fabe44e37a6e58e3c0ec571f9.jpg: 480x640 (no detections), 6.6ms
+Speed: 1.0ms preprocess, 6.6ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:36] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/af1f898900a14c99b9d5982102a6ddd3.jpg: 480x640 (no detections), 8.0ms
+Speed: 1.4ms preprocess, 8.0ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:36] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c9ef12819a664933886d9f9f5abd6b0d.jpg: 480x640 (no detections), 6.6ms
+Speed: 1.1ms preprocess, 6.6ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:37] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1f27f34cb8a244feaaca643074c16b1b.jpg: 480x640 (no detections), 8.5ms
+Speed: 1.3ms preprocess, 8.5ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:38] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9e05c485b9204aa7b57219a741633db7.jpg: 480x640 (no detections), 8.2ms
+Speed: 1.3ms preprocess, 8.2ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:38] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/ee6cbf4574c1421b87a08492f7700f38.jpg: 480x640 1 door, 12.1ms
+Speed: 2.1ms preprocess, 12.1ms inference, 3.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:38] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/36bb188b2120428caa155b40bef1d1a1.jpg: 480x640 (no detections), 4.3ms
+Speed: 0.9ms preprocess, 4.3ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:39] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b793491f8748493f83b46aaf8138dcc0.jpg: 480x640 (no detections), 7.5ms
+Speed: 1.3ms preprocess, 7.5ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:39] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3048f569db1f4419b249569e6ff38e9f.jpg: 480x640 (no detections), 4.1ms
+Speed: 0.9ms preprocess, 4.1ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:40] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b42fe0fa42cb4868ac8b2577d1f60882.jpg: 480x640 (no detections), 8.4ms
+Speed: 1.5ms preprocess, 8.4ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:41] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/46da353ace9c4a2ca1bdc72cd2ee0a49.jpg: 480x640 (no detections), 5.7ms
+Speed: 1.0ms preprocess, 5.7ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:38] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1ceae24a558446e7964b3926fa02f44a.jpg: 480x640 (no detections), 8.2ms
+Speed: 0.9ms preprocess, 8.2ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:39] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/43b17f5ae9244deda0764b85bf024b4c.jpg: 480x640 (no detections), 5.1ms
+Speed: 0.9ms preprocess, 5.1ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:40] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/26b336e1841c4164bcdb6ed01b208722.jpg: 480x640 (no detections), 5.5ms
+Speed: 0.9ms preprocess, 5.5ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:40] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b5c1880091ba4751bc6c03e7fbe98383.jpg: 480x640 (no detections), 5.3ms
+Speed: 1.2ms preprocess, 5.3ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:40] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/8a70cb8b9cde45cb98bd97cc4415d12f.jpg: 480x640 (no detections), 6.6ms
+Speed: 1.2ms preprocess, 6.6ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:41] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f771949c35024cc1a8758e0117b62c5e.jpg: 480x640 1 what, 5.6ms
+Speed: 1.0ms preprocess, 5.6ms inference, 1.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:41] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/91f75c74413a4bb987bd0a00b809cb70.jpg: 480x640 1 what, 7.2ms
+Speed: 1.1ms preprocess, 7.2ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:42] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/019cafd7a2c14ee388881cb804aa2ab0.jpg: 480x640 (no detections), 6.8ms
+Speed: 0.9ms preprocess, 6.8ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:43] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/dd431f8b9e4e4420b5932ae430a7a117.jpg: 480x640 (no detections), 7.1ms
+Speed: 1.0ms preprocess, 7.1ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:11:43] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b3f9cd6fff9a47b59cc857d051d96c82.jpg: 480x640 (no detections), 7.0ms
+Speed: 1.1ms preprocess, 7.0ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:46] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c9306c0d7b274fe288dfb1bc0935f063.jpg: 480x640 (no detections), 8.0ms
+Speed: 1.0ms preprocess, 8.0ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:47] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fa7f310a557c46e0b4a8c743616edd0f.jpg: 480x640 (no detections), 12.7ms
+Speed: 1.4ms preprocess, 12.7ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:47] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3fedd02609fd4a2a949e8eac0738679a.jpg: 480x640 (no detections), 4.8ms
+Speed: 0.8ms preprocess, 4.8ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:47] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/0c2c994a751f4212874760362f21747d.jpg: 480x640 (no detections), 4.4ms
+Speed: 0.9ms preprocess, 4.4ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:48] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a0f3950fb6bf4b51b49628bf53247ef4.jpg: 480x640 (no detections), 5.4ms
+Speed: 0.9ms preprocess, 5.4ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:48] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/80f6cbb61e8b467085c2e2c10989e7e8.jpg: 480x640 (no detections), 4.4ms
+Speed: 0.8ms preprocess, 4.4ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:49] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/62ffcb2da343405995f80b190dc55848.jpg: 480x640 (no detections), 5.1ms
+Speed: 1.1ms preprocess, 5.1ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:50] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3c27e900f7f74e378b9cb01ad24223fc.jpg: 480x640 (no detections), 5.2ms
+Speed: 0.9ms preprocess, 5.2ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:50] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/603428f6487b425593b35f182fffc0d4.jpg: 480x640 1 door, 5.1ms
+Speed: 1.0ms preprocess, 5.1ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:50] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/539bb10b4c0c4d7c80dcd4d0d39d9288.jpg: 480x640 1 door, 6.2ms
+Speed: 1.0ms preprocess, 6.2ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:51] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c28fbc1f086f4fd0a52079013b725e6a.jpg: 480x640 1 door, 7.6ms
+Speed: 1.0ms preprocess, 7.6ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:51] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1fd71ae793e44c33b375937814df6622.jpg: 480x640 1 door, 7.9ms
+Speed: 1.7ms preprocess, 7.9ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:52] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b38040d9cc8446e2a5d7040bd967106d.jpg: 480x640 1 door, 6.6ms
+Speed: 0.9ms preprocess, 6.6ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:53] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/388750731b5a4e0e82666909c81ddf77.jpg: 480x640 1 door, 7.0ms
+Speed: 1.0ms preprocess, 7.0ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:53] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1e0c3e8853e3492eaa4c4fdc5274acae.jpg: 480x640 1 door, 6.4ms
+Speed: 1.2ms preprocess, 6.4ms inference, 2.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:53] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/036be33b550b48c486eaa698f79d0d33.jpg: 480x640 1 door, 6.9ms
+Speed: 1.2ms preprocess, 6.9ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:54] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3e41f7f3fba6406daf66d91286e97305.jpg: 480x640 (no detections), 7.8ms
+Speed: 1.4ms preprocess, 7.8ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:55] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/ad62633829d54c3db273e7a0d9b34aa3.jpg: 480x640 (no detections), 6.3ms
+Speed: 1.1ms preprocess, 6.3ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:55] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/23605f1a98ba46339aab3207ffdcbdcc.jpg: 480x640 (no detections), 4.2ms
+Speed: 1.1ms preprocess, 4.2ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:56] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5b122feb7a48417cab6fb0cfb2a7cc78.jpg: 480x640 1 what, 7.8ms
+Speed: 2.1ms preprocess, 7.8ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:56] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c0477331d5dd4ef1882a46bd13a5d42f.jpg: 480x640 (no detections), 4.3ms
+Speed: 0.9ms preprocess, 4.3ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:56] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/ab8159bedb834792b7befa6441ec22e7.jpg: 480x640 1 what, 5.7ms
+Speed: 1.1ms preprocess, 5.7ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:57] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a9c0655a35de4dedb0c6507210b20ee4.jpg: 480x640 (no detections), 5.3ms
+Speed: 1.4ms preprocess, 5.3ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:58] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/79f4f8959a34434fbc0cfbd5f44d5b30.jpg: 480x640 1 door, 4.9ms
+Speed: 0.9ms preprocess, 4.9ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:58] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b18b39bbc772460d91355cf3ccf0489e.jpg: 480x640 1 door, 9.7ms
+Speed: 1.6ms preprocess, 9.7ms inference, 2.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/4f924188ae2147f98b5b85d766d93814.jpg: 480x640 (no detections), 7.8ms
+Speed: 1.8ms preprocess, 7.8ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a8807497a68e4599ad295f184b546596.jpg: 480x640 (no detections), 9.1ms
+Speed: 1.8ms preprocess, 9.1ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7d6cb58964b74838a9593997bdaf99a8.jpg: 480x640 (no detections), 5.8ms
+Speed: 0.9ms preprocess, 5.8ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/32fd1a957f1349a48b1e14e9f7da0119.jpg: 480x640 (no detections), 8.6ms
+Speed: 2.2ms preprocess, 8.6ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/0616fc5eb4024e6d951411014439f4b3.jpg: 480x640 (no detections), 6.5ms
+Speed: 0.9ms preprocess, 6.5ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/df34a047b388419796ae13b568e6ddf5.jpg: 480x640 1 door, 7.2ms
+Speed: 1.0ms preprocess, 7.2ms inference, 1.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/90badcab697c4aeba3e396fdd7524b3a.jpg: 480x640 (no detections), 6.8ms
+Speed: 1.3ms preprocess, 6.8ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f6dc48c4828d44179e79a487317e5d31.jpg: 480x640 (no detections), 6.9ms
+Speed: 1.3ms preprocess, 6.9ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/23f5be1c08154671bd130a5e06b1915d.jpg: 480x640 (no detections), 5.2ms
+Speed: 1.3ms preprocess, 5.2ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:03] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fa80ea4d59ff4ee885cbca46d0e91d41.jpg: 480x640 (no detections), 4.7ms
+Speed: 1.0ms preprocess, 4.7ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:04] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/22713e648da94812bbf7e2e09e07c82e.jpg: 480x640 (no detections), 4.1ms
+Speed: 0.8ms preprocess, 4.1ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:04] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f5cbed80dbfc438ba517d3c2febc49cb.jpg: 480x640 1 door, 4.3ms
+Speed: 0.9ms preprocess, 4.3ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:05] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/de3657b852f547f19824340bbb8740ff.jpg: 480x640 1 door, 4.7ms
+Speed: 1.2ms preprocess, 4.7ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:05] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d599200453ef4cab83c115f039de9820.jpg: 480x640 (no detections), 4.9ms
+Speed: 0.8ms preprocess, 4.9ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:05] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/4bb1a10298494f22b2ab6f9dc5a5606a.jpg: 480x640 (no detections), 6.9ms
+Speed: 1.0ms preprocess, 6.9ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:06] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/80958a140d3a4ee79e0d400c998bc480.jpg: 480x640 (no detections), 9.1ms
+Speed: 1.3ms preprocess, 9.1ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:07] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/831466056c58463dbab4545f10d6812f.jpg: 480x640 1 door, 6.9ms
+Speed: 1.2ms preprocess, 6.9ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:07] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/87933ee683044db9ad4afd712e6fb959.jpg: 480x640 (no detections), 8.5ms
+Speed: 1.4ms preprocess, 8.5ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:08] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1dd53dd9b2ff4e1584ca5911384cb393.jpg: 480x640 (no detections), 6.4ms
+Speed: 1.2ms preprocess, 6.4ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:08] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/545653d094164e94a2c873c23e03512e.jpg: 480x640 (no detections), 5.7ms
+Speed: 0.9ms preprocess, 5.7ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:08] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5df6cc00bff347b5bf7d571d19f131a6.jpg: 480x640 1 door, 6.0ms
+Speed: 1.0ms preprocess, 6.0ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:09] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7d43ebc1f03243da9849dcf6fafeeee2.jpg: 480x640 (no detections), 6.8ms
+Speed: 0.9ms preprocess, 6.8ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:10] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/68d8a1a4c4374d3ca1e1f1baba00eaa8.jpg: 480x640 (no detections), 6.4ms
+Speed: 1.0ms preprocess, 6.4ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:10] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fed08253d3334b59a22103dd462e55b6.jpg: 480x640 (no detections), 8.2ms
+Speed: 1.3ms preprocess, 8.2ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:11] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/2eaa72292d1b45979947f09f9fe3b636.jpg: 480x640 (no detections), 6.7ms
+Speed: 0.9ms preprocess, 6.7ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:11] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/06f83584fa884c28b131086af4e2a12c.jpg: 480x640 (no detections), 5.1ms
+Speed: 1.1ms preprocess, 5.1ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:12] "POST /detect_image HTTP/1.1" 200 -
+
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/679a58532392469fa61b72c3d8f910f1.jpg: 480x640 (no detections), 11.9ms
+Speed: 1.6ms preprocess, 11.9ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/146f9deb101e43a59ac380d55b912001.jpg: 480x640 (no detections), 13.0ms
+Speed: 0.4ms preprocess, 6.5ms inference, 0.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:13] "POST /detect_image HTTP/1.1" 200 -
+127.0.0.1 - - [04/May/2026 16:15:13] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/4c17e5b37c16437f80be6b489a72969e.jpg: 480x640 (no detections), 5.1ms
+Speed: 0.9ms preprocess, 5.1ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:13] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7fc4b1e5e58f47958eb637ac93679c13.jpg: 480x640 (no detections), 7.6ms
+Speed: 1.1ms preprocess, 7.6ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:14] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/6583bf3df3a24619b61ebda704022f49.jpg: 480x640 (no detections), 4.7ms
+Speed: 1.0ms preprocess, 4.7ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:14] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/cf62f579c73140a291cfbcd707dee2d2.jpg: 480x640 (no detections), 7.0ms
+Speed: 1.3ms preprocess, 7.0ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:15:15] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f8bd3d45c77a412abd9f28266d0fa7b1.jpg: 480x640 (no detections), 7.7ms
+Speed: 1.3ms preprocess, 7.7ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:12:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/016ece7f994c4f1f868997a868c22bcd.jpg: 480x640 (no detections), 12.4ms
+Speed: 1.5ms preprocess, 12.4ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/096ea69e7d724207a53debb5c49f2f19.jpg: 480x640 1 door, 6.9ms
+Speed: 1.6ms preprocess, 6.9ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7f39eeb58537495897ba656a951b7b7b.jpg: 480x640 1 door, 6.1ms
+Speed: 1.2ms preprocess, 6.1ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/32392c4f32ab46bfb993cdf83d101298.jpg: 480x640 1 door, 4.3ms
+Speed: 0.9ms preprocess, 4.3ms inference, 1.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/21edcedf4f3c48efa6f282ee40f8a23f.jpg: 480x640 1 door, 4.7ms
+Speed: 1.0ms preprocess, 4.7ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/68ac8cb342434245b9db9ed5e5c8d8c8.jpg: 480x640 (no detections), 5.8ms
+Speed: 1.0ms preprocess, 5.8ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:02] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a90c3966699c40388e279c087072d797.jpg: 480x640 (no detections), 4.9ms
+Speed: 0.9ms preprocess, 4.9ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:06] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7ebf983d09a345b6a116f8deb3b73c7c.jpg: 480x640 (no detections), 5.0ms
+Speed: 1.0ms preprocess, 5.0ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:06] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/6d732ba9cfd9409a80249c4a76f11403.jpg: 480x640 (no detections), 5.3ms
+Speed: 1.0ms preprocess, 5.3ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:06] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/29f81e87a94e493da3b5fbb47e56d483.jpg: 480x640 (no detections), 5.5ms
+Speed: 1.0ms preprocess, 5.5ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:07] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5774459c739b4a1e98a487d85e93bfe8.jpg: 480x640 (no detections), 7.1ms
+Speed: 1.4ms preprocess, 7.1ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:07] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fdca5900a1564b879c65bff138142320.jpg: 480x640 (no detections), 6.3ms
+Speed: 1.1ms preprocess, 6.3ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:08] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/529c6acfa1974b9bb7862b974c393fa6.jpg: 480x640 1 door, 6.3ms
+Speed: 1.0ms preprocess, 6.3ms inference, 2.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:09] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b4bd45f03d7545ab941bf4514ac9c3ef.jpg: 480x640 1 door, 6.9ms
+Speed: 1.0ms preprocess, 6.9ms inference, 2.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:09] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5ab1370208484045af015f03caf10277.jpg: 480x640 1 door, 7.3ms
+Speed: 0.9ms preprocess, 7.3ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:09] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3fb54ec0f43c4814b98a9993c555aadd.jpg: 480x640 1 door, 7.0ms
+Speed: 1.0ms preprocess, 7.0ms inference, 1.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:10] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/e034f4d5657944d49a5510439febeae4.jpg: 480x640 1 door, 7.4ms
+Speed: 1.1ms preprocess, 7.4ms inference, 2.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:10] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b0dc70f81c864c75b8ef3cac527eb3ed.jpg: 480x640 1 door, 5.2ms
+Speed: 1.1ms preprocess, 5.2ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:11] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/bc3e8b5b5ceb43bbb0ea3c7ad309fb19.jpg: 480x640 1 door, 5.7ms
+Speed: 1.0ms preprocess, 5.7ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:12] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b7137715c6b248d5a4bbc9dfe6a42158.jpg: 480x640 (no detections), 6.1ms
+Speed: 1.6ms preprocess, 6.1ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:12] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/95ca93404d1f403791858206fe0e8125.jpg: 480x640 1 door, 6.5ms
+Speed: 2.0ms preprocess, 6.5ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:12] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/e6ca5b1452a24e908613ca69b0b13692.jpg: 480x640 1 door, 8.4ms
+Speed: 1.8ms preprocess, 8.4ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:13] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1bfc5f9ccc044706b3851d1ccfe80e6c.jpg: 480x640 1 door, 5.0ms
+Speed: 0.9ms preprocess, 5.0ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:14] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/4008a92318734444a2d272bf50ec0a40.jpg: 480x640 (no detections), 6.5ms
+Speed: 1.0ms preprocess, 6.5ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:14] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/256f31e172074fc187be2e2f02c7894b.jpg: 480x640 (no detections), 6.3ms
+Speed: 1.0ms preprocess, 6.3ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:15] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3695270f48044a929edf24a27e338f9e.jpg: 480x640 (no detections), 5.2ms
+Speed: 0.9ms preprocess, 5.2ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:15] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/363ad5a69a6240dcb0eb675f29b52f5c.jpg: 480x640 (no detections), 5.5ms
+Speed: 1.0ms preprocess, 5.5ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:15] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1464db8c7ddf4342a4683538d6b318ba.jpg: 480x640 (no detections), 6.0ms
+Speed: 1.0ms preprocess, 6.0ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:16] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/376749380620491fa0823c49570187b7.jpg: 480x640 (no detections), 7.1ms
+Speed: 1.0ms preprocess, 7.1ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:22] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/0277b6af89d740888eeba136a1d120a4.jpg: 480x640 (no detections), 8.2ms
+Speed: 1.3ms preprocess, 8.2ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:26] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7e18305706404575a18ba41b34d35275.jpg: 480x640 (no detections), 7.2ms
+Speed: 1.8ms preprocess, 7.2ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:23] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/cba1415a3dff4ffdb381f82d4510064a.jpg: 480x640 1 door, 9.4ms
+Speed: 1.8ms preprocess, 9.4ms inference, 2.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:24] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/191ab06aac464138a7d5bec257f8be53.jpg: 480x640 1 door, 9.3ms
+Speed: 1.5ms preprocess, 9.3ms inference, 2.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:25] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/da73d484974b460a8f01d44cdfbeac6a.jpg: 480x640 (no detections), 9.9ms
+Speed: 1.3ms preprocess, 9.9ms inference, 2.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:25] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/10b8e98813304331902159323ab3ad46.jpg: 480x640 1 door, 4.6ms
+Speed: 1.8ms preprocess, 4.6ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:25] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/82f4c958bbc9415bb9bc139bb1e06dc9.jpg: 480x640 (no detections), 4.3ms
+Speed: 1.3ms preprocess, 4.3ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:26] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7cc367e4db6c4a87817a7be5cbfebf2c.jpg: 480x640 (no detections), 8.3ms
+Speed: 2.5ms preprocess, 8.3ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:26] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d63cdde00bcf43c6934c0dc00faf3066.jpg: 480x640 (no detections), 9.6ms
+Speed: 2.0ms preprocess, 9.6ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:27] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/0127ae05a1f447d2a3c4753611aa0fbb.jpg: 480x640 (no detections), 5.5ms
+Speed: 2.1ms preprocess, 5.5ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:28] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/50080a363d9d4f58ad387c3c4f1a8539.jpg: 480x640 (no detections), 7.3ms
+Speed: 1.5ms preprocess, 7.3ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:28] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/44cd11cd75bb496dadddb8cebfda911d.jpg: 480x640 (no detections), 7.0ms
+Speed: 2.1ms preprocess, 7.0ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:31] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/62c92c02b33a445f88592a009304ed80.jpg: 480x640 (no detections), 5.7ms
+Speed: 1.2ms preprocess, 5.7ms inference, 0.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:29] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/62b1269c6c624670b6ad7df5a659ef13.jpg: 480x640 (no detections), 6.4ms
+Speed: 1.3ms preprocess, 6.4ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:29] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7335e9bab170469bad53da8d35370387.jpg: 480x640 (no detections), 6.4ms
+Speed: 1.0ms preprocess, 6.4ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:30] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c0f418aabf38491e9f5e8b6386fd9ed2.jpg: 480x640 1 door, 6.5ms
+Speed: 0.9ms preprocess, 6.5ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:31] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/a6ed9281a40240c1b64b3b4eb8df3566.jpg: 480x640 1 door, 7.2ms
+Speed: 1.0ms preprocess, 7.2ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:31] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/6220b8f8cc5c4eb29f41ea27f8fd293f.jpg: 480x640 (no detections), 6.8ms
+Speed: 1.1ms preprocess, 6.8ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:31] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/479d1bd0a37f432588cf87a624777537.jpg: 480x640 (no detections), 15.5ms
+Speed: 2.7ms preprocess, 15.5ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:32] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7c16dc5005684f128ede989ea2c9d3db.jpg: 480x640 1 door, 7.5ms
+Speed: 0.9ms preprocess, 7.5ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:32] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/31b5cb2d7e20491b93f11c0caef0a5b3.jpg: 480x640 1 door, 4.4ms
+Speed: 1.5ms preprocess, 4.4ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:33] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/90920daadf584c5e81509125935ec26d.jpg: 480x640 (no detections), 4.4ms
+Speed: 0.9ms preprocess, 4.4ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:34] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/836e8c0e775a446481920aa36dcc3f6d.jpg: 480x640 (no detections), 5.1ms
+Speed: 1.5ms preprocess, 5.1ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:34] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/55afccbe2eca43878549565d720085e4.jpg: 480x640 (no detections), 4.7ms
+Speed: 1.2ms preprocess, 4.7ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:34] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/cb563f0b3bfb4c498b172a3ab2ef43bb.jpg: 480x640 1 new, 5.4ms
+Speed: 1.1ms preprocess, 5.4ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:35] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/e09457079a0148bfa050ceb607c4dfaf.jpg: 480x640 (no detections), 5.1ms
+Speed: 1.1ms preprocess, 5.1ms inference, 0.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:35] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/92aff9cc129840a982eb01a5540304ca.jpg: 480x640 (no detections), 5.7ms
+Speed: 1.0ms preprocess, 5.7ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:41] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/5bb7f1ec3bf14b958ebc2a001b53fd9a.jpg: 480x640 (no detections), 7.9ms
+Speed: 1.7ms preprocess, 7.9ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:42] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/00e63bb77e2a40d5b26efd74806aa301.jpg: 480x640 (no detections), 7.9ms
+Speed: 1.4ms preprocess, 7.9ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:42] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1aaa0dbf7e4140d399772298d7aa09ce.jpg: 480x640 1 0, 15.0ms
+Speed: 1.7ms preprocess, 15.0ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:42] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7815c81701bc43128683c889eac8245c.jpg: 480x640 1 0, 24.1ms
+Speed: 2.6ms preprocess, 24.1ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:43] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/de9d04c794e44457b6523043e869c742.jpg: 480x640 (no detections), 25.1ms
+Speed: 3.1ms preprocess, 25.1ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:46] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f4e36035c1764e869db581b8a52f7830.jpg: 480x640 1 0, 27.1ms
+Speed: 3.6ms preprocess, 27.1ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:46] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/46303328f53c46cc804725423b4d960f.jpg: 480x640 1 0, 32.3ms
+Speed: 2.9ms preprocess, 32.3ms inference, 2.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:47] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/565c570d4319499eb54ef568a8c52115.jpg: 480x640 1 0, 32.7ms
+Speed: 2.8ms preprocess, 32.7ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:47] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/8b5c539b4ef042b88b5f783e96756b93.jpg: 480x640 1 0, 32.2ms
+Speed: 3.0ms preprocess, 32.2ms inference, 1.4ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:48] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/109bd6f649e24b7d86c101a5b68ae0ec.jpg: 480x640 (no detections), 32.4ms
+Speed: 3.6ms preprocess, 32.4ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:49] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/082ae2ef928a4451866559863414a01c.jpg: 480x640 1 new, 32.0ms
+Speed: 2.6ms preprocess, 32.0ms inference, 1.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:49] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f960164522ac42d18bf2719279305448.jpg: 480x640 1 new, 36.6ms
+Speed: 10.6ms preprocess, 36.6ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:49] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b76eedb8e61b43ffa695a2215698f9bd.jpg: 480x640 1 new, 32.2ms
+Speed: 2.6ms preprocess, 32.2ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:50] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/1c870ccf742044409a6b44049390e0f8.jpg: 480x640 1 new, 32.1ms
+Speed: 2.4ms preprocess, 32.1ms inference, 1.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:51] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c108fd7e9ae94129b6c50e9c240b602a.jpg: 480x640 1 new, 32.0ms
+Speed: 3.6ms preprocess, 32.0ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:51] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/e988814332064598b4866d2a66e84c80.jpg: 480x640 1 new, 32.4ms
+Speed: 3.7ms preprocess, 32.4ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:52] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f538e6fcc5ef4ad292ace9139439368c.jpg: 480x640 (no detections), 32.1ms
+Speed: 3.1ms preprocess, 32.1ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:52] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/50ebb0413c5b4f0c8f13b03626788f0d.jpg: 480x640 (no detections), 32.1ms
+Speed: 3.0ms preprocess, 32.1ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:52] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/69d49ee183ef497a80cf4b21a9496152.jpg: 480x640 (no detections), 32.7ms
+Speed: 4.1ms preprocess, 32.7ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:53] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/8580e99f3a364f63928bf24f7d143d26.jpg: 480x640 (no detections), 32.1ms
+Speed: 3.4ms preprocess, 32.1ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:54] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/eae14cbf581343cc85d7332075c266f6.jpg: 480x640 (no detections), 32.3ms
+Speed: 2.9ms preprocess, 32.3ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:54] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/7397d612b0c94cbc88f80d21553c8698.jpg: 480x640 (no detections), 32.0ms
+Speed: 2.5ms preprocess, 32.0ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:55] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/e4e777bfa66d471ebba47d74f66b6e81.jpg: 480x640 (no detections), 32.1ms
+Speed: 3.3ms preprocess, 32.1ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:55] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/42c9c87ac6cf46e3a5c2aafc27185e9c.jpg: 480x640 (no detections), 32.3ms
+Speed: 2.8ms preprocess, 32.3ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:55] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/ee68a4702fec42219f7bdd9e12b4f9d7.jpg: 480x640 (no detections), 32.4ms
+Speed: 3.4ms preprocess, 32.4ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:56] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/4805f9935610416c9881c0546df64be4.jpg: 480x640 (no detections), 31.9ms
+Speed: 3.1ms preprocess, 31.9ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:57] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3b4d57ce273b49e685bbd4a6097bc0c8.jpg: 480x640 (no detections), 31.9ms
+Speed: 3.0ms preprocess, 31.9ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:57] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c2f566a5a21f4355890affb7453aa143.jpg: 480x640 1 door, 32.2ms
+Speed: 3.0ms preprocess, 32.2ms inference, 1.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:58] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/116aec15658c4ee88c6741fb9b91bf8e.jpg: 480x640 (no detections), 32.4ms
+Speed: 2.6ms preprocess, 32.4ms inference, 0.8ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:58] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b6d4e7cae56643b7b5ec7a3050dc7c12.jpg: 480x640 1 door, 32.2ms
+Speed: 4.3ms preprocess, 32.2ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/80cb400f020b4dbbb61d694ec50eceda.jpg: 480x640 (no detections), 32.3ms
+Speed: 2.7ms preprocess, 32.3ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/b1aad726883a4b5aa5bfbf31ace10856.jpg: 480x640 (no detections), 31.9ms
+Speed: 2.9ms preprocess, 31.9ms inference, 0.7ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:17:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/41cdaed788844688bb14b0424743213d.jpg: 480x640 1 door, 33.0ms
+Speed: 3.0ms preprocess, 33.0ms inference, 1.3ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:17:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d1475894d657437daf436d56a978db32.jpg: 480x640 (no detections), 32.6ms
+Speed: 3.0ms preprocess, 32.6ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:17:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/ac65242903054ac88e7628a54b51a797.jpg: 480x640 1 door, 32.0ms
+Speed: 2.8ms preprocess, 32.0ms inference, 2.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:17:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/fe9ab48570ba4df38ec5e78511f93ab0.jpg: 480x640 1 door, 32.2ms
+Speed: 3.5ms preprocess, 32.2ms inference, 2.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:13:59] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/e57ee9203ea0494f8c147b59dda61278.jpg: 480x640 (no detections), 32.1ms
+Speed: 2.6ms preprocess, 32.1ms inference, 1.5ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/d0ec75ce80254bb890e92599c80cb13d.jpg: 480x640 (no detections), 32.1ms
+Speed: 2.5ms preprocess, 32.1ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/3acba81e8f41427da03801c2fb0ac841.jpg: 480x640 (no detections), 32.1ms
+Speed: 2.8ms preprocess, 32.1ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:00] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/22433979792d42acab389f8af745af0a.jpg: 480x640 (no detections), 32.2ms
+Speed: 3.5ms preprocess, 32.2ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/c1883b669b904c4e890947ed6dc1d383.jpg: 480x640 (no detections), 31.8ms
+Speed: 2.3ms preprocess, 31.8ms inference, 0.9ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:01] "POST /detect_image HTTP/1.1" 200 -
+
+image 1/1 /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/bd6a298f3daf4bb39486ab268072a900.jpg: 480x640 (no detections), 31.8ms
+Speed: 2.7ms preprocess, 31.8ms inference, 1.0ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:14:02] "POST /detect_image HTTP/1.1" 200 -
+
+
+WARNING ⚠️ inference results will accumulate in RAM unless `stream=True` is passed, causing potential out-of-memory
+errors for large sources or long-running streams and videos. See https://docs.ultralytics.com/modes/predict/ for help.
+
+Example:
+    results = model(source=..., stream=True)  # generator of Results objects
+    for r in results:
+        boxes = r.boxes  # Boxes object for bbox outputs
+        masks = r.masks  # Masks object for segment masks outputs
+        probs = r.probs  # Class probabilities for classification outputs
+
+video 1/1 (1/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 time, 32.3ms
+video 1/1 (2/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 time, 32.1ms
+video 1/1 (3/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 time, 32.2ms
+video 1/1 (4/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 time, 31.9ms
+video 1/1 (5/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 time, 31.9ms
+video 1/1 (6/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 time, 32.9ms
+video 1/1 (7/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 time, 15.8ms
+video 1/1 (8/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 9, 4.4ms
+video 1/1 (9/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 9, 4.5ms
+video 1/1 (10/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 9, 4.1ms
+video 1/1 (11/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 5.0ms
+video 1/1 (12/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (13/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 5.3ms
+video 1/1 (14/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.1ms
+video 1/1 (15/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (16/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (17/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (18/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.4ms
+video 1/1 (19/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (20/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 you/your/this, 4.3ms
+video 1/1 (21/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.3ms
+video 1/1 (22/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.1ms
+video 1/1 (23/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.2ms
+video 1/1 (24/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.3ms
+video 1/1 (25/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.2ms
+video 1/1 (26/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 5.0ms
+video 1/1 (27/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.9ms
+video 1/1 (28/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.4ms
+video 1/1 (29/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.1ms
+video 1/1 (30/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.7ms
+video 1/1 (31/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.1ms
+video 1/1 (32/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 0, 4.1ms
+video 1/1 (33/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.3ms
+video 1/1 (34/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.2ms
+video 1/1 (35/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.0ms
+video 1/1 (36/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.0ms
+video 1/1 (37/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.7ms
+video 1/1 (38/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.2ms
+video 1/1 (39/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.3ms
+video 1/1 (40/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.0ms
+video 1/1 (41/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.0ms
+video 1/1 (42/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 new, 4.1ms
+video 1/1 (43/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 road, 4.1ms
+video 1/1 (44/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 road, 4.6ms
+video 1/1 (45/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 road, 4.3ms
+video 1/1 (46/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 road, 4.2ms
+video 1/1 (47/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 road, 4.1ms
+video 1/1 (48/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 safe, 4.3ms
+video 1/1 (49/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 safe, 3.9ms
+video 1/1 (50/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 safe, 4.1ms
+video 1/1 (51/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 safe, 4.0ms
+video 1/1 (52/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 safe, 4.0ms
+video 1/1 (53/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 friend, 4.3ms
+video 1/1 (54/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 friend, 3.9ms
+video 1/1 (55/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 friend, 4.1ms
+video 1/1 (56/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 friend, 3.9ms
+video 1/1 (57/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 friend, 4.2ms
+video 1/1 (58/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 friend, 4.5ms
+video 1/1 (59/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 please, 4.0ms
+video 1/1 (60/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 please, 4.8ms
+video 1/1 (61/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 please, 4.0ms
+video 1/1 (62/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 please, 3.8ms
+video 1/1 (63/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 know, 4.4ms
+video 1/1 (64/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 know, 3.9ms
+video 1/1 (65/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 know, 4.0ms
+video 1/1 (66/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 know, 3.9ms
+video 1/1 (67/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 know, 4.0ms
+video 1/1 (68/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 know, 3.8ms
+video 1/1 (69/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 business card, 4.0ms
+video 1/1 (70/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 business card, 3.9ms
+video 1/1 (71/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 business card, 4.1ms
+video 1/1 (72/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 business card, 4.3ms
+video 1/1 (73/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 business card, 4.7ms
+video 1/1 (74/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 today, 3.9ms
+video 1/1 (75/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 today, 4.1ms
+video 1/1 (76/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 today, 3.9ms
+video 1/1 (77/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 today, 4.0ms
+video 1/1 (78/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 today, 5.4ms
+video 1/1 (79/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 today, 4.2ms
+video 1/1 (80/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 door, 4.0ms
+video 1/1 (81/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 door, 4.1ms
+video 1/1 (82/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 door, 4.0ms
+video 1/1 (83/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 door, 4.3ms
+video 1/1 (84/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 tea, 4.0ms
+video 1/1 (85/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 tea, 6.1ms
+video 1/1 (86/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 tea, 4.0ms
+video 1/1 (87/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 tea, 4.1ms
+video 1/1 (88/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 morning, 4.1ms
+video 1/1 (89/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 morning, 4.0ms
+video 1/1 (90/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 morning, 4.1ms
+video 1/1 (91/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (92/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.3ms
+video 1/1 (93/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.9ms
+video 1/1 (94/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (95/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (96/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (97/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.4ms
+video 1/1 (98/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (99/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (100/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (101/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.8ms
+video 1/1 (102/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (103/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.8ms
+video 1/1 (104/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (105/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.6ms
+video 1/1 (106/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (107/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 6.4ms
+video 1/1 (108/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.9ms
+video 1/1 (109/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (110/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 3.8ms
+video 1/1 (111/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 5.0ms
+video 1/1 (112/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (113/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (114/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 5.0ms
+video 1/1 (115/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (116/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 4.8ms
+video 1/1 (117/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 5.0ms
+video 1/1 (118/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/9babb8b43fc64e918cf3e929bc5e7e64.mp4: 480x640 1 walk, 6.2ms
+Speed: 1.5ms preprocess, 5.8ms inference, 1.2ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:19:08] "POST /detect_image HTTP/1.1" 500 -
+
+
+WARNING ⚠️ inference results will accumulate in RAM unless `stream=True` is passed, causing potential out-of-memory
+errors for large sources or long-running streams and videos. See https://docs.ultralytics.com/modes/predict/ for help.
+
+Example:
+    results = model(source=..., stream=True)  # generator of Results objects
+    for r in results:
+        boxes = r.boxes  # Boxes object for bbox outputs
+        masks = r.masks  # Masks object for segment masks outputs
+        probs = r.probs  # Class probabilities for classification outputs
+
+video 1/1 (1/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 time, 32.2ms
+video 1/1 (2/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 time, 182671.1ms
+video 1/1 (3/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 time, 32.0ms
+video 1/1 (4/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 time, 31.8ms
+video 1/1 (5/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 time, 26.0ms
+video 1/1 (6/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 time, 22.7ms
+video 1/1 (7/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 time, 23.1ms
+video 1/1 (8/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 9, 22.2ms
+video 1/1 (9/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 9, 22.5ms
+video 1/1 (10/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 9, -182611.3ms
+video 1/1 (11/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 22.5ms
+video 1/1 (12/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 5.1ms
+video 1/1 (13/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.5ms
+video 1/1 (14/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.3ms
+video 1/1 (15/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.3ms
+video 1/1 (16/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (17/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (18/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.6ms
+video 1/1 (19/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.2ms
+video 1/1 (20/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 you/your/this, 4.3ms
+video 1/1 (21/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.3ms
+video 1/1 (22/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.2ms
+video 1/1 (23/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.2ms
+video 1/1 (24/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.3ms
+video 1/1 (25/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.4ms
+video 1/1 (26/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.2ms
+video 1/1 (27/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.4ms
+video 1/1 (28/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.3ms
+video 1/1 (29/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.3ms
+video 1/1 (30/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.2ms
+video 1/1 (31/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.4ms
+video 1/1 (32/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 0, 4.2ms
+video 1/1 (33/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.2ms
+video 1/1 (34/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.2ms
+video 1/1 (35/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.8ms
+video 1/1 (36/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.3ms
+video 1/1 (37/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.4ms
+video 1/1 (38/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.2ms
+video 1/1 (39/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.2ms
+video 1/1 (40/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.2ms
+video 1/1 (41/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.5ms
+video 1/1 (42/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 new, 4.1ms
+video 1/1 (43/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 road, 4.1ms
+video 1/1 (44/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 road, 4.3ms
+video 1/1 (45/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 road, 4.2ms
+video 1/1 (46/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 road, 4.2ms
+video 1/1 (47/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 road, 4.2ms
+video 1/1 (48/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 safe, 4.1ms
+video 1/1 (49/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 safe, 4.2ms
+video 1/1 (50/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 safe, 4.1ms
+video 1/1 (51/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 safe, 4.2ms
+video 1/1 (52/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 safe, 4.4ms
+video 1/1 (53/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 friend, 4.3ms
+video 1/1 (54/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 friend, 4.4ms
+video 1/1 (55/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 friend, 4.2ms
+video 1/1 (56/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 friend, 4.5ms
+video 1/1 (57/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 friend, 4.2ms
+video 1/1 (58/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 friend, 4.0ms
+video 1/1 (59/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 please, 4.5ms
+video 1/1 (60/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 please, 4.1ms
+video 1/1 (61/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 please, 4.1ms
+video 1/1 (62/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 please, 4.1ms
+video 1/1 (63/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 know, 5.2ms
+video 1/1 (64/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 know, 4.1ms
+video 1/1 (65/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 know, 4.2ms
+video 1/1 (66/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 know, 4.7ms
+video 1/1 (67/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 know, 4.1ms
+video 1/1 (68/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 know, 4.7ms
+video 1/1 (69/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 business card, 4.3ms
+video 1/1 (70/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 business card, 4.9ms
+video 1/1 (71/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 business card, 4.1ms
+video 1/1 (72/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 business card, 4.1ms
+video 1/1 (73/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 business card, 4.4ms
+video 1/1 (74/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 today, 4.0ms
+video 1/1 (75/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 today, 4.1ms
+video 1/1 (76/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 today, 4.0ms
+video 1/1 (77/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 today, 4.1ms
+video 1/1 (78/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 today, 4.4ms
+video 1/1 (79/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 today, 4.1ms
+video 1/1 (80/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 door, 4.0ms
+video 1/1 (81/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 door, 4.1ms
+video 1/1 (82/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 door, 4.0ms
+video 1/1 (83/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 door, 5.2ms
+video 1/1 (84/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 tea, 4.1ms
+video 1/1 (85/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 tea, 4.4ms
+video 1/1 (86/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 tea, 4.0ms
+video 1/1 (87/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 tea, 4.1ms
+video 1/1 (88/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 morning, 4.4ms
+video 1/1 (89/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 morning, 4.3ms
+video 1/1 (90/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 morning, 4.7ms
+video 1/1 (91/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (92/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (93/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.7ms
+video 1/1 (94/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (95/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (96/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (97/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (98/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (99/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (100/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (101/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (102/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (103/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (104/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.3ms
+video 1/1 (105/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (106/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (107/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (108/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (109/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (110/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (111/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (112/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (113/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.2ms
+video 1/1 (114/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.3ms
+video 1/1 (115/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.4ms
+video 1/1 (116/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.1ms
+video 1/1 (117/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.0ms
+video 1/1 (118/118) /mnt/e/python/CVandPR/mainew-shoyuDetection/new-shoyuDetection/static/uploads/f871afde5af94039900af3c0fcbdbdb3.mp4: 480x640 1 walk, 4.4ms
+Speed: 2.0ms preprocess, 6.4ms inference, 1.1ms postprocess per image at shape (1, 3, 480, 640)
+127.0.0.1 - - [04/May/2026 16:16:30] "POST /detect_image HTTP/1.1" 500 -
+127.0.0.1 - - [04/May/2026 16:17:24] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/May/2026 16:17:24] "POST /detect_image HTTP/1.1" 400 -
+[INFO] Model loaded on device: 0
+==================================================
+  手语检测 Web 服务
+  访问地址: http://localhost:5000
+==================================================
