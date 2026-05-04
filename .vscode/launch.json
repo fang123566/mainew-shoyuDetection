@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run MainProgram",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\new-shoyuDetection\\MainProgram.py",
+      "cwd": "${workspaceFolder}\\new-shoyuDetection",
+      "python": "${workspaceFolder}\\.venv39\\Scripts\\python.exe",
+      "console": "integratedTerminal"
+    }
+  ]
+}

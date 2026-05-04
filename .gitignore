@@ -1,0 +1,25 @@
+# Virtual environments
+.venv/
+.venv*/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# OS files
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# IDE
+.idea/
+.vscode/
+
+# Large data / model files (keep in repo only if needed)
+# datasets/
+# runs/
+# *.pt
+# *.pth

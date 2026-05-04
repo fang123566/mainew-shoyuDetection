@@ -1,0 +1,23 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>ui_imgs/icons/手掌.png</file>
+    <file>ui_imgs/3d8c06bc59cef6211b27a6325abb8436.png</file>
+    <file>ui_imgs/11.png</file>
+    <file>ui_imgs/bg22.png</file>
+    <file>ui_imgs/DDDDFF-imageonline.co-1920x1080.png</file>
+    <file>ui_imgs/DDFFFF-imageonline.co-1920x1080.png</file>
+    <file>ui_imgs/E6FFDD-imageonline.co-1920x1080.png</file>
+    <file>ui_imgs/FFB08C-imageonline.co-1920x1080.png</file>
+    <file>ui_imgs/FFFFFF-imageonline.co-1920x1080.png</file>
+    <file>ui_imgs/手语-47_爱给网_aigei_com.png</file>
+    <file>ui_imgs/icons/目标检测.png</file>
+    <file>ui_imgs/icons/保存.png</file>
+    <file>ui_imgs/icons/退出.png</file>
+    <file>ui_imgs/icons/camera.png</file>
+    <file>ui_imgs/icons/folder.png</file>
+    <file>ui_imgs/icons/img.png</file>
+    <file>ui_imgs/icons/video.png</file>
+    <file>ui_imgs/11.png</file>
+  </qresource>
+  <qresource prefix="bgs"/>
+</RCC>
