@@ -20,28 +20,28 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual Environment
-venv/
-ENV/
-env/
+# Virtual environments and local config
 .venv/
+venv/
+env/
+ENV/
+.env
 
-# IDE
+# IDE and OS files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
-
-# macOS
 __MACOSX/
 ._*
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Notebook and caches
+.ipynb_checkpoints/
+.cache/
 
-# PyTorch / TensorFlow / CV 相关
+# Model files and exports
 *.pth
 *.pt
 *.onnx
@@ -50,10 +50,32 @@ __MACOSX/
 *.pb
 *.tflite
 *.mlmodel
+weights/*.pt
+!weights/.gitkeep
 
-# 模型和数据
-logs/
-checkpoints/
+# Datasets: keep only the lightweight template structure.
+datasets/**
+!datasets/
+!datasets/sign_language/
+!datasets/sign_language/.gitkeep
+!datasets/sign_language/data.yaml
+!datasets/sign_language/train/
+!datasets/sign_language/train/images/
+!datasets/sign_language/train/images/.gitkeep
+!datasets/sign_language/train/labels/
+!datasets/sign_language/train/labels/.gitkeep
+!datasets/sign_language/valid/
+!datasets/sign_language/valid/images/
+!datasets/sign_language/valid/images/.gitkeep
+!datasets/sign_language/valid/labels/
+!datasets/sign_language/valid/labels/.gitkeep
+!datasets/sign_language/test/
+!datasets/sign_language/test/images/
+!datasets/sign_language/test/images/.gitkeep
+!datasets/sign_language/test/labels/
+!datasets/sign_language/test/labels/.gitkeep
+
+# Generated media and archives
 *.jpg
 *.jpeg
 *.png
@@ -66,14 +88,25 @@ checkpoints/
 *.zip
 *.rar
 
-# 训练输出
-output/
-results/
+# Training and runtime outputs
 runs/
 wandb/
 tensorboard/
+output/
+results/
+/logs/
+checkpoints/
+outputs/images/*
+!outputs/images/.gitkeep
+outputs/videos/*
+!outputs/videos/.gitkeep
+outputs/logs/*
+!outputs/logs/.gitkeep
+outputs/csv/*
+!outputs/csv/.gitkeep
+outputs/figures/*
+!outputs/figures/.gitkeep
 
-# 临时文件
+# Temporary files
 *.tmp
 *.temp
-.cache/

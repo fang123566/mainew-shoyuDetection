@@ -1,0 +1,43 @@
+path: .
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 35
+names:
+  0: time
+  1: you/your/this
+  2: morning
+  3: "9"
+  4: "0"
+  5: happy
+  6: new
+  7: wish
+  8: please
+  9: road
+  10: birthday
+  11: flat
+  12: safe
+  13: friend
+  14: "8"
+  15: know
+  16: business card
+  17: marry/wife
+  18: tea
+  19: have
+  20: flavor
+  21: today
+  22: door
+  23: stop
+  24: thank you
+  25: slow
+  26: walk
+  27: late/night
+  28: I/me
+  29: love
+  30: good
+  31: person
+  32: what
+  33: name
+  34: introduce
+
