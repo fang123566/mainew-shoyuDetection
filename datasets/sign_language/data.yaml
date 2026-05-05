@@ -1,5 +1,6 @@
-# 路径相对于 data.yaml 所在目录
-path: ../../
+# ultralytics 8.4 按训练命令当前工作目录解析该字段。
+# 请从仓库根目录运行训练脚本。
+path: .
 train: new-shoyuDetection/datasets/images/train
 val: new-shoyuDetection/datasets/images/val
 test: new-shoyuDetection/datasets/images/val
