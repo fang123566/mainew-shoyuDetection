@@ -360,8 +360,12 @@
         let stream = null;
         let cameraRunning = false;
         let cameraTimer = null;
-        let latestAnnotated = null;
-        let latestAnnotatedAt = 0;
+        let cameraInFlight = false;
+        let cameraAnimationId = null;
+        let latestDetections = [];
+        let detectionFrameSize = { width: 0, height: 0 };
+        const cameraSegmentMs = 1200;
+        const cameraDetectMaxSide = 640;
         const phraseHistory = [];
 
         const imageInput = document.getElementById('imageInput');
@@ -439,7 +443,8 @@
                 resultImage.style.display = 'none';
                 webcamCanvas.style.display = 'block';
                 startCameraLoop();
-                writeLog('摄像头已开启，正在实时检测。');
+                startBackgroundSegmentRecognition();
+                writeLog('摄像头已开启，后台按时间片分段识别。');
             } catch (err) {
                 writeLog(`无法打开摄像头：${err.message}`, true);
             }
@@ -447,8 +452,13 @@
 
         function stopCamera() {
             cameraRunning = false;
-            if (cameraTimer) clearTimeout(cameraTimer);
+            if (cameraTimer) clearInterval(cameraTimer);
             cameraTimer = null;
+            if (cameraAnimationId) cancelAnimationFrame(cameraAnimationId);
+            cameraAnimationId = null;
+            cameraInFlight = false;
+            latestDetections = [];
+            detectionFrameSize = { width: 0, height: 0 };
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
                 stream = null;
@@ -464,61 +474,104 @@
                 if (!cameraRunning) return;
                 canvas.width = webcamVideo.videoWidth || 640;
                 canvas.height = webcamVideo.videoHeight || 480;
-                if (latestAnnotated && Date.now() - latestAnnotatedAt < 650) {
-                    ctx.drawImage(latestAnnotated, 0, 0, canvas.width, canvas.height);
-                } else {
-                    ctx.drawImage(webcamVideo, 0, 0, canvas.width, canvas.height);
-                }
-                requestAnimationFrame(draw);
+                ctx.drawImage(webcamVideo, 0, 0, canvas.width, canvas.height);
+                drawDetectionOverlay(ctx, canvas);
+                cameraAnimationId = requestAnimationFrame(draw);
             };
             draw();
-            scheduleCameraDetection();
         }
 
-        function scheduleCameraDetection() {
+        function startBackgroundSegmentRecognition() {
             if (!cameraRunning) return;
-            cameraTimer = setTimeout(async () => {
-                const captureCanvas = document.createElement('canvas');
-                captureCanvas.width = webcamVideo.videoWidth || 640;
-                captureCanvas.height = webcamVideo.videoHeight || 480;
-                captureCanvas.getContext('2d').drawImage(webcamVideo, 0, 0, captureCanvas.width, captureCanvas.height);
-                captureCanvas.toBlob(async blob => {
-                    if (blob) await detectBlob(blob, false);
-                    scheduleCameraDetection();
-                }, 'image/jpeg', 0.85);
-            }, 650);
+            captureSegmentForDetection();
+            cameraTimer = setInterval(captureSegmentForDetection, cameraSegmentMs);
         }
 
-        async function detectBlob(blob, updateImage) {
+        function captureSegmentForDetection() {
+            if (!cameraRunning || cameraInFlight || !webcamVideo.videoWidth) return;
+            cameraInFlight = true;
+            const sourceWidth = webcamVideo.videoWidth || 640;
+            const sourceHeight = webcamVideo.videoHeight || 480;
+            const scale = Math.min(cameraDetectMaxSide / sourceWidth, cameraDetectMaxSide / sourceHeight, 1);
+            const captureWidth = Math.max(1, Math.round(sourceWidth * scale));
+            const captureHeight = Math.max(1, Math.round(sourceHeight * scale));
+            const captureCanvas = document.createElement('canvas');
+            captureCanvas.width = captureWidth;
+            captureCanvas.height = captureHeight;
+            captureCanvas.getContext('2d').drawImage(webcamVideo, 0, 0, captureWidth, captureHeight);
+            captureCanvas.toBlob(async blob => {
+                if (!blob) {
+                    cameraInFlight = false;
+                    return;
+                }
+                await detectBlob(blob, false, {
+                    background: true,
+                    frameWidth: captureWidth,
+                    frameHeight: captureHeight
+                });
+            }, 'image/jpeg', 0.78);
+        }
+
+        function drawDetectionOverlay(ctx, canvas) {
+            if (!latestDetections.length || !detectionFrameSize.width || !detectionFrameSize.height) return;
+            const sx = canvas.width / detectionFrameSize.width;
+            const sy = canvas.height / detectionFrameSize.height;
+            ctx.save();
+            ctx.lineWidth = 3;
+            ctx.font = '18px Microsoft YaHei, Arial';
+            for (const det of latestDetections) {
+                const [x1, y1, x2, y2] = det.bbox;
+                const left = x1 * sx;
+                const top = y1 * sy;
+                const width = (x2 - x1) * sx;
+                const height = (y2 - y1) * sy;
+                const text = `${det.class} | ${det.class_cn} ${det.confidence}%`;
+                ctx.strokeStyle = '#22c55e';
+                ctx.fillStyle = '#22c55e';
+                ctx.strokeRect(left, top, width, height);
+                const textWidth = Math.min(ctx.measureText(text).width + 14, canvas.width - left - 4);
+                const labelTop = Math.max(0, top - 28);
+                ctx.fillRect(left, labelTop, textWidth, 26);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(text, left + 7, labelTop + 19);
+            }
+            ctx.restore();
+        }
+
+        async function detectBlob(blob, updateImage, options = {}) {
             const form = new FormData();
             form.append('image', blob, 'frame.jpg');
             form.append('conf', confSlider.value);
             form.append('iou', iouSlider.value);
-            setBusy(true);
+            if (!options.background) setBusy(true);
             try {
                 const res = await fetch('/detect_image', { method: 'POST', body: form });
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || '检测失败');
                 currentResult = data;
-                if (updateImage) {
+                if (options.background) {
+                    latestDetections = data.detections || [];
+                    detectionFrameSize = {
+                        width: options.frameWidth || webcamVideo.videoWidth || 640,
+                        height: options.frameHeight || webcamVideo.videoHeight || 480
+                    };
+                } else if (updateImage) {
                     placeholder.style.display = 'none';
                     resultImage.style.display = 'block';
                     resultImage.src = data.result_image;
-                } else {
-                    const img = new Image();
-                    img.onload = () => {
-                        latestAnnotated = img;
-                        latestAnnotatedAt = Date.now();
-                    };
-                    img.src = data.result_image;
                 }
                 displayResults(data);
                 document.getElementById('saveBtn').disabled = false;
-                writeLog(`检测完成：${data.count} 个目标，耗时 ${data.time}s`);
+                if (options.background) {
+                    writeLog(`后台分段识别：${data.count} 个目标，耗时 ${data.time}s`);
+                } else {
+                    writeLog(`检测完成：${data.count} 个目标，耗时 ${data.time}s`);
+                }
             } catch (err) {
                 writeLog(err.message, true);
             } finally {
-                setBusy(false);
+                if (options.background) cameraInFlight = false;
+                if (!options.background) setBusy(false);
             }
         }
 
@@ -572,7 +625,8 @@
             webcamCanvas.style.display = 'none';
             placeholder.style.display = 'block';
             currentResult = null;
-            latestAnnotated = null;
+            latestDetections = [];
+            detectionFrameSize = { width: 0, height: 0 };
             phraseHistory.length = 0;
             document.getElementById('sentenceText').textContent = '等待连续识别...';
             document.getElementById('countValue').textContent = '0';
@@ -598,4 +652,3 @@
     </script>
 </body>
 </html>
-
