@@ -3,1357 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>手语检测系统</title>
+    <title>多类别手语识别与无障碍交流辅助系统</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
-
         :root {
-            --bg-dark: #0d1117;
-            --bg-card: #161b22;
-            --bg-input: #21262d;
-            --border: #30363d;
-            --accent: #58a6ff;
-            --accent-dim: #1f3a5f;
-            --text: #c9d1d9;
-            --text-muted: #8b949e;
-            --success: #3fb950;
-            --warning: #d29922;
-            --danger: #f85149;
-            --purple: #a371f7;
-            --radius: 10px;
-            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+            --bg: #f6f8fb;
+            --panel: #ffffff;
+            --line: #d9e0ea;
+            --text: #172033;
+            --muted: #687385;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --shadow: 0 14px 40px rgba(22, 32, 51, 0.10);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { box-sizing: border-box; }
 
         body {
-            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text);
+            margin: 0;
             min-height: 100vh;
-            background-image:
-                radial-gradient(ellipse at 20% 50%, rgba(88, 166, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(163, 113, 247, 0.03) 0%, transparent 50%);
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
         }
 
-        /* ─── HEADER ─── */
-        .header {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 0 40px;
+        header {
             height: 64px;
+            padding: 0 28px;
+            background: #111827;
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent), var(--purple));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .logo-text {
+        .brand {
             font-size: 18px;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--accent), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
+        .device {
+            font-size: 13px;
+            color: #d1d5db;
+        }
+
+        main {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 380px;
             gap: 20px;
         }
 
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            box-shadow: 0 0 6px var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* ─── MAIN LAYOUT ─── */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 32px 40px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 360px;
-            gap: 24px;
-            align-items: start;
-        }
-
-        /* ─── CARDS ─── */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 10px;
             box-shadow: var(--shadow);
+            overflow: hidden;
         }
 
-        .card-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
+        .panel-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--line);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255,255,255,0.01);
+            gap: 12px;
         }
 
-        .card-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
+        .panel-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .panel-body { padding: 18px; }
+
+        .tabs {
             display: flex;
-            align-items: center;
             gap: 8px;
         }
 
-        .card-title .icon {
-            font-size: 16px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        /* ─── MODE TABS ─── */
-        .mode-tabs {
-            display: flex;
-            background: var(--bg-input);
-            border-radius: 8px;
-            padding: 4px;
-            gap: 4px;
-            margin-bottom: 20px;
-        }
-
-        .mode-tab {
-            flex: 1;
-            padding: 10px 8px;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 500;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-        }
-
-        .mode-tab:hover {
+        .tab, button {
+            border: 1px solid var(--line);
+            background: #fff;
             color: var(--text);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .mode-tab.active {
-            background: var(--accent-dim);
-            color: var(--accent);
-            box-shadow: 0 0 0 1px rgba(88, 166, 255, 0.2);
-        }
-
-        /* ─── UPLOAD AREA ─── */
-        .upload-area {
-            border: 2px dashed var(--border);
-            border-radius: var(--radius);
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            margin-bottom: 16px;
-        }
-
-        .upload-area:hover, .upload-area.drag-over {
-            border-color: var(--accent);
-            background: rgba(88, 166, 255, 0.05);
-        }
-
-        .upload-area input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .upload-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-
-        .upload-text {
+            border-radius: 8px;
+            padding: 9px 14px;
             font-size: 14px;
-            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.15s ease;
         }
 
-        .upload-text strong {
-            color: var(--accent);
+        .tab.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
         }
 
-        /* ─── IMAGE PREVIEW ─── */
-        .image-preview {
-            display: none;
-            margin-bottom: 16px;
-            border-radius: var(--radius);
+        button.primary {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        button.primary:hover { background: var(--primary-dark); }
+        button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+        .viewer {
+            min-height: 540px;
+            background: #0b1020;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             position: relative;
-            background: #000;
         }
 
-        .image-preview.show { display: block; }
-
-        .image-preview img {
-            width: 100%;
+        .viewer img, .viewer canvas {
+            max-width: 100%;
+            max-height: 680px;
             display: block;
         }
 
-        .preview-overlay {
+        .placeholder {
+            color: #aeb7c6;
+            text-align: center;
+            line-height: 1.8;
+            padding: 40px;
+        }
+
+        .hidden-video {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            display: flex;
-            gap: 6px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
 
-        .preview-btn {
-            background: rgba(0,0,0,0.7);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            transition: all 0.2s;
+        .controls {
+            display: grid;
+            gap: 16px;
         }
 
-        .preview-btn:hover {
-            background: rgba(0,0,0,0.9);
-            border-color: rgba(255,255,255,0.3);
-        }
-
-        /* ─── BUTTONS ─── */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        .control-group {
+            display: grid;
             gap: 8px;
-            padding: 10px 20px;
+        }
+
+        label {
+            font-size: 13px;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type="file"], input[type="text"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
             border-radius: 8px;
             font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: all 0.2s;
-            font-family: inherit;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: #fff;
-            border-color: rgba(255,255,255,0.1);
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-        }
+        input[type="range"] { width: 100%; }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #1d4ed8, #1e40af);
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
-            transform: translateY(-1px);
-        }
-
-        .btn-primary:active { transform: translateY(0); }
-
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-secondary {
-            background: var(--bg-input);
-            color: var(--text);
-            border-color: var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--border);
-            border-color: var(--text-muted);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #16a34a, #15803d);
-            color: #fff;
-            border-color: rgba(255,255,255,0.1);
-            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #15803d, #166534);
-            box-shadow: 0 4px 16px rgba(22, 163, 74, 0.4);
-            transform: translateY(-1px);
-        }
-
-        .btn-block { width: 100%; }
-
-        .btn-group {
-            display: flex;
+        .button-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-top: 16px;
         }
 
-        /* ─── SPINNER ─── */
-        .spinner {
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            display: none;
-        }
-
-        .btn.loading .spinner { display: inline-block; }
-        .btn.loading .btn-text { display: none; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ─── PARAMS ─── */
-        .param-group {
-            margin-bottom: 16px;
-        }
-
-        .param-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .param-label span { color: var(--accent); font-weight: 600; }
-
-        input[type="range"] {
-            width: 100%;
-            height: 4px;
-            border-radius: 2px;
-            background: var(--bg-input);
-            outline: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 6px rgba(88, 166, 255, 0.5);
-            cursor: pointer;
-        }
-
-        /* Toggle */
-        .toggle-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .toggle-label { font-size: 13px; }
-
-        .toggle {
-            position: relative;
-            width: 44px;
-            height: 24px;
-        }
-
-        .toggle input { opacity: 0; width: 0; height: 0; }
-
-        .toggle-slider {
-            position: absolute;
-            inset: 0;
-            background: var(--bg-input);
-            border-radius: 24px;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 1px solid var(--border);
-        }
-
-        .toggle-slider::before {
-            content: '';
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            left: 2px;
-            bottom: 2px;
-            background: var(--text-muted);
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-
-        .toggle input:checked + .toggle-slider {
-            background: var(--accent-dim);
-            border-color: var(--accent);
-        }
-
-        .toggle input:checked + .toggle-slider::before {
-            transform: translateX(20px);
-            background: var(--accent);
-            box-shadow: 0 0 6px var(--accent);
-        }
-
-        /* Folder input */
-        .folder-input {
-            display: none;
-            margin-bottom: 16px;
-        }
-
-        .folder-input.show { display: block; }
-
-        .input-field {
-            width: 100%;
-            padding: 10px 14px;
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 13px;
-            font-family: inherit;
-            transition: border-color 0.2s;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
-        }
-
-        .input-field::placeholder { color: var(--text-muted); }
-
-        /* ─── RESULT PANEL ─── */
-        .result-stats {
+        .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 16px;
         }
 
-        .stat-item {
-            background: var(--bg-input);
+        .stat {
+            border: 1px solid var(--line);
             border-radius: 8px;
             padding: 12px;
             text-align: center;
-            border: 1px solid var(--border);
+            background: #f9fbff;
         }
 
         .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
         }
-
-        .stat-value.success { color: var(--success); }
-        .stat-value.warning { color: var(--warning); }
 
         .stat-label {
-            font-size: 11px;
-            color: var(--text-muted);
             margin-top: 4px;
-        }
-
-        /* ─── DETECTION TABLE ─── */
-        .table-wrapper {
-            max-height: 320px;
-            overflow-y: auto;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .table-wrapper::-webkit-scrollbar { width: 6px; }
-        .table-wrapper::-webkit-scrollbar-track { background: transparent; }
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
+            font-size: 12px;
+            color: var(--muted);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
+            font-size: 13px;
         }
 
-        thead {
-            position: sticky;
-            top: 0;
-            background: var(--bg-input);
-            z-index: 1;
+        th, td {
+            border-bottom: 1px solid var(--line);
+            padding: 10px 8px;
+            text-align: left;
+            vertical-align: top;
         }
 
         th {
-            padding: 10px 12px;
-            text-align: left;
+            color: var(--muted);
             font-weight: 600;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
+            background: #f9fbff;
         }
 
-        td {
-            padding: 8px 12px;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
-            color: var(--text);
-        }
-
-        tr:last-child td { border-bottom: none; }
-
-        tr:hover td { background: rgba(255,255,255,0.02); }
-
-        .cls-tag {
+        .tag {
             display: inline-block;
             padding: 2px 8px;
-            background: var(--accent-dim);
-            color: var(--accent);
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 500;
+            border-radius: 999px;
+            background: #e8f0ff;
+            color: var(--primary);
+            font-weight: 700;
         }
 
-        .conf-bar {
-            height: 4px;
-            background: var(--bg-input);
-            border-radius: 2px;
-            overflow: hidden;
-            width: 80px;
-        }
-
-        .conf-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--purple));
-            border-radius: 2px;
-            transition: width 0.3s;
-        }
-
-        /* ─── BATCH RESULTS ─── */
-        .batch-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
-            max-height: 500px;
-            overflow-y: auto;
-            padding: 4px;
-        }
-
-        .batch-item {
-            background: var(--bg-input);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .batch-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        .batch-item img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .batch-info {
-            padding: 8px 10px;
-        }
-
-        .batch-name {
-            font-size: 11px;
-            color: var(--text);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 4px;
-        }
-
-        .batch-count {
-            font-size: 11px;
-            color: var(--success);
-            font-weight: 600;
-        }
-
-        /* ─── LOG ─── */
-        .log-area {
-            background: #0a0e14;
-            border-radius: 8px;
-            padding: 12px;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 12px;
-            max-height: 120px;
-            overflow-y: auto;
+        .sentence {
             margin-top: 16px;
-            border: 1px solid var(--border);
-        }
-
-        .log-line {
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .log-line.success { color: var(--success); }
-        .log-line.error { color: var(--danger); }
-        .log-line.info { color: var(--accent); }
-
-        /* ─── SECTION LABELS ─── */
-        .section-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        /* ─── WEBCAM ─── */
-        .webcam-section { text-align: center; }
-
-        #webcamVideo {
-            width: 100%;
-            border-radius: var(--radius);
-            display: none;
-            background: #000;
-            max-height: 400px;
-        }
-
-        #webcamCanvas {
-            width: 100%;
-            border-radius: var(--radius);
-            display: none;
-            background: #000;
-        }
-
-        .webcam-placeholder {
-            background: var(--bg-input);
-            border-radius: var(--radius);
-            padding: 40px 20px;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .webcam-placeholder .icon { font-size: 40px; margin-bottom: 8px; display: block; }
-
-        /* ─── TOAST ─── */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 20px;
-            font-size: 13px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast.success { border-left: 3px solid var(--success); }
-        .toast.error { border-left: 3px solid var(--danger); }
-        .toast.info { border-left: 3px solid var(--accent); }
-
-        /* ─── PROGRESS BAR ─── */
-        .progress-container {
-            margin: 12px 0;
-            display: none;
-        }
-
-        .progress-container.show { display: block; }
-
-        .progress-bar {
-            height: 6px;
-            background: var(--bg-input);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--purple));
-            border-radius: 3px;
-            transition: width 0.2s;
-            width: 0%;
-        }
-
-        .progress-text {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 6px;
-            text-align: center;
-        }
-
-        /* ─── FULLSCREEN MODAL ─── */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            cursor: zoom-out;
-        }
-
-        .modal.show { display: flex; }
-
-        .modal img {
-            max-width: 95%;
-            max-height: 95%;
+            padding: 12px 14px;
+            border: 1px solid var(--line);
             border-radius: 8px;
+            background: #f9fbff;
+            min-height: 52px;
+            line-height: 1.7;
         }
 
-        /* ─── DIVIDER ─── */
-        .divider {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 16px 0;
+        .log {
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.7;
+            min-height: 24px;
         }
 
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 900px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            .container { padding: 16px; }
+        .ok { color: var(--success); }
+        .err { color: var(--danger); }
+
+        @media (max-width: 980px) {
+            main { grid-template-columns: 1fr; }
+            .viewer { min-height: 360px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- HEADER -->
-    <header class="header">
-        <div class="header-left">
-            <div class="logo-icon">&#128072;</div>
-            <span class="logo-text">手语检测系统</span>
-        </div>
-        <div class="header-right">
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                <span id="deviceInfo">检测中...</span>
-            </div>
-        </div>
+    <header>
+        <div class="brand">多类别手语识别与无障碍交流辅助系统</div>
+        <div class="device" id="deviceInfo">模型加载中...</div>
     </header>
 
-    <!-- MAIN -->
-    <div class="container">
-        <div class="grid">
-
-            <!-- LEFT PANEL: Image/Video/Cam display -->
-            <div class="left-panel">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title"><span class="icon">&#128247;</span> 视觉区域</div>
-                    </div>
-                    <div class="card-body">
-                        <!-- Mode Tabs -->
-                        <div class="mode-tabs">
-                            <button class="mode-tab active" data-mode="image" onclick="setMode('image')">&#128444; 图片</button>
-                            <button class="mode-tab" data-mode="video" onclick="setMode('video')">&#127909; 视频</button>
-                            <button class="mode-tab" data-mode="folder" onclick="setMode('folder')">&#128193; 批量</button>
-                            <button class="mode-tab" data-mode="camera" onclick="setMode('camera')">&#128250; 摄像头</button>
-                        </div>
-
-                        <!-- Image Upload Area -->
-                        <div class="upload-area" id="uploadArea">
-                            <input type="file" id="fileInput" accept="image/*,.mp4,.avi,.mkv,.wmv" />
-                            <div class="upload-icon">&#128444;</div>
-                            <div class="upload-text">
-                                点击或拖拽上传 <strong>图片/视频</strong><br>
-                                <small style="color:var(--text-muted)">支持 JPG, PNG, MP4, AVI</small>
-                            </div>
-                        </div>
-
-                        <!-- Image Preview -->
-                        <div class="image-preview" id="imagePreview">
-                            <img id="previewImg" src="" alt="Preview" />
-                            <div class="preview-overlay">
-                                <button class="preview-btn" onclick="openFullscreen()" title="全屏">&#9974;</button>
-                                <button class="preview-btn" onclick="clearPreview()" title="清除">&#10006;</button>
-                            </div>
-                        </div>
-
-                        <!-- Webcam -->
-                        <div id="webcamContainer">
-                            <div class="webcam-placeholder" id="webcamPlaceholder">
-                                <span class="icon">&#128250;</span>
-                                点击上方"摄像头"模式开始实时检测
-                            </div>
-                            <video id="webcamVideo" autoplay playsinline muted></video>
-                            <canvas id="webcamCanvas"></canvas>
-                        </div>
-
-                        <!-- Batch results grid -->
-                        <div class="batch-grid" id="batchGrid" style="display:none;"></div>
-
-                        <!-- Progress -->
-                        <div class="progress-container" id="progressContainer">
-                            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                            <div class="progress-text" id="progressText">处理中...</div>
-                        </div>
-
-                        <!-- Log -->
-                        <div class="log-area" id="logArea" style="display:none;"></div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div style="padding: 0 20px 20px;">
-                        <button class="btn btn-primary btn-block" id="detectBtn" onclick="runDetection()" disabled>
-                            <span class="btn-text">&#128270; 开始检测</span>
-                            <div class="spinner"></div>
-                        </button>
-                        <div class="btn-group">
-                            <button class="btn btn-success btn-block" id="saveBtn" onclick="saveResult()" disabled>
-                                &#128190; 保存结果
-                            </button>
-                        </div>
-                    </div>
+    <main>
+        <section class="panel">
+            <div class="panel-header">
+                <div class="panel-title">检测画面</div>
+                <div class="tabs">
+                    <button class="tab active" id="imageTab" onclick="setMode('image')">图片检测</button>
+                    <button class="tab" id="cameraTab" onclick="setMode('camera')">摄像头检测</button>
                 </div>
             </div>
-
-            <!-- RIGHT PANEL: Parameters & Results -->
-            <div class="right-panel">
-                <!-- Parameters -->
-                <div class="card" style="margin-bottom: 24px;">
-                    <div class="card-header">
-                        <div class="card-title"><span class="icon">&#9881;</span> 检测参数</div>
+            <div class="panel-body">
+                <div class="viewer">
+                    <div class="placeholder" id="placeholder">
+                        请选择图片或打开摄像头开始演示<br>
+                        识别结果会显示英文标签、中文含义、置信度和检测框
                     </div>
-                    <div class="card-body">
-                        <div class="param-group">
-                            <div class="param-label">
-                                置信度阈值 (Confidence)
-                                <span id="confVal">0.25</span>
-                            </div>
-                            <input type="range" id="confSlider" min="0" max="1" step="0.05" value="0.25"
-                                   oninput="document.getElementById('confVal').textContent = this.value">
-                        </div>
-                        <div class="param-group">
-                            <div class="param-label">
-                                IOU 阈值 (NMS)
-                                <span id="iouVal">0.45</span>
-                            </div>
-                            <input type="range" id="iouSlider" min="0" max="1" step="0.05" value="0.45"
-                                   oninput="document.getElementById('iouVal').textContent = this.value">
-                        </div>
-                        <hr class="divider">
-                        <div class="toggle-row">
-                            <span class="toggle-label">显示标签文字</span>
-                            <label class="toggle">
-                                <input type="checkbox" id="showLabels" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
+                    <img id="resultImage" alt="检测结果" style="display:none;">
+                    <video id="webcamVideo" class="hidden-video" autoplay playsinline muted></video>
+                    <canvas id="webcamCanvas" style="display:none;"></canvas>
+                </div>
+                <div class="log" id="logText">等待操作。</div>
+            </div>
+        </section>
+
+        <aside class="panel">
+            <div class="panel-header">
+                <div class="panel-title">控制与结果</div>
+            </div>
+            <div class="panel-body">
+                <div class="controls">
+                    <div class="control-group" id="imageControl">
+                        <label>上传图片 <span>jpg / png / bmp</span></label>
+                        <input type="file" id="imageInput" accept="image/*">
+                    </div>
+
+                    <div class="control-group">
+                        <label>置信度阈值 <span id="confValue">0.50</span></label>
+                        <input type="range" id="confSlider" min="0.05" max="0.95" step="0.05" value="0.50">
+                    </div>
+
+                    <div class="control-group">
+                        <label>IoU 阈值 <span id="iouValue">0.45</span></label>
+                        <input type="range" id="iouSlider" min="0.10" max="0.90" step="0.05" value="0.45">
+                    </div>
+
+                    <div class="button-row">
+                        <button class="primary" id="detectBtn" onclick="runImageDetection()">开始检测</button>
+                        <button id="cameraBtn" onclick="toggleCamera()" style="display:none;">打开摄像头</button>
+                    </div>
+                    <button onclick="saveResult()" id="saveBtn" disabled>保存当前结果</button>
+                </div>
+
+                <div class="stats" style="margin-top:18px;">
+                    <div class="stat">
+                        <div class="stat-value" id="countValue">0</div>
+                        <div class="stat-label">目标数</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="timeValue">--</div>
+                        <div class="stat-label">耗时(s)</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="modeValue">图片</div>
+                        <div class="stat-label">模式</div>
                     </div>
                 </div>
 
-                <!-- Results -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title"><span class="icon">&#128202;</span> 检测结果</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="result-stats">
-                            <div class="stat-item">
-                                <div class="stat-value" id="countValue">0</div>
-                                <div class="stat-label">检测数目</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value success" id="timeValue">--</div>
-                                <div class="stat-label">耗时 (s)</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value warning" id="modeValue">--</div>
-                                <div class="stat-label">当前模式</div>
-                            </div>
-                        </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>英文</th>
+                            <th>中文</th>
+                            <th>置信度</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTable">
+                        <tr><td colspan="4" style="text-align:center;color:var(--muted);">暂无检测结果</td></tr>
+                    </tbody>
+                </table>
 
-                        <!-- Detection table -->
-                        <div class="section-label">检测详情</div>
-                        <div class="table-wrapper" id="tableWrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>类别</th>
-                                        <th>中文</th>
-                                        <th>置信度</th>
-                                        <th>位置 [x1,y1,x2,y2]</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="resultTable">
-                                    <tr>
-                                        <td colspan="5" style="text-align:center; color:var(--text-muted); padding:20px;">
-                                            暂无检测结果
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="sentence">
+                    <strong>简单短语：</strong>
+                    <span id="sentenceText">等待连续识别...</span>
                 </div>
             </div>
-
-        </div>
-    </div>
-
-    <!-- TOAST -->
-    <div class="toast" id="toast"></div>
-
-    <!-- FULLSCREEN MODAL -->
-    <div class="modal" id="fullscreenModal" onclick="closeFullscreen()">
-        <img id="fullscreenImg" src="" alt="Fullscreen" />
-    </div>
+        </aside>
+    </main>
 
     <script>
-        // ─── STATE ───
-        let currentMode = 'image';
-        let uploadedFile = null;
+        let mode = 'image';
+        let selectedFile = null;
         let currentResult = null;
-        let batchResults = [];
-        let webcamStream = null;
-        let webcamRunning = false;
-        let webcamAnimationId = null;
+        let stream = null;
+        let cameraRunning = false;
+        let cameraTimer = null;
+        let latestAnnotated = null;
+        let latestAnnotatedAt = 0;
+        const phraseHistory = [];
 
-        // ─── INIT ───
-        window.addEventListener('DOMContentLoaded', () => {
-            checkDevice();
-            setupUploadArea();
+        const imageInput = document.getElementById('imageInput');
+        const confSlider = document.getElementById('confSlider');
+        const iouSlider = document.getElementById('iouSlider');
+        const resultImage = document.getElementById('resultImage');
+        const placeholder = document.getElementById('placeholder');
+        const webcamVideo = document.getElementById('webcamVideo');
+        const webcamCanvas = document.getElementById('webcamCanvas');
+        const logText = document.getElementById('logText');
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            imageInput.addEventListener('change', onImageSelected);
+            confSlider.addEventListener('input', () => document.getElementById('confValue').textContent = Number(confSlider.value).toFixed(2));
+            iouSlider.addEventListener('input', () => document.getElementById('iouValue').textContent = Number(iouSlider.value).toFixed(2));
+            try {
+                const res = await fetch('/model_info');
+                const data = await res.json();
+                document.getElementById('deviceInfo').textContent = `YOLOv11 | ${data.device === '0' ? 'GPU' : 'CPU'} | 35类`;
+            } catch {
+                document.getElementById('deviceInfo').textContent = '模型状态未知';
+            }
         });
 
-        function checkDevice() {
-            fetch('/detect_image', {
-                method: 'POST',
-                body: new FormData()
-            }).catch(() => {})
-             .finally(() => {
-                 document.getElementById('deviceInfo').textContent = navigator.userAgent.includes('Linux') ? 'WSL2 + CPU' : 'Windows';
-             });
+        function setMode(nextMode) {
+            if (mode === nextMode) return;
+            mode = nextMode;
+            stopCamera();
+            document.getElementById('imageTab').classList.toggle('active', mode === 'image');
+            document.getElementById('cameraTab').classList.toggle('active', mode === 'camera');
+            document.getElementById('imageControl').style.display = mode === 'image' ? 'grid' : 'none';
+            document.getElementById('detectBtn').style.display = mode === 'image' ? 'block' : 'none';
+            document.getElementById('cameraBtn').style.display = mode === 'camera' ? 'block' : 'none';
+            document.getElementById('modeValue').textContent = mode === 'image' ? '图片' : '摄像头';
+            resetDisplay();
         }
 
-        // ─── MODE SWITCH ───
-        function setMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+        function onImageSelected(event) {
+            selectedFile = event.target.files[0] || null;
+            if (!selectedFile) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                placeholder.style.display = 'none';
+                webcamCanvas.style.display = 'none';
+                resultImage.style.display = 'block';
+                resultImage.src = e.target.result;
+            };
+            reader.readAsDataURL(selectedFile);
+            writeLog(`已选择图片：${selectedFile.name}`);
+        }
 
-            document.getElementById('uploadArea').style.display = (mode === 'image' || mode === 'video') ? 'block' : 'none';
-            document.getElementById('imagePreview').classList.remove('show');
-            document.getElementById('batchGrid').style.display = 'none';
-            document.getElementById('webcamPlaceholder').style.display = 'none';
-            document.getElementById('webcamVideo').style.display = 'none';
-            document.getElementById('webcamCanvas').style.display = 'none';
-            document.getElementById('progressContainer').classList.remove('show');
-            document.getElementById('logArea').style.display = 'none';
-
-            if (mode === 'camera') {
-                document.getElementById('webcamPlaceholder').style.display = 'block';
+        async function runImageDetection() {
+            if (!selectedFile) {
+                writeLog('请先选择一张图片。', true);
+                return;
             }
-
-            if (mode === 'folder') {
-                document.getElementById('logArea').style.display = 'block';
-                log('info', '批量模式：请输入文件夹路径后点击检测');
-            }
-
-            document.getElementById('modeValue').textContent =
-                {'image':'图片', 'video':'视频', 'folder':'批量', 'camera':'摄像头'}[mode];
-            document.getElementById('detectBtn').disabled = false;
-
-            stopWebcam();
-            resetResults();
+            await detectBlob(selectedFile, true);
         }
 
-        // ─── UPLOAD ───
-        function setupUploadArea() {
-            const area = document.getElementById('uploadArea');
-            const input = document.getElementById('fileInput');
-
-            area.addEventListener('dragover', e => {
-                e.preventDefault();
-                area.classList.add('drag-over');
-            });
-            area.addEventListener('dragleave', () => area.classList.remove('drag-over'));
-            area.addEventListener('drop', e => {
-                e.preventDefault();
-                area.classList.remove('drag-over');
-                if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-            });
-            input.addEventListener('change', e => {
-                if (e.target.files.length) handleFile(e.target.files[0]);
-            });
-        }
-
-        function handleFile(file) {
-            uploadedFile = file;
-            const isImage = file.type.startsWith('image/');
-            const preview = document.getElementById('imagePreview');
-            const img = document.getElementById('previewImg');
-
-            if (isImage) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    img.src = e.target.result;
-                    preview.classList.add('show');
-                    document.getElementById('uploadArea').style.display = 'none';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.classList.remove('show');
-                document.getElementById('uploadArea').style.display = 'block';
-                log('info', `已选择视频: ${file.name}`);
-            }
-
-            log('success', `文件已加载: ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)`);
-        }
-
-        function clearPreview() {
-            document.getElementById('imagePreview').classList.remove('show');
-            document.getElementById('uploadArea').style.display = 'block';
-            document.getElementById('fileInput').value = '';
-            uploadedFile = null;
-            resetResults();
-        }
-
-        // ─── DETECTION ───
-        async function runDetection() {
-            const conf = parseFloat(document.getElementById('confSlider').value);
-            const iou = parseFloat(document.getElementById('iouSlider').value);
-            const btn = document.getElementById('detectBtn');
-
-            if (currentMode === 'image' || currentMode === 'video') {
-                if (!uploadedFile) { toast('请先上传图片或视频', 'error'); return; }
-                btn.classList.add('loading');
-                btn.disabled = true;
-
-                const formData = new FormData();
-                formData.append('image', uploadedFile);
-                formData.append('conf', conf);
-                formData.append('iou', iou);
-
-                try {
-                    const resp = await fetch('/detect_image', { method: 'POST', body: formData });
-                    const data = await resp.json();
-                    if (data.success) {
-                        currentResult = data;
-                        document.getElementById('previewImg').src = data.result_image;
-                        document.getElementById('imagePreview').classList.add('show');
-                        document.getElementById('uploadArea').style.display = 'none';
-                        displayResults(data);
-                        document.getElementById('saveBtn').disabled = false;
-                        log('success', `检测完成！发现 ${data.count} 个目标，耗时 ${data.time}s`);
-                    } else {
-                        toast('检测失败: ' + data.error, 'error');
-                        log('error', data.error);
-                    }
-                } catch (e) {
-                    toast('网络错误', 'error');
-                    log('error', e.message);
-                } finally {
-                    btn.classList.remove('loading');
-                    btn.disabled = false;
-                }
-
-            } else if (currentMode === 'folder') {
-                const folderPath = prompt('请输入要检测的图片文件夹路径：\n（例如：/home/user/images）');
-                if (!folderPath) return;
-                btn.classList.add('loading');
-                btn.disabled = true;
-                document.getElementById('progressContainer').classList.add('show');
-
-                const formData = new FormData();
-                formData.append('folder_path', folderPath);
-                formData.append('conf', conf);
-                formData.append('iou', iou);
-
-                try {
-                    const resp = await fetch('/detect_batch', { method: 'POST', body: formData });
-                    const data = await resp.json();
-                    if (data.success) {
-                        batchResults = data.results;
-                        displayBatchResults(data);
-                        document.getElementById('countValue').textContent = data.total_detections;
-                        log('success', `批量检测完成！共 ${data.total_images} 张图片，${data.total_detections} 个目标`);
-                    } else {
-                        toast('批量检测失败: ' + data.error, 'error');
-                        log('error', data.error);
-                    }
-                } catch (e) {
-                    toast('网络错误', 'error');
-                    log('error', e.message);
-                } finally {
-                    btn.classList.remove('loading');
-                    btn.disabled = false;
-                    document.getElementById('progressContainer').classList.remove('show');
-                }
-
-            } else if (currentMode === 'camera') {
-                toggleWebcam();
-            }
-        }
-
-        // ─── WEBCAM ───
-        async function toggleWebcam() {
-            if (webcamRunning) {
-                stopWebcam();
+        async function toggleCamera() {
+            if (cameraRunning) {
+                stopCamera();
                 return;
             }
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-                webcamStream = stream;
-                const video = document.getElementById('webcamVideo');
-                video.srcObject = stream;
-                video.style.display = 'block';
-                document.getElementById('webcamPlaceholder').style.display = 'none';
-                webcamRunning = true;
-                document.querySelector('[data-mode="camera"]').textContent = '&#10006; 停止';
-                document.getElementById('modeValue').textContent = '检测中';
-                toast('摄像头已启动，实时检测中...', 'info');
-                runWebcamLoop();
-            } catch (e) {
-                toast('无法访问摄像头: ' + e.message, 'error');
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: { ideal: 960 }, height: { ideal: 720 }, facingMode: 'user' },
+                    audio: false
+                });
+                webcamVideo.srcObject = stream;
+                await webcamVideo.play();
+                cameraRunning = true;
+                document.getElementById('cameraBtn').textContent = '停止摄像头';
+                placeholder.style.display = 'none';
+                resultImage.style.display = 'none';
+                webcamCanvas.style.display = 'block';
+                startCameraLoop();
+                writeLog('摄像头已开启，正在实时检测。');
+            } catch (err) {
+                writeLog(`无法打开摄像头：${err.message}`, true);
             }
         }
 
-        function stopWebcam() {
-            if (webcamStream) {
-                webcamStream.getTracks().forEach(t => t.stop());
-                webcamStream = null;
+        function stopCamera() {
+            cameraRunning = false;
+            if (cameraTimer) clearTimeout(cameraTimer);
+            cameraTimer = null;
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
             }
-            if (webcamAnimationId) {
-                cancelAnimationFrame(webcamAnimationId);
-                webcamAnimationId = null;
-            }
-            webcamRunning = false;
-            const video = document.getElementById('webcamVideo');
-            video.style.display = 'none';
-            video.srcObject = null;
-            document.getElementById('webcamPlaceholder').style.display = 'block';
-            document.querySelector('[data-mode="camera"]').innerHTML = '&#128250; 摄像头';
+            webcamVideo.srcObject = null;
+            document.getElementById('cameraBtn').textContent = '打开摄像头';
         }
 
-        let lastWebcamDetect = 0;
-        async function runWebcamLoop() {
-            if (!webcamRunning) return;
-
-            const video = document.getElementById('webcamVideo');
-            const canvas = document.getElementById('webcamCanvas');
+        function startCameraLoop() {
+            const canvas = webcamCanvas;
             const ctx = canvas.getContext('2d');
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            const now = Date.now();
-            if (now - lastWebcamDetect > 500) {
-                lastWebcamDetect = now;
-                canvas.toBlob(async blob => {
-                    if (!blob) return;
-                    const conf = parseFloat(document.getElementById('confSlider').value);
-                    const iou = parseFloat(document.getElementById('iouSlider').value);
-                    const formData = new FormData();
-                    formData.append('image', blob, 'webcam.jpg');
-                    formData.append('conf', conf);
-                    formData.append('iou', iou);
-                    try {
-                        const resp = await fetch('/detect_image', { method: 'POST', body: formData });
-                        const data = await resp.json();
-                        if (data.success) {
-                            const img = new Image();
-                            img.onload = () => {
-                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                                displayResults(data, true);
-                            };
-                            img.src = data.result_image;
-                        }
-                    } catch (e) {}
-                }, 'image/jpeg', 0.8);
-            }
-
-            webcamAnimationId = requestAnimationFrame(runWebcamLoop);
+            const draw = () => {
+                if (!cameraRunning) return;
+                canvas.width = webcamVideo.videoWidth || 640;
+                canvas.height = webcamVideo.videoHeight || 480;
+                if (latestAnnotated && Date.now() - latestAnnotatedAt < 650) {
+                    ctx.drawImage(latestAnnotated, 0, 0, canvas.width, canvas.height);
+                } else {
+                    ctx.drawImage(webcamVideo, 0, 0, canvas.width, canvas.height);
+                }
+                requestAnimationFrame(draw);
+            };
+            draw();
+            scheduleCameraDetection();
         }
 
-        // ─── DISPLAY RESULTS ───
-        function displayResults(data, isWebcam = false) {
-            document.getElementById('countValue').textContent = data.count;
-            document.getElementById('timeValue').textContent = data.time;
+        function scheduleCameraDetection() {
+            if (!cameraRunning) return;
+            cameraTimer = setTimeout(async () => {
+                const captureCanvas = document.createElement('canvas');
+                captureCanvas.width = webcamVideo.videoWidth || 640;
+                captureCanvas.height = webcamVideo.videoHeight || 480;
+                captureCanvas.getContext('2d').drawImage(webcamVideo, 0, 0, captureCanvas.width, captureCanvas.height);
+                captureCanvas.toBlob(async blob => {
+                    if (blob) await detectBlob(blob, false);
+                    scheduleCameraDetection();
+                }, 'image/jpeg', 0.85);
+            }, 650);
+        }
 
+        async function detectBlob(blob, updateImage) {
+            const form = new FormData();
+            form.append('image', blob, 'frame.jpg');
+            form.append('conf', confSlider.value);
+            form.append('iou', iouSlider.value);
+            setBusy(true);
+            try {
+                const res = await fetch('/detect_image', { method: 'POST', body: form });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || '检测失败');
+                currentResult = data;
+                if (updateImage) {
+                    placeholder.style.display = 'none';
+                    resultImage.style.display = 'block';
+                    resultImage.src = data.result_image;
+                } else {
+                    const img = new Image();
+                    img.onload = () => {
+                        latestAnnotated = img;
+                        latestAnnotatedAt = Date.now();
+                    };
+                    img.src = data.result_image;
+                }
+                displayResults(data);
+                document.getElementById('saveBtn').disabled = false;
+                writeLog(`检测完成：${data.count} 个目标，耗时 ${data.time}s`);
+            } catch (err) {
+                writeLog(err.message, true);
+            } finally {
+                setBusy(false);
+            }
+        }
+
+        function displayResults(data) {
+            document.getElementById('countValue').textContent = data.count;
+            document.getElementById('timeValue').textContent = data.time ?? '--';
             const tbody = document.getElementById('resultTable');
             if (!data.detections || data.detections.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:20px;">未检测到目标</td></tr>`;
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);">未检测到目标</td></tr>';
                 return;
             }
             tbody.innerHTML = data.detections.map(d => `
                 <tr>
                     <td>${d.id}</td>
-                    <td><span class="cls-tag">${d.class}</span></td>
-                    <td>${d.class_cn}</td>
-                    <td>
-                        <div class="conf-bar"><div class="conf-fill" style="width:${d.confidence}%"></div></div>
-                        ${d.confidence}%
-                    </td>
-                    <td style="font-family:monospace;font-size:11px;">[${d.bbox.join(', ')}]</td>
+                    <td><span class="tag">${escapeHtml(d.class)}</span></td>
+                    <td>${escapeHtml(d.class_cn)}</td>
+                    <td>${d.confidence}%</td>
                 </tr>
             `).join('');
+            updatePhrase(data.detections[0]);
         }
 
-        function displayBatchResults(data) {
-            const grid = document.getElementById('batchGrid');
-            grid.style.display = 'grid';
-            grid.innerHTML = data.results.map(r => `
-                <div class="batch-item" onclick="viewBatchItem('${r.image_b64}', ${JSON.stringify(r).replace(/"/g, '&quot;')})">
-                    <img src="${r.image_b64}" alt="${r.file}" />
-                    <div class="batch-info">
-                        <div class="batch-name">${r.file}</div>
-                        <div class="batch-count">${r.count} 个目标</div>
-                    </div>
-                </div>
-            `).join('');
+        function updatePhrase(topDetection) {
+            if (!topDetection || topDetection.confidence < 45) return;
+            const word = topDetection.class_cn;
+            const last = phraseHistory[phraseHistory.length - 1];
+            if (last !== word) phraseHistory.push(word);
+            while (phraseHistory.length > 6) phraseHistory.shift();
+            document.getElementById('sentenceText').textContent = phraseHistory.join(' ');
         }
 
-        function viewBatchItem(imgB64, data) {
-            document.getElementById('previewImg').src = imgB64;
-            document.getElementById('imagePreview').classList.add('show');
-            displayResults({ detections: data.detections.map((d,i) => ({...d, id:i+1, bbox:d.bbox||[]})), count: data.count, time: '--' });
-            document.getElementById('countValue').textContent = data.count;
-            document.getElementById('modeValue').textContent = '批量查看';
-            currentResult = { result_path: data.result_path };
-            document.getElementById('saveBtn').disabled = false;
-        }
-
-        function resetResults() {
-            currentResult = null;
-            batchResults = [];
-            document.getElementById('countValue').textContent = '0';
-            document.getElementById('timeValue').textContent = '--';
-            document.getElementById('resultTable').innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:20px;">暂无检测结果</td></tr>`;
-            document.getElementById('saveBtn').disabled = true;
-        }
-
-        // ─── SAVE ───
         async function saveResult() {
-            if (!currentResult) return;
-            const name = prompt('保存文件名（不含扩展名）：', 'detect_result');
-            if (!name) return;
-
+            if (!currentResult || !currentResult.result_path) return;
+            const name = `detect_${Date.now()}.jpg`;
             try {
-                const resp = await fetch('/save_detect_result', {
+                const res = await fetch('/save_detect_result', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        result_path: currentResult.result_path,
-                        save_name: name + '.jpg'
-                    })
+                    body: JSON.stringify({ result_path: currentResult.result_path, save_name: name })
                 });
-                const data = await resp.json();
-                if (data.success) {
-                    toast(`已保存至: ${data.save_path}`, 'success');
-                    log('success', `结果已保存: ${data.save_path}`);
-                } else {
-                    toast('保存失败: ' + data.error, 'error');
-                }
-            } catch (e) {
-                toast('保存失败', 'error');
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || '保存失败');
+                writeLog(`结果已保存：${data.save_path}`);
+            } catch (err) {
+                writeLog(err.message, true);
             }
         }
 
-        // ─── FULLSCREEN ───
-        function openFullscreen() {
-            const src = document.getElementById('previewImg').src;
-            document.getElementById('fullscreenImg').src = src;
-            document.getElementById('fullscreenModal').classList.add('show');
+        function resetDisplay() {
+            resultImage.style.display = 'none';
+            webcamCanvas.style.display = 'none';
+            placeholder.style.display = 'block';
+            currentResult = null;
+            latestAnnotated = null;
+            phraseHistory.length = 0;
+            document.getElementById('sentenceText').textContent = '等待连续识别...';
+            document.getElementById('countValue').textContent = '0';
+            document.getElementById('timeValue').textContent = '--';
+            document.getElementById('saveBtn').disabled = true;
+            document.getElementById('resultTable').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);">暂无检测结果</td></tr>';
         }
 
-        function closeFullscreen() {
-            document.getElementById('fullscreenModal').classList.remove('show');
+        function setBusy(isBusy) {
+            document.getElementById('detectBtn').disabled = isBusy && mode === 'image';
         }
 
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFullscreen(); });
-
-        // ─── LOG ───
-        function log(type, msg) {
-            const area = document.getElementById('logArea');
-            area.style.display = 'block';
-            const line = document.createElement('div');
-            line.className = `log-line ${type}`;
-            const t = new Date().toLocaleTimeString();
-            line.textContent = `[${t}] ${msg}`;
-            area.appendChild(line);
-            area.scrollTop = area.scrollHeight;
+        function writeLog(message, isError = false) {
+            logText.textContent = message;
+            logText.className = `log ${isError ? 'err' : 'ok'}`;
         }
 
-        // ─── TOAST ───
-        function toast(msg, type = 'info') {
-            const t = document.getElementById('toast');
-            t.className = `toast ${type}`;
-            t.innerHTML = {
-                success: '&#10004; ' + msg,
-                error: '&#10006; ' + msg,
-                info: '&#8505; ' + msg
-            }[type];
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, ch => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[ch]));
         }
     </script>
 </body>
 </html>
+
