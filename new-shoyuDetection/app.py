@@ -30,6 +30,7 @@ LABEL_MAP_PATH = PROJECT_ROOT / "configs" / "label_map.json"
 SAVE_PATH = PROJECT_ROOT / "outputs" / "images"
 UPLOAD_FOLDER = WEB_ROOT / "static" / "uploads"
 RESULT_FOLDER = WEB_ROOT / "static" / "results"
+IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 
 app = Flask(
     __name__,
@@ -122,6 +123,35 @@ def extract_detections(results) -> list[dict[str, object]]:
     return detections
 
 
+def run_detection(image_path: Path, conf: float, iou: float) -> dict[str, object]:
+    """对单张图片执行检测，并返回前端可直接使用的结构化结果。"""
+    start = time.perf_counter()
+    result = MODEL.predict(
+        source=str(image_path),
+        conf=conf,
+        iou=iou,
+        device=DEVICE,
+        verbose=False,
+    )[0]
+    elapsed = time.perf_counter() - start
+
+    plotted = result.plot()
+    result_name = f"result_{uuid.uuid4().hex}.jpg"
+    result_path = RESULT_FOLDER / result_name
+    cv2.imwrite(str(result_path), plotted)
+
+    detections = extract_detections(result)
+    return {
+        "success": True,
+        "result_image": pil_to_b64(cv2_to_pil(plotted)),
+        "result_path": f"/static/results/{result_name}",
+        "detections": detections,
+        "count": len(detections),
+        "time": round(elapsed, 3),
+        "device": DEVICE,
+    }
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -152,7 +182,7 @@ def detect_image():
     conf = float(request.form.get("conf", 0.25))
     iou = float(request.form.get("iou", 0.45))
     suffix = Path(file.filename).suffix.lower() or ".jpg"
-    if suffix not in {".jpg", ".jpeg", ".png", ".bmp", ".webp"}:
+    if suffix not in IMAGE_SUFFIXES:
         suffix = ".jpg"
 
     temp_name = f"{uuid.uuid4().hex}{suffix}"
@@ -160,33 +190,7 @@ def detect_image():
     file.save(temp_path)
 
     try:
-        start = time.perf_counter()
-        result = MODEL.predict(
-            source=str(temp_path),
-            conf=conf,
-            iou=iou,
-            device=DEVICE,
-            verbose=False,
-        )[0]
-        elapsed = time.perf_counter() - start
-
-        plotted = result.plot()
-        result_name = f"result_{temp_path.stem}.jpg"
-        result_path = RESULT_FOLDER / result_name
-        cv2.imwrite(str(result_path), plotted)
-
-        detections = extract_detections(result)
-        return jsonify(
-            {
-                "success": True,
-                "result_image": pil_to_b64(cv2_to_pil(plotted)),
-                "result_path": f"/static/results/{result_name}",
-                "detections": detections,
-                "count": len(detections),
-                "time": round(elapsed, 3),
-                "device": DEVICE,
-            }
-        )
+        return jsonify(run_detection(temp_path, conf, iou))
     except Exception as exc:
         return jsonify({"error": str(exc)}), 500
     finally:
@@ -196,46 +200,69 @@ def detect_image():
 
 @app.route("/detect_batch", methods=["POST"])
 def detect_batch():
-    """批量检测指定文件夹内的图片。"""
-    folder_path = Path(request.form.get("folder_path", "").strip())
+    """批量检测上传图片；兼容旧版按文件夹路径批量检测。"""
     conf = float(request.form.get("conf", 0.25))
     iou = float(request.form.get("iou", 0.45))
 
+    results_list = []
+    total_count = 0
+    start = time.perf_counter()
+    uploaded_files = request.files.getlist("images")
+
+    if uploaded_files:
+        for file in uploaded_files:
+            if not file or file.filename == "":
+                continue
+            suffix = Path(file.filename).suffix.lower() or ".jpg"
+            if suffix not in IMAGE_SUFFIXES:
+                results_list.append({"file": file.filename, "error": "不支持的图片格式"})
+                continue
+
+            temp_path = UPLOAD_FOLDER / f"{uuid.uuid4().hex}{suffix}"
+            file.save(temp_path)
+            try:
+                item = run_detection(temp_path, conf, iou)
+                item["file"] = file.filename
+                item["image_b64"] = item.pop("result_image")
+                total_count += int(item["count"])
+                results_list.append(item)
+            except Exception as exc:
+                results_list.append({"file": file.filename, "error": str(exc)})
+            finally:
+                if temp_path.exists():
+                    temp_path.unlink()
+
+        if not results_list:
+            return jsonify({"error": "No valid image files provided"}), 400
+
+        return jsonify(
+            {
+                "success": True,
+                "results": results_list,
+                "total_images": len(results_list),
+                "total_detections": total_count,
+                "time": round(time.perf_counter() - start, 3),
+            }
+        )
+
+    folder_value = request.form.get("folder_path", "").strip()
+    if not folder_value:
+        return jsonify({"error": "请上传图片，或提供有效的 folder_path"}), 400
+
+    folder_path = Path(folder_value)
     if not folder_path.exists() or not folder_path.is_dir():
         return jsonify({"error": f"Invalid folder path: {folder_path}"}), 400
 
-    image_suffixes = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
-    results_list = []
-    total_count = 0
-
     for image_path in sorted(folder_path.iterdir()):
-        if not image_path.is_file() or image_path.suffix.lower() not in image_suffixes:
+        if not image_path.is_file() or image_path.suffix.lower() not in IMAGE_SUFFIXES:
             continue
         try:
-            result = MODEL.predict(
-                source=str(image_path),
-                conf=conf,
-                iou=iou,
-                device=DEVICE,
-                verbose=False,
-            )[0]
-            plotted = result.plot()
-            result_name = f"result_{uuid.uuid4().hex}.jpg"
-            result_path = RESULT_FOLDER / result_name
-            cv2.imwrite(str(result_path), plotted)
-
-            detections = extract_detections(result)
-            total_count += len(detections)
-            results_list.append(
-                {
-                    "file": image_path.name,
-                    "path": str(image_path),
-                    "result_path": f"/static/results/{result_name}",
-                    "count": len(detections),
-                    "detections": detections,
-                    "image_b64": pil_to_b64(cv2_to_pil(plotted)),
-                }
-            )
+            item = run_detection(image_path, conf, iou)
+            item["file"] = image_path.name
+            item["path"] = str(image_path)
+            item["image_b64"] = item.pop("result_image")
+            total_count += int(item["count"])
+            results_list.append(item)
         except Exception as exc:
             results_list.append({"file": image_path.name, "error": str(exc)})
 
@@ -245,6 +272,7 @@ def detect_batch():
             "results": results_list,
             "total_images": len(results_list),
             "total_detections": total_count,
+            "time": round(time.perf_counter() - start, 3),
         }
     )
 
@@ -286,4 +314,3 @@ def save_batch_results():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
-

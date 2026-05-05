@@ -242,6 +242,36 @@
             line-height: 1.7;
         }
 
+        .batch-gallery {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .batch-card {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .batch-card img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            display: block;
+            background: #0b1020;
+        }
+
+        .batch-card div {
+            padding: 8px;
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+            word-break: break-all;
+        }
+
         .log {
             margin-top: 14px;
             font-size: 13px;
@@ -271,13 +301,14 @@
                 <div class="panel-title">检测画面</div>
                 <div class="tabs">
                     <button class="tab active" id="imageTab" onclick="setMode('image')">图片检测</button>
+                    <button class="tab" id="batchTab" onclick="setMode('batch')">批量测试</button>
                     <button class="tab" id="cameraTab" onclick="setMode('camera')">摄像头检测</button>
                 </div>
             </div>
             <div class="panel-body">
                 <div class="viewer">
                     <div class="placeholder" id="placeholder">
-                        请选择图片或打开摄像头开始演示<br>
+                        请选择单张图片、批量图片或打开摄像头开始演示<br>
                         识别结果会显示英文标签、中文含义、置信度和检测框
                     </div>
                     <img id="resultImage" alt="检测结果" style="display:none;">
@@ -299,6 +330,11 @@
                         <input type="file" id="imageInput" accept="image/*">
                     </div>
 
+                    <div class="control-group" id="batchControl" style="display:none;">
+                        <label>批量上传图片 <span>可多选 jpg / png / bmp</span></label>
+                        <input type="file" id="batchInput" accept="image/*" multiple>
+                    </div>
+
                     <div class="control-group">
                         <label>置信度阈值 <span id="confValue">0.50</span></label>
                         <input type="range" id="confSlider" min="0.05" max="0.95" step="0.05" value="0.50">
@@ -311,6 +347,7 @@
 
                     <div class="button-row">
                         <button class="primary" id="detectBtn" onclick="runImageDetection()">开始检测</button>
+                        <button class="primary" id="batchBtn" onclick="runBatchDetection()" style="display:none;">开始批量测试</button>
                         <button id="cameraBtn" onclick="toggleCamera()" style="display:none;">打开摄像头</button>
                     </div>
                     <button onclick="saveResult()" id="saveBtn" disabled>保存当前结果</button>
@@ -349,6 +386,8 @@
                     <strong>简单短语：</strong>
                     <span id="sentenceText">等待连续识别...</span>
                 </div>
+
+                <div class="batch-gallery" id="batchGallery" style="display:none;"></div>
             </div>
         </aside>
     </main>
@@ -356,7 +395,9 @@
     <script>
         let mode = 'image';
         let selectedFile = null;
+        let selectedBatchFiles = [];
         let currentResult = null;
+        let currentBatchResults = [];
         let stream = null;
         let cameraRunning = false;
         let cameraTimer = null;
@@ -369,16 +410,19 @@
         const phraseHistory = [];
 
         const imageInput = document.getElementById('imageInput');
+        const batchInput = document.getElementById('batchInput');
         const confSlider = document.getElementById('confSlider');
         const iouSlider = document.getElementById('iouSlider');
         const resultImage = document.getElementById('resultImage');
         const placeholder = document.getElementById('placeholder');
         const webcamVideo = document.getElementById('webcamVideo');
         const webcamCanvas = document.getElementById('webcamCanvas');
+        const batchGallery = document.getElementById('batchGallery');
         const logText = document.getElementById('logText');
 
         window.addEventListener('DOMContentLoaded', async () => {
             imageInput.addEventListener('change', onImageSelected);
+            batchInput.addEventListener('change', onBatchSelected);
             confSlider.addEventListener('input', () => document.getElementById('confValue').textContent = Number(confSlider.value).toFixed(2));
             iouSlider.addEventListener('input', () => document.getElementById('iouValue').textContent = Number(iouSlider.value).toFixed(2));
             try {
@@ -395,11 +439,15 @@
             mode = nextMode;
             stopCamera();
             document.getElementById('imageTab').classList.toggle('active', mode === 'image');
+            document.getElementById('batchTab').classList.toggle('active', mode === 'batch');
             document.getElementById('cameraTab').classList.toggle('active', mode === 'camera');
             document.getElementById('imageControl').style.display = mode === 'image' ? 'grid' : 'none';
+            document.getElementById('batchControl').style.display = mode === 'batch' ? 'grid' : 'none';
             document.getElementById('detectBtn').style.display = mode === 'image' ? 'block' : 'none';
+            document.getElementById('batchBtn').style.display = mode === 'batch' ? 'block' : 'none';
             document.getElementById('cameraBtn').style.display = mode === 'camera' ? 'block' : 'none';
-            document.getElementById('modeValue').textContent = mode === 'image' ? '图片' : '摄像头';
+            const modeName = mode === 'image' ? '图片' : (mode === 'batch' ? '批量' : '摄像头');
+            document.getElementById('modeValue').textContent = modeName;
             resetDisplay();
         }
 
@@ -417,12 +465,53 @@
             writeLog(`已选择图片：${selectedFile.name}`);
         }
 
+        function onBatchSelected(event) {
+            selectedBatchFiles = Array.from(event.target.files || []);
+            resetDisplay();
+            if (!selectedBatchFiles.length) return;
+            placeholder.style.display = 'none';
+            batchGallery.style.display = 'grid';
+            batchGallery.innerHTML = selectedBatchFiles.slice(0, 12).map(file => `
+                <div class="batch-card">
+                    <div>${escapeHtml(file.name)}<br>等待检测</div>
+                </div>
+            `).join('');
+            const extra = selectedBatchFiles.length > 12 ? `，另有 ${selectedBatchFiles.length - 12} 张未预览` : '';
+            writeLog(`已选择 ${selectedBatchFiles.length} 张图片${extra}。`);
+        }
+
         async function runImageDetection() {
             if (!selectedFile) {
                 writeLog('请先选择一张图片。', true);
                 return;
             }
             await detectBlob(selectedFile, true);
+        }
+
+        async function runBatchDetection() {
+            if (!selectedBatchFiles.length) {
+                writeLog('请先选择一组图片。', true);
+                return;
+            }
+            const form = new FormData();
+            selectedBatchFiles.forEach(file => form.append('images', file, file.name));
+            form.append('conf', confSlider.value);
+            form.append('iou', iouSlider.value);
+            setBusy(true);
+            try {
+                const res = await fetch('/detect_batch', { method: 'POST', body: form });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || '批量检测失败');
+                currentResult = null;
+                currentBatchResults = data.results || [];
+                displayBatchResults(data);
+                document.getElementById('saveBtn').disabled = currentBatchResults.length === 0;
+                writeLog(`批量测试完成：${data.total_images} 张图片，${data.total_detections} 个目标，总耗时 ${data.time}s`);
+            } catch (err) {
+                writeLog(err.message, true);
+            } finally {
+                setBusy(false);
+            }
         }
 
         async function toggleCamera() {
@@ -549,6 +638,7 @@
                 const data = await res.json();
                 if (!data.success) throw new Error(data.error || '检测失败');
                 currentResult = data;
+                currentBatchResults = [];
                 if (options.background) {
                     latestDetections = data.detections || [];
                     detectionFrameSize = {
@@ -578,6 +668,7 @@
         function displayResults(data) {
             document.getElementById('countValue').textContent = data.count;
             document.getElementById('timeValue').textContent = data.time ?? '--';
+            batchGallery.style.display = 'none';
             const tbody = document.getElementById('resultTable');
             if (!data.detections || data.detections.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);">未检测到目标</td></tr>';
@@ -594,6 +685,65 @@
             updatePhrase(data.detections[0]);
         }
 
+        function displayBatchResults(data) {
+            document.getElementById('countValue').textContent = data.total_detections;
+            document.getElementById('timeValue').textContent = data.time ?? '--';
+            resultImage.style.display = 'none';
+            webcamCanvas.style.display = 'none';
+            placeholder.style.display = 'none';
+            batchGallery.style.display = 'grid';
+
+            const rows = [];
+            for (const item of data.results || []) {
+                if (item.error) {
+                    rows.push(`<tr><td>${escapeHtml(item.file)}</td><td colspan="3" class="err">${escapeHtml(item.error)}</td></tr>`);
+                    continue;
+                }
+                if (!item.detections || item.detections.length === 0) {
+                    rows.push(`<tr><td>${escapeHtml(item.file)}</td><td colspan="3" style="color:var(--muted);">未检测到目标</td></tr>`);
+                    continue;
+                }
+                for (const det of item.detections) {
+                    rows.push(`
+                        <tr>
+                            <td>${escapeHtml(item.file)}</td>
+                            <td><span class="tag">${escapeHtml(det.class)}</span></td>
+                            <td>${escapeHtml(det.class_cn)}</td>
+                            <td>${det.confidence}%</td>
+                        </tr>
+                    `);
+                }
+            }
+            document.getElementById('resultTable').innerHTML = rows.length
+                ? rows.join('')
+                : '<tr><td colspan="4" style="text-align:center;color:var(--muted);">暂无批量检测结果</td></tr>';
+
+            batchGallery.innerHTML = (data.results || []).slice(0, 12).map(item => {
+                const top = item.detections && item.detections[0];
+                const summary = item.error
+                    ? item.error
+                    : (top ? `${top.class_cn} / ${top.class} ${top.confidence}%` : '未检测到目标');
+                const image = item.image_b64
+                    ? `<img src="${item.image_b64}" alt="${escapeHtml(item.file)}">`
+                    : '';
+                return `
+                    <div class="batch-card">
+                        ${image}
+                        <div><strong>${escapeHtml(item.file)}</strong><br>${escapeHtml(summary)}</div>
+                    </div>
+                `;
+            }).join('');
+
+            const phraseWords = [];
+            for (const item of data.results || []) {
+                const top = item.detections && item.detections[0];
+                if (top && top.confidence >= 45) phraseWords.push(top.class_cn);
+            }
+            document.getElementById('sentenceText').textContent = phraseWords.length
+                ? phraseWords.slice(0, 8).join(' ')
+                : '批量图片未形成稳定短语';
+        }
+
         function updatePhrase(topDetection) {
             if (!topDetection || topDetection.confidence < 45) return;
             const word = topDetection.class_cn;
@@ -604,6 +754,22 @@
         }
 
         async function saveResult() {
+            if (currentBatchResults.length) {
+                try {
+                    const res = await fetch('/save_batch_results', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ results: currentBatchResults })
+                    });
+                    const data = await res.json();
+                    if (!data.success) throw new Error(data.error || '批量保存失败');
+                    writeLog(`批量结果已保存 ${data.saved_count} 张：${data.save_path}`);
+                } catch (err) {
+                    writeLog(err.message, true);
+                }
+                return;
+            }
+
             if (!currentResult || !currentResult.result_path) return;
             const name = `detect_${Date.now()}.jpg`;
             try {
@@ -625,9 +791,12 @@
             webcamCanvas.style.display = 'none';
             placeholder.style.display = 'block';
             currentResult = null;
+            currentBatchResults = [];
             latestDetections = [];
             detectionFrameSize = { width: 0, height: 0 };
             phraseHistory.length = 0;
+            batchGallery.style.display = 'none';
+            batchGallery.innerHTML = '';
             document.getElementById('sentenceText').textContent = '等待连续识别...';
             document.getElementById('countValue').textContent = '0';
             document.getElementById('timeValue').textContent = '--';
@@ -637,6 +806,7 @@
 
         function setBusy(isBusy) {
             document.getElementById('detectBtn').disabled = isBusy && mode === 'image';
+            document.getElementById('batchBtn').disabled = isBusy && mode === 'batch';
         }
 
         function writeLog(message, isError = false) {
