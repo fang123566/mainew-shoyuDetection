@@ -1,824 +1,1443 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多类别手语识别与无障碍交流辅助系统</title>
-    <style>
-        :root {
-            --bg: #f6f8fb;
-            --panel: #ffffff;
-            --line: #d9e0ea;
-            --text: #172033;
-            --muted: #687385;
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --shadow: 0 14px 40px rgba(22, 32, 51, 0.10);
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>多类别手语识别与无障碍交流辅助系统</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+:root {
+  --bg: #f5f7fb;
+  --bg-soft: #ffffff;
+  --bg-grad:
+    radial-gradient(900px 500px at -10% -10%, rgba(99,102,241,0.10), transparent 60%),
+    radial-gradient(700px 400px at 110% 0%, rgba(34,211,238,0.10), transparent 60%),
+    linear-gradient(180deg, #f5f7fb 0%, #eef2f7 100%);
+  --panel: #ffffff;
+  --panel-soft: #fafbfd;
+  --line: #e6eaf2;
+  --line-strong: #d6dde9;
+  --text: #0f172a;
+  --text-soft: #334155;
+  --muted: #64748b;
+  --primary: #6366f1;
+  --primary-2: #22d3ee;
+  --primary-soft: #eef2ff;
+  --accent: #a78bfa;
+  --success: #16a34a;
+  --success-soft: #ecfdf5;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+  --danger-soft: #fef2f2;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow: 0 4px 14px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.10);
+  --radius: 14px;
+  --radius-sm: 10px;
+}
 
-        * { box-sizing: border-box; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Inter", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, sans-serif;
+  background: var(--bg-grad);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-        }
+/* layout */
+.app {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 64px 1fr;
+  grid-template-areas:
+    "side header"
+    "side main";
+  min-height: 100vh;
+}
+header.topbar {
+  grid-area: header;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 5;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  display: grid; place-items: center; color: white; font-size: 16px; font-weight: 700;
+  box-shadow: 0 6px 16px rgba(99,102,241,0.25);
+}
+.brand .title { font-size: 15px; font-weight: 700; color: var(--text); }
+.brand .subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-        header {
-            height: 64px;
-            padding: 0 28px;
-            background: #111827;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.topbar .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.tag {
+  padding: 5px 11px; border-radius: 999px; font-weight: 500;
+  background: var(--primary-soft); color: #4f46e5;
+  border: 1px solid #e0e7ff;
+}
+.tag.ok { background: var(--success-soft); color: #15803d; border-color: #d1fae5; }
+.tag.muted { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
 
-        .brand {
-            font-size: 18px;
-            font-weight: 700;
-        }
+/* sidebar */
+aside.sidebar {
+  grid-area: side;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--line);
+  padding: 18px 12px;
+  position: sticky; top: 0; height: 100vh;
+  overflow-y: auto;
+}
+.sidebar .brand-mini {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 8px 18px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+.nav { display: flex; flex-direction: column; gap: 4px; padding-top: 8px; }
+.nav .item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 10px; cursor: pointer;
+  color: var(--text-soft); font-size: 14px; font-weight: 500;
+  user-select: none; border: 1px solid transparent;
+  transition: all .15s ease;
+}
+.nav .item:hover { background: var(--primary-soft); color: #4338ca; }
+.nav .item.active {
+  background: linear-gradient(135deg, #eef2ff, #ecfeff);
+  color: #4338ca; border-color: #e0e7ff;
+  box-shadow: var(--shadow-sm);
+}
+.nav .ico { width: 18px; text-align: center; font-size: 15px; }
 
-        .device {
-            font-size: 13px;
-            color: #d1d5db;
-        }
+main.content {
+  grid-area: main;
+  padding: 22px 26px 60px;
+  min-width: 0;
+}
 
-        main {
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 24px;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 380px;
-            gap: 20px;
-        }
+/* panels */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.panel + .panel { margin-top: 18px; }
+.panel .head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; border-bottom: 1px solid var(--line);
+}
+.panel .head h2 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.2px; }
+.panel .body { padding: 18px; }
 
-        .panel {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
+/* fields */
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+.field label { color: var(--muted); font-weight: 500; }
+.field input[type="number"], .field input[type="text"], .field select {
+  background: #fff; color: var(--text);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+  padding: 9px 12px; outline: none;
+  transition: border .15s ease, box-shadow .15s ease;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
-        .panel-header {
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--line);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
+/* sliders */
+.slider-row { display: flex; align-items: center; gap: 10px; }
+.slider-row input[type="range"] {
+  flex: 1; -webkit-appearance: none; appearance: none;
+  height: 6px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary) var(--p, 0%), #e2e8f0 var(--p, 0%));
+  outline: none;
+}
+.slider-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: white; border: 2px solid var(--primary);
+  box-shadow: 0 2px 6px rgba(99,102,241,0.35);
+  cursor: pointer;
+}
+.slider-row .val {
+  min-width: 48px; text-align: right;
+  color: var(--text); font-variant-numeric: tabular-nums; font-weight: 600;
+}
 
-        .panel-title {
-            font-size: 15px;
-            font-weight: 700;
-        }
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 16px; border-radius: var(--radius-sm);
+  cursor: pointer; font-size: 13.5px; font-weight: 600;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--text-soft);
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.btn:hover { background: #f8fafc; border-color: #cbd5e1; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.primary {
+  color: #fff; background: linear-gradient(135deg, var(--primary), #4f46e5);
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(99,102,241,0.30);
+}
+.btn.primary:hover { box-shadow: 0 8px 20px rgba(99,102,241,0.40); }
+.btn.success {
+  color: #fff; background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: transparent;
+  box-shadow: 0 6px 14px rgba(34,197,94,0.25);
+}
+.btn.danger {
+  color: #fff; background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: transparent;
+  box-shadow: 0 6px 14px rgba(239,68,68,0.25);
+}
+.btn.ghost { background: var(--primary-soft); color: #4338ca; border-color: #e0e7ff; }
+.btn.ghost:hover { background: #e0e7ff; }
+.btn.icon { padding: 9px 11px; }
 
-        .panel-body { padding: 18px; }
+/* drop */
+.drop {
+  border: 2px dashed var(--line-strong);
+  border-radius: var(--radius);
+  background: #fbfcfe;
+  padding: 30px;
+  text-align: center;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.drop.hover, .drop:hover {
+  border-color: var(--primary);
+  background: #f5f7ff;
+  color: #4338ca;
+}
+.drop strong { color: var(--text); font-weight: 600; }
+.drop .hint { font-size: 12px; margin-top: 6px; }
+.drop .icon-big { font-size: 28px; margin-bottom: 6px; }
 
-        .tabs {
-            display: flex;
-            gap: 8px;
-        }
+/* media */
+.media-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  align-items: start;
+}
+.media {
+  position: relative;
+  background: #0f172a;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 16/10;
+  box-shadow: var(--shadow-sm);
+}
+.media img, .media video {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  background: #0f172a;
+}
+.media .placeholder {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  color: #cbd5e1; font-size: 13px;
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  color: var(--muted);
+}
 
-        .tab, button {
-            border: 1px solid var(--line);
-            background: #fff;
-            color: var(--text);
-            border-radius: 8px;
-            padding: 9px 14px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.15s ease;
-        }
+/* live media (camera) */
+.live-stage {
+  position: relative;
+  width: 100%; aspect-ratio: 16/9;
+  background: #0f172a; border-radius: var(--radius);
+  overflow: hidden; border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.live-stage video, .live-stage canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: contain;
+}
+.live-stage .overlay-info {
+  position: absolute; left: 12px; top: 12px;
+  padding: 6px 10px; border-radius: 999px;
+  background: rgba(15, 23, 42, 0.65); color: #fff;
+  font-size: 12px; font-variant-numeric: tabular-nums;
+  display: flex; align-items: center; gap: 8px;
+  backdrop-filter: blur(8px);
+}
+.live-stage .overlay-info .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #ef4444; box-shadow: 0 0 0 0 rgba(239,68,68,0.8);
+  animation: pulse 1.4s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+.live-stage .placeholder {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  color: #94a3b8; font-size: 14px;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+}
 
-        .tab.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
+/* stats */
+.stats { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.stat {
+  padding: 14px 16px; border-radius: var(--radius);
+  background: var(--panel); border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  position: relative; overflow: hidden;
+}
+.stat::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-2));
+}
+.stat .k { font-size: 12px; color: var(--muted); font-weight: 500; }
+.stat .v { font-size: 22px; font-weight: 700; margin-top: 4px; color: var(--text); font-variant-numeric: tabular-nums; }
+.stat .v.small { font-size: 14px; font-weight: 600; }
 
-        button.primary {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
+/* table */
+.table-wrap { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--line); }
+table.det {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+table.det th, table.det td {
+  padding: 10px 14px; text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+table.det th {
+  color: var(--muted); font-weight: 600; background: #fafbfd;
+  position: sticky; top: 0; z-index: 1;
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+table.det tbody tr:last-child td { border-bottom: none; }
+table.det tr:hover td { background: #f8fafc; }
+.badge {
+  display: inline-block; padding: 3px 9px; border-radius: 999px;
+  font-size: 12px; font-weight: 500;
+  background: var(--primary-soft); color: #4338ca;
+  border: 1px solid #e0e7ff;
+}
+.badge.green { background: var(--success-soft); color: #15803d; border-color: #d1fae5; }
+.badge.gray  { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+.badge.warn  { background: #fef3c7; color: #b45309; border-color: #fde68a; }
 
-        button.primary:hover { background: var(--primary-dark); }
-        button:disabled { opacity: 0.55; cursor: not-allowed; }
+/* progress */
+.progress {
+  height: 10px; border-radius: 999px;
+  background: #f1f5f9; border: 1px solid var(--line);
+  overflow: hidden;
+}
+.progress > span {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  width: 0%;
+  transition: width .25s ease;
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
-        .viewer {
-            min-height: 540px;
-            background: #0b1020;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
+/* batch grid */
+.batch-grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+.bcard {
+  display: flex; flex-direction: column;
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--line); background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s, box-shadow .15s;
+}
+.bcard:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.bcard .pic {
+  position: relative; width: 100%; aspect-ratio: 16/10;
+  background: #0f172a;
+}
+.bcard .pic img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.bcard .pic .badge-pill {
+  position: absolute; left: 8px; top: 8px;
+  padding: 4px 10px; border-radius: 999px;
+  background: rgba(255,255,255,0.95); color: var(--text);
+  font-size: 11px; font-weight: 600; box-shadow: var(--shadow-sm);
+}
+.bcard .info {
+  padding: 12px 14px; border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+}
+.bcard .info .fname {
+  font-size: 13px; font-weight: 600; color: var(--text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%;
+}
+.bcard .info .fmeta { font-size: 11px; color: var(--muted); }
+.bcard .dets {
+  padding: 8px 14px 14px; font-size: 12.5px;
+  max-height: 220px; overflow-y: auto;
+}
+.bcard .dets .empty { color: var(--muted); padding: 8px 0; text-align: center; font-size: 12px; }
+.bcard .dets .det-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 0; border-bottom: 1px dashed var(--line);
+  gap: 8px;
+}
+.bcard .dets .det-row:last-child { border-bottom: none; }
+.bcard .dets .det-row .lbl { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.bcard .dets .det-row .en { color: var(--muted); font-size: 11px; }
+.bcard .err {
+  padding: 14px; color: var(--danger); font-size: 12px; background: var(--danger-soft);
+}
 
-        .viewer img, .viewer canvas {
-            max-width: 100%;
-            max-height: 680px;
-            display: block;
-        }
+/* phrase strip */
+.phrase-strip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px; border-radius: var(--radius);
+  background: linear-gradient(135deg, #eef2ff, #ecfeff);
+  border: 1px solid #e0e7ff;
+  min-height: 56px;
+  flex-wrap: wrap;
+}
+.phrase-strip .word {
+  padding: 6px 12px; border-radius: 999px;
+  background: white; border: 1px solid var(--line);
+  font-size: 14px; font-weight: 600; color: var(--text);
+  box-shadow: var(--shadow-sm);
+  animation: pop .25s ease;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(4px) scale(0.9); } to { opacity: 1; transform: none; } }
+.phrase-strip .ph-empty { color: var(--muted); font-size: 13px; }
 
-        .placeholder {
-            color: #aeb7c6;
-            text-align: center;
-            line-height: 1.8;
-            padding: 40px;
-        }
+/* recent list */
+.recent { display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto; }
+.recent .row-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line); background: #fff;
+  font-size: 13px;
+}
+.recent .row-item .when { color: var(--muted); font-size: 11px; }
 
-        .hidden-video {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
+/* sections */
+.section { display: none; animation: fade .2s ease; }
+.section.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
-        .controls {
-            display: grid;
-            gap: 16px;
-        }
+/* toast */
+.toast {
+  position: fixed; right: 18px; bottom: 18px; z-index: 999;
+  padding: 12px 16px; border-radius: var(--radius);
+  background: rgba(255,255,255,0.95); border: 1px solid var(--line);
+  color: var(--text); font-size: 14px;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px); opacity: 0; pointer-events: none;
+  transition: all .2s ease;
+  backdrop-filter: blur(10px);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.ok { border-left: 3px solid var(--success); }
+.toast.err { border-left: 3px solid var(--danger); }
+.toast.warn { border-left: 3px solid var(--warning); }
 
-        .control-group {
-            display: grid;
-            gap: 8px;
-        }
-
-        label {
-            font-size: 13px;
-            color: var(--muted);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        input[type="file"], input[type="text"] {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        input[type="range"] { width: 100%; }
-
-        .button-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .stat {
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            background: #f9fbff;
-        }
-
-        .stat-value {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            margin-top: 4px;
-            font-size: 12px;
-            color: var(--muted);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        th, td {
-            border-bottom: 1px solid var(--line);
-            padding: 10px 8px;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th {
-            color: var(--muted);
-            font-weight: 600;
-            background: #f9fbff;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 999px;
-            background: #e8f0ff;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .sentence {
-            margin-top: 16px;
-            padding: 12px 14px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            background: #f9fbff;
-            min-height: 52px;
-            line-height: 1.7;
-        }
-
-        .batch-gallery {
-            margin-top: 16px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 12px;
-        }
-
-        .batch-card {
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            overflow: hidden;
-            background: #fff;
-        }
-
-        .batch-card img {
-            width: 100%;
-            height: 110px;
-            object-fit: cover;
-            display: block;
-            background: #0b1020;
-        }
-
-        .batch-card div {
-            padding: 8px;
-            font-size: 12px;
-            color: var(--muted);
-            line-height: 1.5;
-            word-break: break-all;
-        }
-
-        .log {
-            margin-top: 14px;
-            font-size: 13px;
-            color: var(--muted);
-            line-height: 1.7;
-            min-height: 24px;
-        }
-
-        .ok { color: var(--success); }
-        .err { color: var(--danger); }
-
-        @media (max-width: 980px) {
-            main { grid-template-columns: 1fr; }
-            .viewer { min-height: 360px; }
-        }
-    </style>
+/* responsive */
+@media (max-width: 1024px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "side" "main";
+    grid-template-rows: 64px auto 1fr;
+  }
+  aside.sidebar { position: static; height: auto; padding: 10px; border-right: none; border-bottom: 1px solid var(--line); }
+  aside.sidebar .brand-mini { display: none; }
+  .nav { flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+  .nav .item { flex: 1 1 auto; justify-content: center; padding: 8px 12px; font-size: 13px; }
+  main.content { padding: 16px; }
+}
+@media (max-width: 600px) {
+  .brand .subtitle { display: none; }
+  .topbar .meta .tag:not(.ok) { display: none; }
+  .panel .body { padding: 14px; }
+}
+</style>
 </head>
 <body>
-    <header>
-        <div class="brand">多类别手语识别与无障碍交流辅助系统</div>
-        <div class="device" id="deviceInfo">模型加载中...</div>
-    </header>
 
-    <main>
-        <section class="panel">
-            <div class="panel-header">
-                <div class="panel-title">检测画面</div>
-                <div class="tabs">
-                    <button class="tab active" id="imageTab" onclick="setMode('image')">图片检测</button>
-                    <button class="tab" id="batchTab" onclick="setMode('batch')">批量测试</button>
-                    <button class="tab" id="cameraTab" onclick="setMode('camera')">摄像头检测</button>
-                </div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand-mini">
+      <div class="logo" style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--primary-2));display:grid;place-items:center;color:#fff;font-weight:700">手</div>
+      <div>
+        <div class="title" style="font-weight:700;font-size:14px;">手语识别系统</div>
+        <div class="subtitle" style="font-size:11px;color:var(--muted);">YOLOv11 · 中文映射</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <div class="item active" data-tab="image"><span class="ico">📷</span><span>图片检测</span></div>
+      <div class="item" data-tab="batch"><span class="ico">🗂</span><span>批量检测</span></div>
+      <div class="item" data-tab="video"><span class="ico">🎬</span><span>视频检测</span></div>
+      <div class="item" data-tab="camera"><span class="ico">📹</span><span>摄像头实时</span></div>
+      <div class="item" data-tab="about"><span class="ico">ℹ️</span><span>模型信息</span></div>
+    </nav>
+  </aside>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">SL</div>
+      <div>
+        <div class="title">多类别手语识别与无障碍交流辅助系统</div>
+        <div class="subtitle">基于 YOLOv11 + 中文语义映射</div>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="tag muted" id="device-tag">设备: 加载中</span>
+      <span class="tag ok" id="model-tag">模型: yolov11_best.pt</span>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <!-- 通用参数 -->
+    <section class="panel">
+      <div class="head">
+        <h2>检测参数</h2>
+        <span class="tag muted">conf 与 iou 对所有页面生效</span>
+      </div>
+      <div class="body">
+        <div class="controls">
+          <div class="field">
+            <label>置信度 (conf)</label>
+            <div class="slider-row">
+              <input type="range" id="conf" min="0" max="1" step="0.01" value="0.25">
+              <span class="val" id="conf-val">0.25</span>
             </div>
-            <div class="panel-body">
-                <div class="viewer">
-                    <div class="placeholder" id="placeholder">
-                        请选择单张图片、批量图片或打开摄像头开始演示<br>
-                        识别结果会显示英文标签、中文含义、置信度和检测框
-                    </div>
-                    <img id="resultImage" alt="检测结果" style="display:none;">
-                    <video id="webcamVideo" class="hidden-video" autoplay playsinline muted></video>
-                    <canvas id="webcamCanvas" style="display:none;"></canvas>
-                </div>
-                <div class="log" id="logText">等待操作。</div>
+          </div>
+          <div class="field">
+            <label>IoU 阈值</label>
+            <div class="slider-row">
+              <input type="range" id="iou" min="0" max="1" step="0.01" value="0.45">
+              <span class="val" id="iou-val">0.45</span>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <aside class="panel">
-            <div class="panel-header">
-                <div class="panel-title">控制与结果</div>
+    <!-- 图片检测 -->
+    <section class="section active" id="tab-image">
+      <div class="panel">
+        <div class="head">
+          <h2>图片检测</h2>
+          <div class="row">
+            <button class="btn" id="img-clear">清空</button>
+            <button class="btn success" id="img-save" disabled>保存结果</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="drop" id="img-drop">
+            <div class="icon-big">📁</div>
+            <div><strong>拖拽图片到此处</strong> 或 <span style="color:var(--primary);text-decoration:underline;">点击选择</span></div>
+            <div class="hint">支持 jpg / png / bmp / webp</div>
+            <input type="file" id="img-input" accept="image/*" hidden />
+          </div>
+
+          <div class="media-grid" style="margin-top: 16px;">
+            <div class="media">
+              <div class="placeholder" id="img-src-ph">原图</div>
+              <img id="img-src" hidden alt="src">
             </div>
-            <div class="panel-body">
-                <div class="controls">
-                    <div class="control-group" id="imageControl">
-                        <label>上传图片 <span>jpg / png / bmp</span></label>
-                        <input type="file" id="imageInput" accept="image/*">
-                    </div>
+            <div class="media">
+              <div class="placeholder" id="img-out-ph">检测结果</div>
+              <img id="img-out" hidden alt="result">
+            </div>
+          </div>
 
-                    <div class="control-group" id="batchControl" style="display:none;">
-                        <label>批量上传图片 <span>可多选 jpg / png / bmp</span></label>
-                        <input type="file" id="batchInput" accept="image/*" multiple>
-                    </div>
+          <div class="stats" style="margin-top: 16px;">
+            <div class="stat"><div class="k">用时</div><div class="v" id="img-time">-</div></div>
+            <div class="stat"><div class="k">目标数</div><div class="v" id="img-count">-</div></div>
+            <div class="stat"><div class="k">推理设备</div><div class="v small" id="img-device">-</div></div>
+          </div>
 
-                    <div class="control-group">
-                        <label>置信度阈值 <span id="confValue">0.50</span></label>
-                        <input type="range" id="confSlider" min="0.05" max="0.95" step="0.05" value="0.50">
-                    </div>
-
-                    <div class="control-group">
-                        <label>IoU 阈值 <span id="iouValue">0.45</span></label>
-                        <input type="range" id="iouSlider" min="0.10" max="0.90" step="0.05" value="0.45">
-                    </div>
-
-                    <div class="button-row">
-                        <button class="primary" id="detectBtn" onclick="runImageDetection()">开始检测</button>
-                        <button class="primary" id="batchBtn" onclick="runBatchDetection()" style="display:none;">开始批量测试</button>
-                        <button id="cameraBtn" onclick="toggleCamera()" style="display:none;">打开摄像头</button>
-                    </div>
-                    <button onclick="saveResult()" id="saveBtn" disabled>保存当前结果</button>
-                </div>
-
-                <div class="stats" style="margin-top:18px;">
-                    <div class="stat">
-                        <div class="stat-value" id="countValue">0</div>
-                        <div class="stat-label">目标数</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="timeValue">--</div>
-                        <div class="stat-label">耗时(s)</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="modeValue">图片</div>
-                        <div class="stat-label">模式</div>
-                    </div>
-                </div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>英文</th>
-                            <th>中文</th>
-                            <th>置信度</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultTable">
-                        <tr><td colspan="4" style="text-align:center;color:var(--muted);">暂无检测结果</td></tr>
-                    </tbody>
+          <div class="panel" style="margin-top: 16px; box-shadow:none;">
+            <div class="head"><h2>检测结果</h2></div>
+            <div class="body">
+              <div class="table-wrap">
+                <table class="det">
+                  <thead><tr><th>#</th><th>英文</th><th>中文</th><th>置信度</th><th>位置</th></tr></thead>
+                  <tbody id="img-tbody">
+                    <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:18px;">暂无数据</td></tr>
+                  </tbody>
                 </table>
-
-                <div class="sentence">
-                    <strong>简单短语：</strong>
-                    <span id="sentenceText">等待连续识别...</span>
-                </div>
-
-                <div class="batch-gallery" id="batchGallery" style="display:none;"></div>
+              </div>
             </div>
-        </aside>
-    </main>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        let mode = 'image';
-        let selectedFile = null;
-        let selectedBatchFiles = [];
-        let currentResult = null;
-        let currentBatchResults = [];
-        let stream = null;
-        let cameraRunning = false;
-        let cameraTimer = null;
-        let cameraInFlight = false;
-        let cameraAnimationId = null;
-        let latestDetections = [];
-        let detectionFrameSize = { width: 0, height: 0 };
-        const cameraSegmentMs = 1200;
-        const cameraDetectMaxSide = 640;
-        const phraseHistory = [];
+    <!-- 批量 -->
+    <section class="section" id="tab-batch">
+      <div class="panel">
+        <div class="head">
+          <h2>批量图片检测</h2>
+          <div class="row">
+            <button class="btn" id="batch-clear">清空</button>
+            <button class="btn success" id="batch-save" disabled>保存全部</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="drop" id="batch-drop">
+            <div class="icon-big">📦</div>
+            <div><strong>拖拽多张图片</strong> 或 <span style="color:var(--primary);text-decoration:underline;">点击选择</span></div>
+            <div class="hint">建议 5 ~ 20 张</div>
+            <input type="file" id="batch-input" accept="image/*" multiple hidden />
+          </div>
 
-        const imageInput = document.getElementById('imageInput');
-        const batchInput = document.getElementById('batchInput');
-        const confSlider = document.getElementById('confSlider');
-        const iouSlider = document.getElementById('iouSlider');
-        const resultImage = document.getElementById('resultImage');
-        const placeholder = document.getElementById('placeholder');
-        const webcamVideo = document.getElementById('webcamVideo');
-        const webcamCanvas = document.getElementById('webcamCanvas');
-        const batchGallery = document.getElementById('batchGallery');
-        const logText = document.getElementById('logText');
+          <div class="stats" style="margin-top: 16px;">
+            <div class="stat"><div class="k">图片数</div><div class="v" id="batch-total">-</div></div>
+            <div class="stat"><div class="k">检测目标</div><div class="v" id="batch-det">-</div></div>
+            <div class="stat"><div class="k">用时</div><div class="v" id="batch-time">-</div></div>
+          </div>
 
-        window.addEventListener('DOMContentLoaded', async () => {
-            imageInput.addEventListener('change', onImageSelected);
-            batchInput.addEventListener('change', onBatchSelected);
-            confSlider.addEventListener('input', () => document.getElementById('confValue').textContent = Number(confSlider.value).toFixed(2));
-            iouSlider.addEventListener('input', () => document.getElementById('iouValue').textContent = Number(iouSlider.value).toFixed(2));
-            try {
-                const res = await fetch('/model_info');
-                const data = await res.json();
-                document.getElementById('deviceInfo').textContent = `YOLOv11 | ${data.device === '0' ? 'GPU' : 'CPU'} | 35类`;
-            } catch {
-                document.getElementById('deviceInfo').textContent = '模型状态未知';
-            }
-        });
+          <div class="batch-grid" id="batch-grid" style="margin-top: 16px;"></div>
+        </div>
+      </div>
+    </section>
 
-        function setMode(nextMode) {
-            if (mode === nextMode) return;
-            mode = nextMode;
-            stopCamera();
-            document.getElementById('imageTab').classList.toggle('active', mode === 'image');
-            document.getElementById('batchTab').classList.toggle('active', mode === 'batch');
-            document.getElementById('cameraTab').classList.toggle('active', mode === 'camera');
-            document.getElementById('imageControl').style.display = mode === 'image' ? 'grid' : 'none';
-            document.getElementById('batchControl').style.display = mode === 'batch' ? 'grid' : 'none';
-            document.getElementById('detectBtn').style.display = mode === 'image' ? 'block' : 'none';
-            document.getElementById('batchBtn').style.display = mode === 'batch' ? 'block' : 'none';
-            document.getElementById('cameraBtn').style.display = mode === 'camera' ? 'block' : 'none';
-            const modeName = mode === 'image' ? '图片' : (mode === 'batch' ? '批量' : '摄像头');
-            document.getElementById('modeValue').textContent = modeName;
-            resetDisplay();
+    <!-- 视频 -->
+    <section class="section" id="tab-video">
+      <div class="panel">
+        <div class="head">
+          <h2>视频文件检测</h2>
+          <div class="row">
+            <button class="btn" id="video-cancel" disabled>取消</button>
+            <button class="btn success" id="video-save" disabled>保存视频</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="drop" id="video-drop">
+            <div class="icon-big">🎬</div>
+            <div><strong>拖拽视频到此处</strong> 或 <span style="color:var(--primary);text-decoration:underline;">点击选择</span></div>
+            <div class="hint">支持 mp4 / avi / mov / mkv / webm</div>
+            <input type="file" id="video-input" accept="video/*" hidden />
+          </div>
+
+          <div class="row" style="margin-top: 14px;">
+            <div class="field" style="min-width: 240px;">
+              <label>跳帧（每 N 帧检测 1 次，越大越快）</label>
+              <div class="slider-row">
+                <input type="range" id="frame-skip" min="1" max="10" step="1" value="1">
+                <span class="val" id="frame-skip-val">1</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress" style="margin-top: 14px;"><span id="video-bar"></span></div>
+          <div class="row" style="margin-top: 8px; justify-content: space-between;">
+            <span id="video-stage" style="color:var(--muted); font-size:13px;">等待上传视频...</span>
+            <span id="video-pct" style="color:var(--text); font-weight:600;">0%</span>
+          </div>
+
+          <div class="stats" style="margin-top: 16px;">
+            <div class="stat"><div class="k">总帧数</div><div class="v" id="video-total">-</div></div>
+            <div class="stat"><div class="k">已处理</div><div class="v" id="video-done">-</div></div>
+            <div class="stat"><div class="k">检测目标</div><div class="v" id="video-det">-</div></div>
+            <div class="stat"><div class="k">用时</div><div class="v" id="video-elapsed">-</div></div>
+          </div>
+
+          <div class="media" style="margin-top: 16px; aspect-ratio: 16/9;">
+            <div class="placeholder" id="video-ph">检测完成后将自动播放结果视频</div>
+            <video id="video-out" controls hidden playsinline></video>
+          </div>
+          <div class="row" style="margin-top: 8px; justify-content: flex-end;">
+            <a id="video-download" class="btn ghost" hidden download>⬇ 下载结果视频</a>
+          </div>
+
+          <div class="panel" style="margin-top: 16px; box-shadow:none;">
+            <div class="head"><h2>类别统计 (Top 10)</h2></div>
+            <div class="body">
+              <div class="table-wrap">
+                <table class="det">
+                  <thead><tr><th>#</th><th>英文</th><th>中文</th><th>出现次数</th></tr></thead>
+                  <tbody id="video-tbody"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:18px;">暂无数据</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 摄像头实时 -->
+    <section class="section" id="tab-camera">
+      <div class="panel">
+        <div class="head">
+          <h2>摄像头实时检测</h2>
+          <div class="row">
+            <button class="btn primary" id="cam-start">开启摄像头</button>
+            <button class="btn danger" id="cam-stop" disabled>停止</button>
+            <button class="btn" id="cam-snapshot" disabled>📸 截图</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="controls">
+            <div class="field">
+              <label>检测间隔 (ms) — 越小越实时，越大越省 CPU</label>
+              <div class="slider-row">
+                <input type="range" id="cam-interval" min="100" max="1500" step="50" value="500">
+                <span class="val" id="cam-interval-val">500</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>发送帧分辨率（短边，越大越准但越慢）</label>
+              <div class="slider-row">
+                <input type="range" id="cam-size" min="480" max="1280" step="80" value="720">
+                <span class="val" id="cam-size-val">720</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>推理 imgsz（YOLO 输入尺寸）</label>
+              <div class="slider-row">
+                <input type="range" id="cam-imgsz" min="416" max="1280" step="32" value="800">
+                <span class="val" id="cam-imgsz-val">800</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>摄像头</label>
+              <select id="cam-device"><option value="">默认设备</option></select>
+            </div>
+            <div class="field">
+              <label>亮度补偿（暗光时调高）</label>
+              <div class="slider-row">
+                <input type="range" id="cam-bright" min="-50" max="80" step="5" value="0">
+                <span class="val" id="cam-bright-val">0</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>对比度</label>
+              <div class="slider-row">
+                <input type="range" id="cam-contrast" min="50" max="180" step="5" value="100">
+                <span class="val" id="cam-contrast-val">100</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>水平翻转 / 仅检测中央区域</label>
+              <div class="row">
+                <label style="display:flex;gap:6px;align-items:center;color:var(--text-soft);font-weight:500;">
+                  <input type="checkbox" id="cam-mirror"> 镜像
+                </label>
+                <label style="display:flex;gap:6px;align-items:center;color:var(--text-soft);font-weight:500;">
+                  <input type="checkbox" id="cam-center"> 中央裁剪
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <label>语句拼接稳定性（连续帧达到次数才记录）</label>
+              <div class="slider-row">
+                <input type="range" id="phrase-stab" min="1" max="6" step="1" value="3">
+                <span class="val" id="phrase-stab-val">3</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px; padding: 12px 14px; background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-sm); font-size: 12.5px; color: #92400e; line-height: 1.7;">
+            💡 <strong>识别效果差时的建议</strong>：
+            ① 让 <strong>双手出现在画面中央</strong>，距离摄像头 30~80cm；
+            ② 暗光时调高 <strong>亮度补偿</strong> 到 30~50；
+            ③ 把 <strong>置信度</strong>（顶部）调到 <strong>0.40 ~ 0.50</strong> 可减少把脸误识别为手语；
+            ④ 推理 imgsz 越大越准但越慢，CPU 建议 <strong>640~800</strong>。
+          </div>
+
+          <div class="live-stage" id="live-stage" style="margin-top: 16px;">
+            <div class="placeholder" id="cam-ph">摄像头未开启</div>
+            <video id="cam-video" autoplay muted playsinline hidden></video>
+            <canvas id="cam-overlay" hidden></canvas>
+            <div class="overlay-info" id="cam-info" hidden>
+              <span class="dot"></span>
+              <span id="cam-fps">FPS 0</span>
+              <span style="color:#cbd5e1">·</span>
+              <span id="cam-latency">-- ms</span>
+              <span style="color:#cbd5e1">·</span>
+              <span id="cam-objects">0 个目标</span>
+            </div>
+          </div>
+
+          <div class="stats" style="margin-top: 16px;">
+            <div class="stat"><div class="k">推理用时</div><div class="v" id="cam-time">-</div></div>
+            <div class="stat"><div class="k">本次目标数</div><div class="v" id="cam-count">-</div></div>
+            <div class="stat"><div class="k">最近识别</div><div class="v small" id="cam-last">-</div></div>
+            <div class="stat"><div class="k">总识别次数</div><div class="v" id="cam-total">0</div></div>
+          </div>
+
+          <!-- 拼接句子 -->
+          <div class="panel" style="margin-top: 16px; box-shadow:none;">
+            <div class="head">
+              <h2>识别句子拼接</h2>
+              <div class="row">
+                <button class="btn" id="phrase-clear">清空</button>
+                <button class="btn ghost" id="phrase-speak">🔊 朗读</button>
+                <button class="btn ghost" id="phrase-copy">📋 复制</button>
+              </div>
+            </div>
+            <div class="body">
+              <div class="phrase-strip" id="phrase-strip">
+                <span class="ph-empty">摄像头开启后，连续稳定识别到的手语会自动追加在这里</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 最近识别 -->
+          <div class="panel" style="margin-top: 16px; box-shadow:none;">
+            <div class="head">
+              <h2>最近识别记录</h2>
+              <button class="btn" id="recent-clear">清空</button>
+            </div>
+            <div class="body">
+              <div class="recent" id="recent">
+                <div class="row-item" style="justify-content:center;color:var(--muted);">暂无记录</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 关于 -->
+    <section class="section" id="tab-about">
+      <div class="panel">
+        <div class="head"><h2>模型与类别</h2></div>
+        <div class="body">
+          <div class="stats">
+            <div class="stat"><div class="k">模型</div><div class="v small" id="about-weights">-</div></div>
+            <div class="stat"><div class="k">设备</div><div class="v small" id="about-device">-</div></div>
+            <div class="stat"><div class="k">类别数</div><div class="v" id="about-nc">-</div></div>
+          </div>
+
+          <div class="table-wrap" style="margin-top: 16px;">
+            <table class="det">
+              <thead><tr><th>类别 ID</th><th>英文</th></tr></thead>
+              <tbody id="about-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<canvas id="hidden-canvas" hidden></canvas>
+
+<script>
+/* ===== utils ===== */
+const $  = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+function toast(msg, type = '') {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + type;
+  clearTimeout(window.__t);
+  window.__t = setTimeout(() => el.className = 'toast', 2200);
+}
+
+/* ===== tabs ===== */
+$$('#nav .item').forEach(it => {
+  it.addEventListener('click', () => {
+    $$('#nav .item').forEach(x => x.classList.remove('active'));
+    it.classList.add('active');
+    const t = it.dataset.tab;
+    $$('.section').forEach(s => s.classList.remove('active'));
+    $('#tab-' + t).classList.add('active');
+    if (t !== 'camera') stopCamera();
+  });
+});
+
+/* ===== sliders fill ===== */
+function bindSlider(el, valEl, fmt = (v) => v) {
+  function refresh() {
+    const min = +el.min, max = +el.max;
+    const p = ((+el.value - min) / (max - min)) * 100;
+    el.style.setProperty('--p', p + '%');
+    valEl.textContent = fmt(el.value);
+  }
+  el.addEventListener('input', refresh);
+  refresh();
+}
+const confEl = $('#conf'), iouEl = $('#iou');
+bindSlider(confEl, $('#conf-val'), v => parseFloat(v).toFixed(2));
+bindSlider(iouEl,  $('#iou-val'),  v => parseFloat(v).toFixed(2));
+bindSlider($('#frame-skip'), $('#frame-skip-val'));
+bindSlider($('#cam-interval'), $('#cam-interval-val'));
+bindSlider($('#cam-size'), $('#cam-size-val'));
+bindSlider($('#cam-imgsz'), $('#cam-imgsz-val'));
+bindSlider($('#cam-bright'), $('#cam-bright-val'));
+bindSlider($('#cam-contrast'), $('#cam-contrast-val'), v => v + '%');
+bindSlider($('#phrase-stab'), $('#phrase-stab-val'));
+function getConf() { return parseFloat(confEl.value); }
+function getIoU()  { return parseFloat(iouEl.value); }
+
+/* ===== drag-drop ===== */
+function bindDrop(zone, input, onFile, multiple = false) {
+  zone.addEventListener('click', () => input.click());
+  zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('hover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('hover'));
+  zone.addEventListener('drop', (e) => {
+    e.preventDefault(); zone.classList.remove('hover');
+    if (e.dataTransfer.files && e.dataTransfer.files.length) {
+      onFile(multiple ? e.dataTransfer.files : e.dataTransfer.files[0]);
+    }
+  });
+  input.addEventListener('change', () => {
+    if (!input.files.length) return;
+    onFile(multiple ? input.files : input.files[0]);
+  });
+}
+
+/* ===== model info ===== */
+async function loadModelInfo() {
+  try {
+    const r = await fetch('/model_info').then(x => x.json());
+    if (!r.success) return;
+    $('#device-tag').textContent = '设备: ' + (r.device === '0' ? 'GPU 0' : 'CPU');
+    $('#about-weights').textContent = r.weights.split(/[\\/]/).pop();
+    $('#about-device').textContent = r.device === '0' ? 'GPU (CUDA)' : 'CPU';
+    const classes = r.classes || {};
+    const ids = Object.keys(classes);
+    $('#about-nc').textContent = ids.length;
+    $('#about-tbody').innerHTML = ids.map(id =>
+      `<tr><td><span class="badge gray">${id}</span></td><td>${classes[id]}</td></tr>`
+    ).join('');
+  } catch (e) { console.error(e); }
+}
+loadModelInfo();
+
+/* ===== image ===== */
+let lastImageResult = null;
+const imgDrop = $('#img-drop'), imgInput = $('#img-input');
+bindDrop(imgDrop, imgInput, async (file) => {
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  $('#img-src').src = url;
+  $('#img-src').hidden = false; $('#img-src-ph').hidden = true;
+
+  const fd = new FormData();
+  fd.append('image', file);
+  fd.append('conf', getConf());
+  fd.append('iou', getIoU());
+  toast('正在检测...');
+  try {
+    const r = await fetch('/detect_image', { method: 'POST', body: fd }).then(x => x.json());
+    if (r.error) { toast(r.error, 'err'); return; }
+    lastImageResult = r;
+    $('#img-out').src = r.result_image;
+    $('#img-out').hidden = false; $('#img-out-ph').hidden = true;
+    $('#img-time').textContent = r.time + ' s';
+    $('#img-count').textContent = r.count;
+    $('#img-device').textContent = r.device === '0' ? 'GPU' : 'CPU';
+    const tb = $('#img-tbody');
+    tb.innerHTML = r.detections.length
+      ? r.detections.map(d => `
+          <tr><td>${d.id}</td><td>${d.class}</td>
+          <td><span class="badge">${d.class_cn}</span></td>
+          <td><span class="badge green">${d.confidence}%</span></td>
+          <td><code>${d.bbox.join(', ')}</code></td></tr>`).join('')
+      : '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:18px;">未检测到目标</td></tr>';
+    $('#img-save').disabled = false;
+    toast('检测完成', 'ok');
+  } catch (e) { toast('检测失败: ' + e.message, 'err'); }
+});
+$('#img-clear').addEventListener('click', () => {
+  $('#img-src').hidden = true; $('#img-src-ph').hidden = false;
+  $('#img-out').hidden = true; $('#img-out-ph').hidden = false;
+  $('#img-tbody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:18px;">暂无数据</td></tr>';
+  $('#img-time').textContent = '-'; $('#img-count').textContent = '-'; $('#img-device').textContent = '-';
+  $('#img-save').disabled = true; lastImageResult = null;
+});
+$('#img-save').addEventListener('click', async () => {
+  if (!lastImageResult) return;
+  const r = await fetch('/save_detect_result', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ result_path: lastImageResult.result_path, save_name: 'image_' + Date.now() + '.jpg' })
+  }).then(x => x.json());
+  r.success ? toast('已保存: ' + r.save_path, 'ok') : toast(r.error || '保存失败', 'err');
+});
+
+/* ===== batch ===== */
+let lastBatchResults = [];
+bindDrop($('#batch-drop'), $('#batch-input'), async (files) => {
+  if (!files || !files.length) return;
+  const fd = new FormData();
+  for (const f of files) fd.append('images', f);
+  fd.append('conf', getConf()); fd.append('iou', getIoU());
+  toast('正在批量检测 ' + files.length + ' 张...');
+  try {
+    const r = await fetch('/detect_batch', { method: 'POST', body: fd }).then(x => x.json());
+    if (r.error) { toast(r.error, 'err'); return; }
+    lastBatchResults = r.results || [];
+    $('#batch-total').textContent = r.total_images;
+    $('#batch-det').textContent = r.total_detections;
+    $('#batch-time').textContent = r.time + ' s';
+    $('#batch-grid').innerHTML = lastBatchResults.map(item => {
+      if (item.error) {
+        return `<div class="bcard"><div class="info"><span class="fname" title="${item.file}">${item.file}</span></div><div class="err">${item.error}</div></div>`;
+      }
+      const dets = item.detections || [];
+      const detsHtml = dets.length
+        ? dets.map((d, i) => `
+            <div class="det-row">
+              <div class="lbl">
+                <span class="badge gray">#${i+1}</span>
+                <span class="badge">${d.class_cn}</span>
+                <span class="en">${d.class}</span>
+              </div>
+              <span class="badge green">${d.confidence}%</span>
+            </div>`).join('')
+        : '<div class="empty">未检测到目标</div>';
+      // 文字说明
+      let summary = '';
+      if (!dets.length) {
+        summary = `本图未检测到任何手语目标。可能原因：手部不在画面中、置信度阈值偏高（当前 ${(getConf()*100).toFixed(0)}%）、或图像质量较差。`;
+      } else {
+        const counter = {};
+        let maxConf = 0, maxName = '';
+        for (const d of dets) {
+          const k = d.class_cn || d.class;
+          counter[k] = (counter[k] || 0) + 1;
+          if (d.confidence > maxConf) { maxConf = d.confidence; maxName = k; }
         }
+        const top = Object.entries(counter).sort((a,b) => b[1]-a[1]).slice(0, 3)
+          .map(([k, v]) => v > 1 ? `${k}×${v}` : k).join('、');
+        summary = `本图共检测到 <strong>${dets.length}</strong> 个目标，主要为 <strong>${top}</strong>；最高置信度为 <strong>${maxName}</strong>（${maxConf.toFixed(1)}%），用时 ${item.time}s。`;
+      }
+      return `
+        <div class="bcard">
+          <div class="pic">
+            <img src="${item.image_b64}" alt="${item.file}">
+            <div class="badge-pill">${item.count} 个目标 · ${item.time}s</div>
+          </div>
+          <div class="info">
+            <span class="fname" title="${item.file}">${item.file}</span>
+            <span class="fmeta">${item.device === '0' ? 'GPU' : 'CPU'}</span>
+          </div>
+          <div style="padding: 10px 14px; font-size: 12.5px; color: var(--text-soft); background: linear-gradient(135deg, #f8fafc, #eef2ff); border-bottom: 1px solid var(--line); line-height: 1.6;">
+            ${summary}
+          </div>
+          <div class="dets">${detsHtml}</div>
+        </div>`;
+    }).join('');
+    $('#batch-save').disabled = false;
+    toast('批量检测完成', 'ok');
+  } catch (e) { toast('批量检测失败: ' + e.message, 'err'); }
+}, true);
+$('#batch-clear').addEventListener('click', () => {
+  $('#batch-grid').innerHTML = '';
+  $('#batch-total').textContent = '-'; $('#batch-det').textContent = '-'; $('#batch-time').textContent = '-';
+  $('#batch-save').disabled = true; lastBatchResults = [];
+});
+$('#batch-save').addEventListener('click', async () => {
+  if (!lastBatchResults.length) return;
+  const r = await fetch('/save_batch_results', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ results: lastBatchResults })
+  }).then(x => x.json());
+  r.success ? toast(`已保存 ${r.saved_count} 张到 ${r.save_path}`, 'ok') : toast(r.error || '保存失败', 'err');
+});
 
-        function onImageSelected(event) {
-            selectedFile = event.target.files[0] || null;
-            if (!selectedFile) return;
-            const reader = new FileReader();
-            reader.onload = e => {
-                placeholder.style.display = 'none';
-                webcamCanvas.style.display = 'none';
-                resultImage.style.display = 'block';
-                resultImage.src = e.target.result;
-            };
-            reader.readAsDataURL(selectedFile);
-            writeLog(`已选择图片：${selectedFile.name}`);
-        }
+/* ===== video ===== */
+let videoTaskId = null, videoPoll = null, lastVideoName = null;
+bindDrop($('#video-drop'), $('#video-input'), async (file) => {
+  if (!file) return;
+  const fd = new FormData();
+  fd.append('video', file);
+  fd.append('conf', getConf());
+  fd.append('iou', getIoU());
+  fd.append('frame_skip', $('#frame-skip').value);
+  resetVideoUI();
+  $('#video-stage').textContent = '上传中...';
+  try {
+    const r = await fetch('/detect_video', { method: 'POST', body: fd }).then(x => x.json());
+    if (r.error) { toast(r.error, 'err'); return; }
+    videoTaskId = r.task_id;
+    $('#video-cancel').disabled = false;
+    $('#video-stage').textContent = '正在检测...';
+    pollVideoStatus();
+  } catch (e) { toast('上传失败: ' + e.message, 'err'); }
+});
+function resetVideoUI() {
+  $('#video-bar').style.width = '0%'; $('#video-pct').textContent = '0%';
+  $('#video-total').textContent = '-'; $('#video-done').textContent = '-';
+  $('#video-det').textContent = '-'; $('#video-elapsed').textContent = '-';
+  $('#video-out').hidden = true; $('#video-ph').hidden = false;
+  $('#video-out').removeAttribute('src');
+  $('#video-download').hidden = true; $('#video-download').removeAttribute('href');
+  $('#video-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:18px;">暂无数据</td></tr>';
+  $('#video-save').disabled = true; lastVideoName = null;
+}
+function pollVideoStatus() {
+  if (!videoTaskId) return;
+  if (videoPoll) clearInterval(videoPoll);
+  videoPoll = setInterval(async () => {
+    try {
+      const r = await fetch('/video_status/' + videoTaskId).then(x => x.json());
+      if (!r.success) return;
+      $('#video-bar').style.width = (r.progress || 0) + '%';
+      $('#video-pct').textContent = (r.progress || 0).toFixed(1) + '%';
+      $('#video-total').textContent = r.total_frames || '-';
+      $('#video-done').textContent = r.processed_frames || '-';
+      $('#video-det').textContent = r.detections || 0;
+      if (r.status === 'done') {
+        clearInterval(videoPoll); videoPoll = null;
+        $('#video-stage').textContent = '检测完成';
+        $('#video-elapsed').textContent = (r.elapsed || 0) + ' s';
+        $('#video-out').src = r.video_url; $('#video-out').hidden = false; $('#video-ph').hidden = true;
+        const dl = $('#video-download'); dl.href = r.video_url; dl.hidden = false;
+        lastVideoName = r.video_name;
+        $('#video-save').disabled = false;
+        $('#video-cancel').disabled = true;
+        const tc = r.top_classes || [];
+        $('#video-tbody').innerHTML = tc.length
+          ? tc.map((c, i) => `<tr><td>${i+1}</td><td>${c.class}</td><td><span class="badge">${c.class_cn}</span></td><td><span class="badge green">${c.count}</span></td></tr>`).join('')
+          : '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:18px;">未检测到目标</td></tr>';
+        toast('视频检测完成', 'ok');
+      } else if (r.status === 'error') {
+        clearInterval(videoPoll); videoPoll = null;
+        $('#video-stage').textContent = '错误: ' + (r.error || '');
+        $('#video-cancel').disabled = true;
+        toast('检测失败: ' + (r.error || ''), 'err');
+      }
+    } catch (e) {}
+  }, 700);
+}
+$('#video-cancel').addEventListener('click', async () => {
+  if (!videoTaskId) return;
+  await fetch('/video_cancel/' + videoTaskId, { method: 'POST' });
+  toast('已发送取消请求', 'warn');
+});
+$('#video-save').addEventListener('click', async () => {
+  if (!lastVideoName) return;
+  const r = await fetch('/save_video_result', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ video_name: lastVideoName })
+  }).then(x => x.json());
+  r.success ? toast('已保存: ' + r.save_path, 'ok') : toast(r.error || '保存失败', 'err');
+});
 
-        function onBatchSelected(event) {
-            selectedBatchFiles = Array.from(event.target.files || []);
-            resetDisplay();
-            if (!selectedBatchFiles.length) return;
-            placeholder.style.display = 'none';
-            batchGallery.style.display = 'grid';
-            batchGallery.innerHTML = selectedBatchFiles.slice(0, 12).map(file => `
-                <div class="batch-card">
-                    <div>${escapeHtml(file.name)}<br>等待检测</div>
-                </div>
-            `).join('');
-            const extra = selectedBatchFiles.length > 12 ? `，另有 ${selectedBatchFiles.length - 12} 张未预览` : '';
-            writeLog(`已选择 ${selectedBatchFiles.length} 张图片${extra}。`);
-        }
+/* ===== camera realtime ===== */
+const camVideo = $('#cam-video'), camOverlay = $('#cam-overlay');
+const camStartBtn = $('#cam-start'), camStopBtn = $('#cam-stop'), camSnapBtn = $('#cam-snapshot');
+let camStream = null, camLoopActive = false, camBusy = false;
+let camTotalDetections = 0;
+let lastFrameBlob = null;
+let phraseHistory = [];   // 拼接的句子
+let recentLog = [];       // 最近识别记录
+let stableCounter = { label: null, count: 0 };
+let fpsCounter = { last: performance.now(), frames: 0, fps: 0 };
 
-        async function runImageDetection() {
-            if (!selectedFile) {
-                writeLog('请先选择一张图片。', true);
-                return;
-            }
-            await detectBlob(selectedFile, true);
-        }
+// 设备列表
+async function listCameras() {
+  try {
+    const devs = await navigator.mediaDevices.enumerateDevices();
+    const sel = $('#cam-device');
+    sel.innerHTML = '<option value="">默认设备</option>' +
+      devs.filter(d => d.kind === 'videoinput')
+          .map((d, i) => `<option value="${d.deviceId}">${d.label || ('摄像头 ' + (i+1))}</option>`)
+          .join('');
+  } catch (e) {}
+}
+listCameras();
 
-        async function runBatchDetection() {
-            if (!selectedBatchFiles.length) {
-                writeLog('请先选择一组图片。', true);
-                return;
-            }
-            const form = new FormData();
-            selectedBatchFiles.forEach(file => form.append('images', file, file.name));
-            form.append('conf', confSlider.value);
-            form.append('iou', iouSlider.value);
-            setBusy(true);
-            try {
-                const res = await fetch('/detect_batch', { method: 'POST', body: form });
-                const data = await res.json();
-                if (!data.success) throw new Error(data.error || '批量检测失败');
-                currentResult = null;
-                currentBatchResults = data.results || [];
-                displayBatchResults(data);
-                document.getElementById('saveBtn').disabled = currentBatchResults.length === 0;
-                writeLog(`批量测试完成：${data.total_images} 张图片，${data.total_detections} 个目标，总耗时 ${data.time}s`);
-            } catch (err) {
-                writeLog(err.message, true);
-            } finally {
-                setBusy(false);
-            }
-        }
+camStartBtn.addEventListener('click', startCamera);
+camStopBtn.addEventListener('click', stopCamera);
+camSnapBtn.addEventListener('click', snapshot);
+$('#phrase-clear').addEventListener('click', () => { phraseHistory = []; renderPhrase(); });
+$('#phrase-copy').addEventListener('click', () => {
+  const text = phraseHistory.map(w => w.cn).join(' · ');
+  if (!text) return toast('当前无句子', 'warn');
+  navigator.clipboard.writeText(text).then(() => toast('已复制: ' + text, 'ok'));
+});
+$('#phrase-speak').addEventListener('click', () => {
+  const text = phraseHistory.map(w => w.cn).join('。');
+  if (!text) return toast('当前无句子', 'warn');
+  if (!('speechSynthesis' in window)) return toast('浏览器不支持语音', 'err');
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+});
+$('#recent-clear').addEventListener('click', () => { recentLog = []; renderRecent(); });
 
-        async function toggleCamera() {
-            if (cameraRunning) {
-                stopCamera();
-                return;
-            }
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: { width: { ideal: 960 }, height: { ideal: 720 }, facingMode: 'user' },
-                    audio: false
-                });
-                webcamVideo.srcObject = stream;
-                await webcamVideo.play();
-                cameraRunning = true;
-                document.getElementById('cameraBtn').textContent = '停止摄像头';
-                placeholder.style.display = 'none';
-                resultImage.style.display = 'none';
-                webcamCanvas.style.display = 'block';
-                startCameraLoop();
-                startBackgroundSegmentRecognition();
-                writeLog('摄像头已开启，后台按时间片分段识别。');
-            } catch (err) {
-                writeLog(`无法打开摄像头：${err.message}`, true);
-            }
-        }
+async function startCamera() {
+  try {
+    const deviceId = $('#cam-device').value;
+    const constraints = {
+      video: deviceId ? { deviceId: { exact: deviceId }, width: 1280, height: 720 } : { width: 1280, height: 720 },
+      audio: false,
+    };
+    camStream = await navigator.mediaDevices.getUserMedia(constraints);
+    camVideo.srcObject = camStream;
+    camVideo.hidden = false; camOverlay.hidden = false; $('#cam-ph').hidden = true;
+    $('#cam-info').hidden = false;
+    camStartBtn.disabled = true; camStopBtn.disabled = false; camSnapBtn.disabled = false;
+    listCameras();   // 权限后能拿到设备名
+    camLoopActive = true;
+    detectionLoop();
+    fpsTick();
+  } catch (e) { toast('无法打开摄像头: ' + e.message, 'err'); }
+}
+function stopCamera() {
+  camLoopActive = false;
+  if (camStream) { camStream.getTracks().forEach(t => t.stop()); camStream = null; }
+  camVideo.hidden = true; camOverlay.hidden = true; $('#cam-info').hidden = true;
+  $('#cam-ph').hidden = false;
+  camStartBtn.disabled = false; camStopBtn.disabled = true; camSnapBtn.disabled = true;
+  // clear overlay
+  const c = camOverlay.getContext('2d');
+  c && c.clearRect(0, 0, camOverlay.width, camOverlay.height);
+}
 
-        function stopCamera() {
-            cameraRunning = false;
-            if (cameraTimer) clearInterval(cameraTimer);
-            cameraTimer = null;
-            if (cameraAnimationId) cancelAnimationFrame(cameraAnimationId);
-            cameraAnimationId = null;
-            cameraInFlight = false;
-            latestDetections = [];
-            detectionFrameSize = { width: 0, height: 0 };
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-            }
-            webcamVideo.srcObject = null;
-            document.getElementById('cameraBtn').textContent = '打开摄像头';
-        }
+async function detectionLoop() {
+  if (!camLoopActive) return;
+  const interval = parseInt($('#cam-interval').value, 10);
+  if (!camBusy && camVideo.videoWidth) {
+    camBusy = true;
+    try {
+      const cap = await captureFrame();
+      if (cap) {
+        const t0 = performance.now();
+        const imgsz = $('#cam-imgsz').value;
+        const r = await fetch(`/detect_frame?conf=${getConf()}&iou=${getIoU()}&imgsz=${imgsz}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/octet-stream' },
+          body: cap.blob,
+        }).then(x => x.json());
+        const latency = Math.round(performance.now() - t0);
+        if (r && r.success) handleDetections(r, latency, cap);
+      }
+    } catch (e) { /* ignore single frame error */ }
+    camBusy = false;
+    fpsCounter.frames++;
+  }
+  setTimeout(detectionLoop, interval);
+}
 
-        function startCameraLoop() {
-            const canvas = webcamCanvas;
-            const ctx = canvas.getContext('2d');
-            const draw = () => {
-                if (!cameraRunning) return;
-                canvas.width = webcamVideo.videoWidth || 640;
-                canvas.height = webcamVideo.videoHeight || 480;
-                ctx.drawImage(webcamVideo, 0, 0, canvas.width, canvas.height);
-                drawDetectionOverlay(ctx, canvas);
-                cameraAnimationId = requestAnimationFrame(draw);
-            };
-            draw();
-        }
+function fpsTick() {
+  if (!camLoopActive) return;
+  const now = performance.now();
+  const dt = now - fpsCounter.last;
+  if (dt >= 1000) {
+    fpsCounter.fps = (fpsCounter.frames * 1000 / dt).toFixed(1);
+    fpsCounter.frames = 0; fpsCounter.last = now;
+    $('#cam-fps').textContent = 'FPS ' + fpsCounter.fps;
+  }
+  requestAnimationFrame(fpsTick);
+}
 
-        function startBackgroundSegmentRecognition() {
-            if (!cameraRunning) return;
-            captureSegmentForDetection();
-            cameraTimer = setInterval(captureSegmentForDetection, cameraSegmentMs);
-        }
+async function captureFrame() {
+  if (!camVideo.videoWidth) return null;
+  const targetShort = parseInt($('#cam-size').value, 10);
+  const mirror = $('#cam-mirror').checked;
+  const center = $('#cam-center').checked;
+  const bright = parseInt($('#cam-bright').value, 10);   // -50..80
+  const contrast = parseInt($('#cam-contrast').value, 10); // 50..180
 
-        function captureSegmentForDetection() {
-            if (!cameraRunning || cameraInFlight || !webcamVideo.videoWidth) return;
-            cameraInFlight = true;
-            const sourceWidth = webcamVideo.videoWidth || 640;
-            const sourceHeight = webcamVideo.videoHeight || 480;
-            const scale = Math.min(cameraDetectMaxSide / sourceWidth, cameraDetectMaxSide / sourceHeight, 1);
-            const captureWidth = Math.max(1, Math.round(sourceWidth * scale));
-            const captureHeight = Math.max(1, Math.round(sourceHeight * scale));
-            const captureCanvas = document.createElement('canvas');
-            captureCanvas.width = captureWidth;
-            captureCanvas.height = captureHeight;
-            captureCanvas.getContext('2d').drawImage(webcamVideo, 0, 0, captureWidth, captureHeight);
-            captureCanvas.toBlob(async blob => {
-                if (!blob) {
-                    cameraInFlight = false;
-                    return;
-                }
-                await detectBlob(blob, false, {
-                    background: true,
-                    frameWidth: captureWidth,
-                    frameHeight: captureHeight
-                });
-            }, 'image/jpeg', 0.78);
-        }
+  const vw = camVideo.videoWidth, vh = camVideo.videoHeight;
+  // 在源视频坐标系里确定要送出的区域（中央 70%）
+  let srcX = 0, srcY = 0, srcW = vw, srcH = vh;
+  if (center) {
+    const ratio = 0.7;
+    srcW = Math.round(vw * ratio);
+    srcH = Math.round(vh * ratio);
+    srcX = Math.round((vw - srcW) / 2);
+    srcY = Math.round((vh - srcH) / 2);
+  }
+  const scale = targetShort / Math.min(srcW, srcH);
+  const cw = Math.round(srcW * scale), ch = Math.round(srcH * scale);
+  const canvas = $('#hidden-canvas');
+  canvas.width = cw; canvas.height = ch;
+  const ctx = canvas.getContext('2d');
+  ctx.save();
+  ctx.filter = `brightness(${100 + bright}%) contrast(${contrast}%)`;
+  if (mirror) { ctx.translate(cw, 0); ctx.scale(-1, 1); }
+  ctx.drawImage(camVideo, srcX, srcY, srcW, srcH, 0, 0, cw, ch);
+  ctx.restore();
+  const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.85));
+  return { blob, srcX, srcY, srcW, srcH, sentW: cw, sentH: ch, mirror };
+}
 
-        function drawDetectionOverlay(ctx, canvas) {
-            if (!latestDetections.length || !detectionFrameSize.width || !detectionFrameSize.height) return;
-            const sx = canvas.width / detectionFrameSize.width;
-            const sy = canvas.height / detectionFrameSize.height;
-            ctx.save();
-            ctx.lineWidth = 3;
-            ctx.font = '18px Microsoft YaHei, Arial';
-            for (const det of latestDetections) {
-                const [x1, y1, x2, y2] = det.bbox;
-                const left = x1 * sx;
-                const top = y1 * sy;
-                const width = (x2 - x1) * sx;
-                const height = (y2 - y1) * sy;
-                const text = `${det.class} | ${det.class_cn} ${det.confidence}%`;
-                ctx.strokeStyle = '#22c55e';
-                ctx.fillStyle = '#22c55e';
-                ctx.strokeRect(left, top, width, height);
-                const textWidth = Math.min(ctx.measureText(text).width + 14, canvas.width - left - 4);
-                const labelTop = Math.max(0, top - 28);
-                ctx.fillRect(left, labelTop, textWidth, 26);
-                ctx.fillStyle = '#ffffff';
-                ctx.fillText(text, left + 7, labelTop + 19);
-            }
-            ctx.restore();
-        }
+const PALETTE = ['#6366f1', '#22c55e', '#06b6d4', '#f59e0b', '#ef4444', '#a855f7', '#ec4899', '#14b8a6'];
+function colorOf(label) {
+  let h = 0; for (const c of label) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
 
-        async function detectBlob(blob, updateImage, options = {}) {
-            const form = new FormData();
-            form.append('image', blob, 'frame.jpg');
-            form.append('conf', confSlider.value);
-            form.append('iou', iouSlider.value);
-            if (!options.background) setBusy(true);
-            try {
-                const res = await fetch('/detect_image', { method: 'POST', body: form });
-                const data = await res.json();
-                if (!data.success) throw new Error(data.error || '检测失败');
-                currentResult = data;
-                currentBatchResults = [];
-                if (options.background) {
-                    latestDetections = data.detections || [];
-                    detectionFrameSize = {
-                        width: options.frameWidth || webcamVideo.videoWidth || 640,
-                        height: options.frameHeight || webcamVideo.videoHeight || 480
-                    };
-                } else if (updateImage) {
-                    placeholder.style.display = 'none';
-                    resultImage.style.display = 'block';
-                    resultImage.src = data.result_image;
-                }
-                displayResults(data);
-                document.getElementById('saveBtn').disabled = false;
-                if (options.background) {
-                    writeLog(`后台分段识别：${data.count} 个目标，耗时 ${data.time}s`);
-                } else {
-                    writeLog(`检测完成：${data.count} 个目标，耗时 ${data.time}s`);
-                }
-            } catch (err) {
-                writeLog(err.message, true);
-            } finally {
-                if (options.background) cameraInFlight = false;
-                if (!options.background) setBusy(false);
-            }
-        }
+function handleDetections(r, latency, cap) {
+  // r.bbox 是发送帧坐标系 (sentW × sentH)，需要先映射回 完整视频坐标 (vw × vh)，再到 display
+  const sentW = r.width, sentH = r.height;
+  const stage = $('#live-stage');
+  const rect = stage.getBoundingClientRect();
+  const vw = camVideo.videoWidth, vh = camVideo.videoHeight;
+  const vRatio = vw / vh;
+  const sRatio = rect.width / rect.height;
+  let dispW, dispH, offX = 0, offY = 0;
+  if (vRatio > sRatio) {
+    dispW = rect.width; dispH = rect.width / vRatio; offY = (rect.height - dispH) / 2;
+  } else {
+    dispH = rect.height; dispW = rect.height * vRatio; offX = (rect.width - dispW) / 2;
+  }
+  camOverlay.width = rect.width; camOverlay.height = rect.height;
+  const ctx = camOverlay.getContext('2d');
+  ctx.clearRect(0, 0, camOverlay.width, camOverlay.height);
 
-        function displayResults(data) {
-            document.getElementById('countValue').textContent = data.count;
-            document.getElementById('timeValue').textContent = data.time ?? '--';
-            batchGallery.style.display = 'none';
-            const tbody = document.getElementById('resultTable');
-            if (!data.detections || data.detections.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);">未检测到目标</td></tr>';
-                return;
-            }
-            tbody.innerHTML = data.detections.map(d => `
-                <tr>
-                    <td>${d.id}</td>
-                    <td><span class="tag">${escapeHtml(d.class)}</span></td>
-                    <td>${escapeHtml(d.class_cn)}</td>
-                    <td>${d.confidence}%</td>
-                </tr>
-            `).join('');
-            updatePhrase(data.detections[0]);
-        }
+  // 发送帧 -> 视频源坐标
+  const sxV = (cap?.srcW ?? sentW) / sentW;
+  const syV = (cap?.srcH ?? sentH) / sentH;
+  const offSrcX = cap?.srcX ?? 0;
+  const offSrcY = cap?.srcY ?? 0;
+  const isMirrored = !!cap?.mirror;
+  // 视频源 -> 显示坐标
+  const sxD = dispW / vw, syD = dispH / vh;
 
-        function displayBatchResults(data) {
-            document.getElementById('countValue').textContent = data.total_detections;
-            document.getElementById('timeValue').textContent = data.time ?? '--';
-            resultImage.style.display = 'none';
-            webcamCanvas.style.display = 'none';
-            placeholder.style.display = 'none';
-            batchGallery.style.display = 'grid';
+  ctx.lineWidth = 3;
+  ctx.font = '600 14px "Microsoft YaHei", system-ui, sans-serif';
+  ctx.textBaseline = 'top';
 
-            const rows = [];
-            for (const item of data.results || []) {
-                if (item.error) {
-                    rows.push(`<tr><td>${escapeHtml(item.file)}</td><td colspan="3" class="err">${escapeHtml(item.error)}</td></tr>`);
-                    continue;
-                }
-                if (!item.detections || item.detections.length === 0) {
-                    rows.push(`<tr><td>${escapeHtml(item.file)}</td><td colspan="3" style="color:var(--muted);">未检测到目标</td></tr>`);
-                    continue;
-                }
-                for (const det of item.detections) {
-                    rows.push(`
-                        <tr>
-                            <td>${escapeHtml(item.file)}</td>
-                            <td><span class="tag">${escapeHtml(det.class)}</span></td>
-                            <td>${escapeHtml(det.class_cn)}</td>
-                            <td>${det.confidence}%</td>
-                        </tr>
-                    `);
-                }
-            }
-            document.getElementById('resultTable').innerHTML = rows.length
-                ? rows.join('')
-                : '<tr><td colspan="4" style="text-align:center;color:var(--muted);">暂无批量检测结果</td></tr>';
+  for (const d of r.detections) {
+    let [x1, y1, x2, y2] = d.bbox;
+    // 1) 镜像还原
+    if (isMirrored) { const nx1 = sentW - x2; const nx2 = sentW - x1; x1 = nx1; x2 = nx2; }
+    // 2) 帧坐标 -> 视频源坐标
+    let vx1 = offSrcX + x1 * sxV;
+    let vy1 = offSrcY + y1 * syV;
+    let vx2 = offSrcX + x2 * sxV;
+    let vy2 = offSrcY + y2 * syV;
+    // 3) 视频源 -> 显示坐标
+    const X = offX + vx1 * sxD;
+    const Y = offY + vy1 * syD;
+    const W = (vx2 - vx1) * sxD;
+    const H = (vy2 - vy1) * syD;
 
-            batchGallery.innerHTML = (data.results || []).slice(0, 12).map(item => {
-                const top = item.detections && item.detections[0];
-                const summary = item.error
-                    ? item.error
-                    : (top ? `${top.class_cn} / ${top.class} ${top.confidence}%` : '未检测到目标');
-                const image = item.image_b64
-                    ? `<img src="${item.image_b64}" alt="${escapeHtml(item.file)}">`
-                    : '';
-                return `
-                    <div class="batch-card">
-                        ${image}
-                        <div><strong>${escapeHtml(item.file)}</strong><br>${escapeHtml(summary)}</div>
-                    </div>
-                `;
-            }).join('');
+    const color = colorOf(d.class);
+    ctx.strokeStyle = color; ctx.fillStyle = color;
+    ctx.strokeRect(X, Y, W, H);
+    const text = `${d.class_cn} ${d.confidence}%`;
+    const padding = 6;
+    const textW = ctx.measureText(text).width + padding * 2;
+    const textH = 22;
+    const labelY = Y - textH < 0 ? Y : Y - textH;
+    ctx.fillRect(X, labelY, textW, textH);
+    ctx.fillStyle = '#fff';
+    ctx.fillText(text, X + padding, labelY + 4);
+  }
 
-            const phraseWords = [];
-            for (const item of data.results || []) {
-                const top = item.detections && item.detections[0];
-                if (top && top.confidence >= 45) phraseWords.push(top.class_cn);
-            }
-            document.getElementById('sentenceText').textContent = phraseWords.length
-                ? phraseWords.slice(0, 8).join(' ')
-                : '批量图片未形成稳定短语';
-        }
+  // 2) info
+  $('#cam-latency').textContent = latency + ' ms';
+  $('#cam-objects').textContent = r.count + ' 个目标';
+  $('#cam-time').textContent = r.time + ' s';
+  $('#cam-count').textContent = r.count;
 
-        function updatePhrase(topDetection) {
-            if (!topDetection || topDetection.confidence < 45) return;
-            const word = topDetection.class_cn;
-            const last = phraseHistory[phraseHistory.length - 1];
-            if (last !== word) phraseHistory.push(word);
-            while (phraseHistory.length > 6) phraseHistory.shift();
-            document.getElementById('sentenceText').textContent = phraseHistory.join(' ');
-        }
+  // 3) recent + phrase
+  if (r.detections.length > 0) {
+    const top = r.detections.sort((a,b) => b.confidence - a.confidence)[0];
+    $('#cam-last').textContent = top.class_cn + ' (' + top.confidence + '%)';
+    camTotalDetections++;
+    $('#cam-total').textContent = camTotalDetections;
+    pushRecent(top);
+    pushPhrase(top);
+  }
+}
 
-        async function saveResult() {
-            if (currentBatchResults.length) {
-                try {
-                    const res = await fetch('/save_batch_results', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ results: currentBatchResults })
-                    });
-                    const data = await res.json();
-                    if (!data.success) throw new Error(data.error || '批量保存失败');
-                    writeLog(`批量结果已保存 ${data.saved_count} 张：${data.save_path}`);
-                } catch (err) {
-                    writeLog(err.message, true);
-                }
-                return;
-            }
+function pushRecent(item) {
+  recentLog.unshift({ ...item, ts: new Date() });
+  if (recentLog.length > 30) recentLog.length = 30;
+  renderRecent();
+}
+function renderRecent() {
+  const wrap = $('#recent');
+  if (!recentLog.length) {
+    wrap.innerHTML = '<div class="row-item" style="justify-content:center;color:var(--muted);">暂无记录</div>';
+    return;
+  }
+  wrap.innerHTML = recentLog.map(it => `
+    <div class="row-item">
+      <div><span class="badge">${it.class_cn}</span>
+        <span style="color:var(--muted); margin-left:8px;font-size:12px;">${it.class}</span>
+      </div>
+      <div>
+        <span class="badge green">${it.confidence}%</span>
+        <span class="when" style="margin-left:8px;">${it.ts.toLocaleTimeString()}</span>
+      </div>
+    </div>
+  `).join('');
+}
 
-            if (!currentResult || !currentResult.result_path) return;
-            const name = `detect_${Date.now()}.jpg`;
-            try {
-                const res = await fetch('/save_detect_result', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ result_path: currentResult.result_path, save_name: name })
-                });
-                const data = await res.json();
-                if (!data.success) throw new Error(data.error || '保存失败');
-                writeLog(`结果已保存：${data.save_path}`);
-            } catch (err) {
-                writeLog(err.message, true);
-            }
-        }
+function pushPhrase(item) {
+  const stab = parseInt($('#phrase-stab').value, 10);
+  if (stableCounter.label === item.class) {
+    stableCounter.count++;
+  } else {
+    stableCounter = { label: item.class, count: 1 };
+  }
+  if (stableCounter.count === stab) {
+    // 跟上一个不同才追加
+    const last = phraseHistory[phraseHistory.length - 1];
+    if (!last || last.en !== item.class) {
+      phraseHistory.push({ en: item.class, cn: item.class_cn });
+      if (phraseHistory.length > 30) phraseHistory.shift();
+      renderPhrase();
+    }
+  }
+}
+function renderPhrase() {
+  const el = $('#phrase-strip');
+  if (!phraseHistory.length) {
+    el.innerHTML = '<span class="ph-empty">摄像头开启后，连续稳定识别到的手语会自动追加在这里</span>';
+    return;
+  }
+  el.innerHTML = phraseHistory.map(w => `<span class="word">${w.cn}</span>`).join('');
+}
 
-        function resetDisplay() {
-            resultImage.style.display = 'none';
-            webcamCanvas.style.display = 'none';
-            placeholder.style.display = 'block';
-            currentResult = null;
-            currentBatchResults = [];
-            latestDetections = [];
-            detectionFrameSize = { width: 0, height: 0 };
-            phraseHistory.length = 0;
-            batchGallery.style.display = 'none';
-            batchGallery.innerHTML = '';
-            document.getElementById('sentenceText').textContent = '等待连续识别...';
-            document.getElementById('countValue').textContent = '0';
-            document.getElementById('timeValue').textContent = '--';
-            document.getElementById('saveBtn').disabled = true;
-            document.getElementById('resultTable').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);">暂无检测结果</td></tr>';
-        }
+function snapshot() {
+  if (!camVideo.videoWidth) return;
+  const c = document.createElement('canvas');
+  c.width = camVideo.videoWidth; c.height = camVideo.videoHeight;
+  const cx = c.getContext('2d');
+  cx.drawImage(camVideo, 0, 0);
+  // 把 overlay 也合成上去
+  const stage = $('#live-stage'); const rect = stage.getBoundingClientRect();
+  const vRatio = camVideo.videoWidth / camVideo.videoHeight;
+  const sRatio = rect.width / rect.height;
+  let dispW, dispH, offX = 0, offY = 0;
+  if (vRatio > sRatio) { dispW = rect.width; dispH = rect.width / vRatio; offY = (rect.height - dispH) / 2; }
+  else { dispH = rect.height; dispW = rect.height * vRatio; offX = (rect.width - dispW) / 2; }
+  // overlay 是 stage 尺寸；要把对应区域裁出来再缩放到视频尺寸
+  const tmp = document.createElement('canvas');
+  tmp.width = c.width; tmp.height = c.height;
+  tmp.getContext('2d').drawImage(camOverlay, offX, offY, dispW, dispH, 0, 0, c.width, c.height);
+  cx.drawImage(tmp, 0, 0);
 
-        function setBusy(isBusy) {
-            document.getElementById('detectBtn').disabled = isBusy && mode === 'image';
-            document.getElementById('batchBtn').disabled = isBusy && mode === 'batch';
-        }
+  c.toBlob(b => {
+    const url = URL.createObjectURL(b);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'snapshot_' + Date.now() + '.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast('截图已下载', 'ok');
+  }, 'image/png');
+}
 
-        function writeLog(message, isError = false) {
-            logText.textContent = message;
-            logText.className = `log ${isError ? 'err' : 'ok'}`;
-        }
-
-        function escapeHtml(value) {
-            return String(value).replace(/[&<>"']/g, ch => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            }[ch]));
-        }
-    </script>
+window.addEventListener('beforeunload', stopCamera);
+</script>
 </body>
 </html>
