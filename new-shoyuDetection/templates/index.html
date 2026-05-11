@@ -413,12 +413,19 @@ table.det tr:hover td { background: #f8fafc; }
   flex-wrap: wrap;
 }
 .phrase-strip .word {
-  padding: 6px 12px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px 6px 12px; border-radius: 999px;
   background: white; border: 1px solid var(--line);
   font-size: 14px; font-weight: 600; color: var(--text);
   box-shadow: var(--shadow-sm);
   animation: pop .25s ease;
 }
+.phrase-strip .word button {
+  border: none; background: #f1f5f9; color: var(--muted);
+  width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
+  display: inline-grid; place-items: center; line-height: 1;
+}
+.phrase-strip .word button:hover { background: var(--danger-soft); color: var(--danger); }
 @keyframes pop { from { opacity: 0; transform: translateY(4px) scale(0.9); } to { opacity: 1; transform: none; } }
 .phrase-strip .ph-empty { color: var(--muted); font-size: 13px; }
 
@@ -734,21 +741,41 @@ table.det tr:hover td { background: #f8fafc; }
               </div>
             </div>
             <div class="field">
-              <label>水平翻转 / 仅检测中央区域</label>
+              <label>水平翻转 / ROI 区域</label>
               <div class="row">
                 <label style="display:flex;gap:6px;align-items:center;color:var(--text-soft);font-weight:500;">
                   <input type="checkbox" id="cam-mirror"> 镜像
                 </label>
                 <label style="display:flex;gap:6px;align-items:center;color:var(--text-soft);font-weight:500;">
-                  <input type="checkbox" id="cam-center"> 中央裁剪
+                  <input type="checkbox" id="cam-roi" checked> ROI
                 </label>
               </div>
             </div>
             <div class="field">
-              <label>语句拼接稳定性（连续帧达到次数才记录）</label>
+              <label>ROI 大小（画面中心百分比）</label>
               <div class="slider-row">
-                <input type="range" id="phrase-stab" min="1" max="6" step="1" value="3">
-                <span class="val" id="phrase-stab-val">3</span>
+                <input type="range" id="cam-roi-size" min="45" max="100" step="5" value="70">
+                <span class="val" id="cam-roi-size-val">70%</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>语句稳定窗口 / 命中次数</label>
+              <div class="row">
+                <div class="slider-row" style="flex:1;min-width:150px;">
+                  <input type="range" id="phrase-window" min="3" max="10" step="1" value="6">
+                  <span class="val" id="phrase-window-val">6</span>
+                </div>
+                <div class="slider-row" style="flex:1;min-width:150px;">
+                  <input type="range" id="phrase-stab" min="1" max="6" step="1" value="3">
+                  <span class="val" id="phrase-stab-val">3</span>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>重复去抖 (秒)</label>
+              <div class="slider-row">
+                <input type="range" id="phrase-cooldown" min="0" max="5" step="0.5" value="2">
+                <span class="val" id="phrase-cooldown-val">2.0</span>
               </div>
             </div>
           </div>
@@ -788,6 +815,7 @@ table.det tr:hover td { background: #f8fafc; }
               <h2>识别句子拼接</h2>
               <div class="row">
                 <button class="btn" id="phrase-clear">清空</button>
+                <button class="btn" id="phrase-undo">撤销</button>
                 <button class="btn ghost" id="phrase-speak">🔊 朗读</button>
                 <button class="btn ghost" id="phrase-copy">📋 复制</button>
               </div>
@@ -796,6 +824,14 @@ table.det tr:hover td { background: #f8fafc; }
               <div class="phrase-strip" id="phrase-strip">
                 <span class="ph-empty">摄像头开启后，连续稳定识别到的手语会自动追加在这里</span>
               </div>
+            </div>
+          </div>
+
+
+          <div class="panel" style="margin-top: 16px; box-shadow:none;">
+            <div class="head"><h2>置信度趋势</h2><span class="tag muted" id="trend-avg">平均: -</span></div>
+            <div class="body">
+              <canvas id="confidence-chart" height="90" style="width:100%; max-height:120px;"></canvas>
             </div>
           </div>
 
@@ -964,9 +1000,12 @@ bindSlider($('#frame-skip'), $('#frame-skip-val'));
 bindSlider($('#cam-interval'), $('#cam-interval-val'));
 bindSlider($('#cam-size'), $('#cam-size-val'));
 bindSlider($('#cam-imgsz'), $('#cam-imgsz-val'));
+bindSlider($('#cam-roi-size'), $('#cam-roi-size-val'), v => v + '%');
 bindSlider($('#cam-bright'), $('#cam-bright-val'));
 bindSlider($('#cam-contrast'), $('#cam-contrast-val'), v => v + '%');
+bindSlider($('#phrase-window'), $('#phrase-window-val'));
 bindSlider($('#phrase-stab'), $('#phrase-stab-val'));
+bindSlider($('#phrase-cooldown'), $('#phrase-cooldown-val'), v => parseFloat(v).toFixed(1));
 function getConf() { return parseFloat(confEl.value); }
 function getIoU()  { return parseFloat(iouEl.value); }
 
@@ -1300,7 +1339,9 @@ let camTotalDetections = 0;
 let lastFrameBlob = null;
 let phraseHistory = [];   // 拼接的句子
 let recentLog = [];       // 最近识别记录
-let stableCounter = { label: null, count: 0 };
+let phraseWindow = [];
+let confidenceTrend = [];
+let lastPhraseAt = {};
 let fpsCounter = { last: performance.now(), frames: 0, fps: 0 };
 
 // 设备列表
@@ -1319,7 +1360,8 @@ listCameras();
 camStartBtn.addEventListener('click', startCamera);
 camStopBtn.addEventListener('click', stopCamera);
 camSnapBtn.addEventListener('click', snapshot);
-$('#phrase-clear').addEventListener('click', () => { phraseHistory = []; renderPhrase(); });
+$('#phrase-clear').addEventListener('click', () => { phraseHistory = []; phraseWindow = []; lastPhraseAt = {}; renderPhrase(); });
+$('#phrase-undo').addEventListener('click', () => { phraseHistory.pop(); renderPhrase(); });
 $('#phrase-copy').addEventListener('click', () => {
   const text = phraseHistory.map(w => w.cn).join(' · ');
   if (!text) return toast('当前无句子', 'warn');
@@ -1405,17 +1447,17 @@ async function captureFrame() {
   if (!camVideo.videoWidth) return null;
   const targetShort = parseInt($('#cam-size').value, 10);
   const mirror = $('#cam-mirror').checked;
-  const center = $('#cam-center').checked;
+  const useRoi = $('#cam-roi').checked;
+  const roiSize = parseInt($('#cam-roi-size').value, 10) / 100;
   const bright = parseInt($('#cam-bright').value, 10);   // -50..80
   const contrast = parseInt($('#cam-contrast').value, 10); // 50..180
 
   const vw = camVideo.videoWidth, vh = camVideo.videoHeight;
   // 在源视频坐标系里确定要送出的区域（中央 70%）
   let srcX = 0, srcY = 0, srcW = vw, srcH = vh;
-  if (center) {
-    const ratio = 0.7;
-    srcW = Math.round(vw * ratio);
-    srcH = Math.round(vh * ratio);
+  if (useRoi) {
+    srcW = Math.round(vw * roiSize);
+    srcH = Math.round(vh * roiSize);
     srcX = Math.round((vw - srcW) / 2);
     srcY = Math.round((vh - srcH) / 2);
   }
@@ -1437,6 +1479,26 @@ const PALETTE = ['#6366f1', '#22c55e', '#06b6d4', '#f59e0b', '#ef4444', '#a855f7
 function colorOf(label) {
   let h = 0; for (const c of label) h = (h * 31 + c.charCodeAt(0)) >>> 0;
   return PALETTE[h % PALETTE.length];
+}
+
+
+function drawRoiGuide(ctx, cap, rect, offX, offY, sxD, syD) {
+  if (!$('#cam-roi').checked || !cap) return;
+  const X = offX + cap.srcX * sxD;
+  const Y = offY + cap.srcY * syD;
+  const W = cap.srcW * sxD;
+  const H = cap.srcH * syD;
+  ctx.save();
+  ctx.setLineDash([8, 6]);
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+  ctx.strokeRect(X, Y, W, H);
+  ctx.fillStyle = 'rgba(15, 23, 42, 0.65)';
+  ctx.fillRect(X + 8, Y + 8, 72, 24);
+  ctx.fillStyle = '#fff';
+  ctx.font = '600 12px "Microsoft YaHei", system-ui, sans-serif';
+  ctx.fillText('ROI 区域', X + 16, Y + 13);
+  ctx.restore();
 }
 
 function handleDetections(r, latency, cap) {
@@ -1465,6 +1527,8 @@ function handleDetections(r, latency, cap) {
   const isMirrored = !!cap?.mirror;
   // 视频源 -> 显示坐标
   const sxD = dispW / vw, syD = dispH / vh;
+
+  drawRoiGuide(ctx, cap, rect, offX, offY, sxD, syD);
 
   ctx.lineWidth = 3;
   ctx.font = '600 14px "Microsoft YaHei", system-ui, sans-serif';
@@ -1511,6 +1575,7 @@ function handleDetections(r, latency, cap) {
     camTotalDetections++;
     $('#cam-total').textContent = camTotalDetections;
     pushRecent(top);
+    pushTrend(top);
     pushPhrase(top);
   }
 }
@@ -1539,22 +1604,64 @@ function renderRecent() {
   `).join('');
 }
 
+function pushTrend(item) {
+  confidenceTrend.push({ confidence: item.confidence, ts: Date.now(), label: item.class_cn });
+  if (confidenceTrend.length > 40) confidenceTrend.shift();
+  renderTrend();
+}
+function renderTrend() {
+  const canvas = $('#confidence-chart');
+  if (!canvas) return;
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.max(320, Math.floor(rect.width * dpr));
+  canvas.height = Math.floor(90 * dpr);
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1 * dpr;
+  for (let i = 0; i <= 4; i++) {
+    const y = (canvas.height - 12 * dpr) * i / 4 + 6 * dpr;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+  }
+  if (!confidenceTrend.length) { $('#trend-avg').textContent = '平均: -'; return; }
+  const vals = confidenceTrend.map(x => x.confidence);
+  const avg = vals.reduce((a,b) => a + b, 0) / vals.length;
+  $('#trend-avg').textContent = '平均: ' + avg.toFixed(1) + '%';
+  ctx.strokeStyle = '#6366f1'; ctx.lineWidth = 2.5 * dpr; ctx.beginPath();
+  vals.forEach((v, i) => {
+    const x = vals.length === 1 ? canvas.width - 8 * dpr : i * (canvas.width - 16 * dpr) / (vals.length - 1) + 8 * dpr;
+    const y = canvas.height - 8 * dpr - (Math.max(0, Math.min(100, v)) / 100) * (canvas.height - 16 * dpr);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+}
 function pushPhrase(item) {
-  const stab = parseInt($('#phrase-stab').value, 10);
-  if (stableCounter.label === item.class) {
-    stableCounter.count++;
-  } else {
-    stableCounter = { label: item.class, count: 1 };
+  const windowSize = parseInt($('#phrase-window').value, 10);
+  const hitNeed = Math.min(parseInt($('#phrase-stab').value, 10), windowSize);
+  const cooldownMs = parseFloat($('#phrase-cooldown').value) * 1000;
+  phraseWindow.push(item);
+  if (phraseWindow.length > windowSize) phraseWindow.shift();
+  const stats = {};
+  for (const row of phraseWindow) {
+    if (!stats[row.class]) stats[row.class] = { count: 0, conf: 0, item: row };
+    stats[row.class].count += 1;
+    stats[row.class].conf += row.confidence;
   }
-  if (stableCounter.count === stab) {
-    // 跟上一个不同才追加
-    const last = phraseHistory[phraseHistory.length - 1];
-    if (!last || last.en !== item.class) {
-      phraseHistory.push({ en: item.class, cn: item.class_cn });
-      if (phraseHistory.length > 30) phraseHistory.shift();
-      renderPhrase();
-    }
-  }
+  const candidate = Object.values(stats).sort((a, b) => b.count - a.count || b.conf / b.count - a.conf / a.count)[0];
+  if (!candidate || candidate.count < hitNeed) return;
+  const avgConf = candidate.conf / candidate.count;
+  if (avgConf < getConf() * 100) return;
+  const now = Date.now();
+  if (now - (lastPhraseAt[candidate.item.class] || 0) < cooldownMs) return;
+  phraseHistory.push({ en: candidate.item.class, cn: candidate.item.class_cn, confidence: avgConf });
+  if (phraseHistory.length > 30) phraseHistory.shift();
+  lastPhraseAt[candidate.item.class] = now;
+  renderPhrase();
+}
+function removePhrase(index) {
+  phraseHistory.splice(index, 1);
+  renderPhrase();
 }
 function renderPhrase() {
   const el = $('#phrase-strip');
@@ -1562,7 +1669,7 @@ function renderPhrase() {
     el.innerHTML = '<span class="ph-empty">摄像头开启后，连续稳定识别到的手语会自动追加在这里</span>';
     return;
   }
-  el.innerHTML = phraseHistory.map(w => `<span class="word">${w.cn}</span>`).join('');
+  el.innerHTML = phraseHistory.map((w, i) => `<span class="word">${w.cn}<button title="删除" onclick="removePhrase(${i})">×</button></span>`).join('');
 }
 
 function snapshot() {
