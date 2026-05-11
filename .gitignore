@@ -22,6 +22,7 @@ wheels/
 
 # Virtual environments and local config
 .venv/
+.venv*/
 venv/
 env/
 ENV/
@@ -55,6 +56,7 @@ __MACOSX/
 *.mlmodel
 weights/*.pt
 !weights/.gitkeep
+!weights/yolov11_best.pt
 
 # Datasets: keep only the lightweight template structure.
 datasets/**/
@@ -87,6 +89,7 @@ datasets/**/
 
 # Training and runtime outputs
 runs/
+new-shoyuDetection/runs/
 wandb/
 tensorboard/
 outputs/
@@ -96,8 +99,17 @@ outputs/
 !outputs/logs/.gitkeep
 !outputs/csv/.gitkeep
 !outputs/figures/.gitkeep
+!outputs/analysis/.gitkeep
+new-shoyuDetection/static/uploads/
+new-shoyuDetection/static/results/
+new-shoyuDetection/static/videos/
+new-shoyuDetection/save_data/
 
 # Temporary files
 *.tmp
 *.temp
 *.log
+
+# Legacy bundled dataset copied from the original project.
+# Keep datasets/sign_language/data.yaml as the lightweight public config instead.
+new-shoyuDetection/datasets/

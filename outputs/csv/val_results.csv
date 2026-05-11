@@ -1,2 +1,0 @@
-﻿weights,precision,recall,map50,map50_95
-/mnt/e/python/CVandPR/mainew-shoyuDetection/weights/yolov11_best.pt,0.9729710761801668,0.9831070093258126,0.9833673469387754,0.7985871150278293

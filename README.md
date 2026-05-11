@@ -495,6 +495,21 @@ outputs/figures/model_comparison.png
 | `outputs/figures/class_distribution.png` | 类别分布图 |
 | `outputs/figures/model_comparison.png` | 模型对比图 |
 
+## 14. Web 演示与协作基线
+
+本项目统一以 Web 页面作为课程展示入口：
+
+```bash
+python new-shoyuDetection/app.py
+```
+
+团队协作时请注意：
+
+- `new-shoyuDetection/datasets/` 是本地训练数据目录，不再提交到 Git；
+- `.venv39/`、`runs/`、`outputs/`、`new-shoyuDetection/static/results/`、`new-shoyuDetection/static/videos/` 都是本地环境或运行产物，不提交；
+- 默认 Web 演示权重保留为 `weights/yolov11_best.pt`；
+- PyQt 与命令行入口保留为辅助入口，答辩和日常演示优先使用 Web。
+
 ## 14. Git 协作规范
 
 请遵守以下规则，避免把仓库搞大或覆盖队友工作：
