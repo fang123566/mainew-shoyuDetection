@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import base64
+import json
 import sys
 import time
 import uuid
@@ -44,6 +45,8 @@ VIDEO_SAVE_PATH = PROJECT_ROOT / "outputs" / "videos"
 UPLOAD_FOLDER = WEB_ROOT / "static" / "uploads"
 RESULT_FOLDER = WEB_ROOT / "static" / "results"
 VIDEO_RESULT_FOLDER = WEB_ROOT / "static" / "videos"
+REPORT_SUMMARY_PATH = PROJECT_ROOT / "configs" / "report_summary.json"
+ANALYSIS_DIR = PROJECT_ROOT / "outputs" / "analysis"
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 VIDEO_SUFFIXES = {".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv"}
 
@@ -65,6 +68,7 @@ RESULT_FOLDER.mkdir(parents=True, exist_ok=True)
 VIDEO_RESULT_FOLDER.mkdir(parents=True, exist_ok=True)
 SAVE_PATH.mkdir(parents=True, exist_ok=True)
 VIDEO_SAVE_PATH.mkdir(parents=True, exist_ok=True)
+ANALYSIS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 WEB_SERVICE = WebInferenceService(WEIGHTS_PATH, LABEL_MAP_PATH)
@@ -124,6 +128,49 @@ def run_detection(image_path: Path, conf: float, iou: float) -> dict[str, object
         "time": round(elapsed, 3),
         "device": DEVICE,
     }
+
+
+def read_json_file(path: Path, default):
+    """读取 JSON，失败时返回默认值，保证 Web 页面稳定可打开。"""
+    if not path.exists():
+        return default
+    try:
+        with path.open("r", encoding="utf-8") as file:
+            return json.load(file)
+    except Exception:
+        return default
+
+
+@app.route("/analysis_asset/<path:filename>")
+def analysis_asset(filename: str):
+    """提供 outputs/analysis 下生成的可选评估图片。"""
+    return send_from_directory(ANALYSIS_DIR, filename)
+
+
+@app.route("/analysis_data")
+def analysis_data():
+    """返回 Web 评估分析页数据；没有生成资产时回退到静态摘要。"""
+    summary = read_json_file(REPORT_SUMMARY_PATH, {})
+    generated_summary = read_json_file(ANALYSIS_DIR / "analysis_summary.json", {})
+    error_examples = read_json_file(ANALYSIS_DIR / "error_examples.json", [])
+    assets = {}
+    for filename in [
+        "class_distribution.png",
+        "confusion_matrix.png",
+        "confusion_matrix_normalized.png",
+    ]:
+        if (ANALYSIS_DIR / filename).exists():
+            key = Path(filename).stem
+            assets[key] = f"/analysis_asset/{filename}"
+    return jsonify(
+        {
+            "success": True,
+            "summary": summary,
+            "generated_summary": generated_summary,
+            "assets": assets,
+            "error_examples": error_examples[:20],
+        }
+    )
 
 
 @app.route("/")

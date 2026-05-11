@@ -489,6 +489,7 @@ table.det tr:hover td { background: #f8fafc; }
       <div class="item" data-tab="batch"><span class="ico">🗂</span><span>批量检测</span></div>
       <div class="item" data-tab="video"><span class="ico">🎬</span><span>视频检测</span></div>
       <div class="item" data-tab="camera"><span class="ico">📹</span><span>摄像头实时</span></div>
+      <div class="item" data-tab="analysis"><span class="ico">📊</span><span>评估分析</span></div>
       <div class="item" data-tab="about"><span class="ico">ℹ️</span><span>模型信息</span></div>
     </nav>
   </aside>
@@ -814,6 +815,86 @@ table.det tr:hover td { background: #f8fafc; }
       </div>
     </section>
 
+
+    <!-- 评估分析 -->
+    <section class="section" id="tab-analysis">
+      <div class="panel">
+        <div class="head">
+          <h2>模型评估分析</h2>
+          <div class="row">
+            <button class="btn" id="analysis-refresh">刷新</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="stats">
+            <div class="stat"><div class="k">类别数</div><div class="v" id="analysis-classes">-</div></div>
+            <div class="stat"><div class="k">训练图片</div><div class="v" id="analysis-train">-</div></div>
+            <div class="stat"><div class="k">验证图片</div><div class="v" id="analysis-val">-</div></div>
+            <div class="stat"><div class="k">mAP@0.5</div><div class="v" id="analysis-map50">-</div></div>
+          </div>
+
+          <div class="media-grid" style="margin-top:16px;">
+            <div class="panel" style="box-shadow:none; margin-top:0;">
+              <div class="head"><h2>核心指标</h2></div>
+              <div class="body">
+                <div class="table-wrap">
+                  <table class="det">
+                    <thead><tr><th>指标</th><th>数值</th><th>说明</th></tr></thead>
+                    <tbody id="analysis-metrics"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:18px;">加载中...</td></tr></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="panel" style="box-shadow:none; margin-top:0;">
+              <div class="head"><h2>数据集概况</h2></div>
+              <div class="body">
+                <div class="table-wrap">
+                  <table class="det">
+                    <thead><tr><th>划分</th><th>图片数</th><th>标注框</th></tr></thead>
+                    <tbody id="analysis-splits"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:18px;">加载中...</td></tr></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:16px; box-shadow:none;">
+            <div class="head"><h2>类别分布</h2></div>
+            <div class="body">
+              <div class="media" id="analysis-dist-media" style="aspect-ratio: 16/8; margin-bottom:14px;" hidden>
+                <img id="analysis-dist-img" alt="class distribution">
+              </div>
+              <div class="table-wrap">
+                <table class="det">
+                  <thead><tr><th>样本最多类别</th><th>数量</th><th>样本较少类别</th><th>数量</th></tr></thead>
+                  <tbody id="analysis-class-tbody"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:18px;">暂无数据</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:16px; box-shadow:none;">
+            <div class="head"><h2>混淆矩阵与问题样例</h2></div>
+            <div class="body">
+              <div class="media-grid">
+                <div class="media" id="analysis-conf-media" style="aspect-ratio: 1/1;" hidden>
+                  <img id="analysis-conf-img" alt="confusion matrix">
+                </div>
+                <div class="recent" id="analysis-errors">
+                  <div class="row-item" style="justify-content:center;color:var(--muted);">未生成错误样例。运行 scripts/generate_analysis.py --with-inference 后可显示。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:16px; box-shadow:none;">
+            <div class="head"><h2>答辩提示</h2></div>
+            <div class="body" id="analysis-notes" style="color:var(--text-soft); line-height:1.8; font-size:13px;">加载中...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 关于 -->
     <section class="section" id="tab-about">
       <div class="panel">
@@ -923,6 +1004,82 @@ async function loadModelInfo() {
   } catch (e) { console.error(e); }
 }
 loadModelInfo();
+
+
+
+/* ===== analysis ===== */
+function esc(s) {
+  return String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+function pct(v) {
+  return typeof v === 'number' ? (v * 100).toFixed(2) + '%' : '-';
+}
+async function loadAnalysisData() {
+  try {
+    const r = await fetch('/analysis_data').then(x => x.json());
+    if (!r.success) return;
+    const s = r.summary || {};
+    const g = r.generated_summary || {};
+    const model = s.model || {};
+    const dataset = s.dataset || {};
+    const metrics = s.metrics || {};
+    $('#analysis-classes').textContent = model.classes ?? g.class_count ?? '-';
+    $('#analysis-train').textContent = dataset.train_images ?? g.splits?.train?.images ?? '-';
+    $('#analysis-val').textContent = dataset.val_images ?? g.splits?.val?.images ?? '-';
+    $('#analysis-map50').textContent = pct(metrics.map50);
+
+    const rows = [
+      ['Precision', metrics.precision, '预测为某类的结果中有多少是真正正确的'],
+      ['Recall', metrics.recall, '真实目标中有多少被模型成功找出'],
+      ['mAP@0.5', metrics.map50, 'IoU=0.5 下的平均检测精度'],
+      ['mAP@0.5:0.95', metrics.map50_95, '更严格 IoU 区间下的综合检测精度'],
+    ];
+    $('#analysis-metrics').innerHTML = rows.map(row =>
+      `<tr><td>${esc(row[0])}</td><td><span class="badge green">${pct(row[1])}</span></td><td>${esc(row[2])}</td></tr>`
+    ).join('');
+
+    const splitRows = ['train', 'val', 'test'].map(name => {
+      const item = g.splits?.[name] || {};
+      const fallbackImages = name === 'train' ? dataset.train_images : name === 'val' ? dataset.val_images : dataset.test_images;
+      return `<tr><td><span class="badge gray">${name}</span></td><td>${fallbackImages ?? item.images ?? '-'}</td><td>${item.boxes ?? '-'}</td></tr>`;
+    });
+    $('#analysis-splits').innerHTML = splitRows.join('');
+
+    const top = s.class_distribution?.top_train || [];
+    const low = s.class_distribution?.low_train || [];
+    const maxLen = Math.max(top.length, low.length);
+    $('#analysis-class-tbody').innerHTML = maxLen ? Array.from({ length: maxLen }).map((_, i) => {
+      const a = top[i] || {}, b = low[i] || {};
+      return `<tr><td>${esc(a.class || '-')}</td><td>${a.count ?? '-'}</td><td>${esc(b.class || '-')}</td><td>${b.count ?? '-'}</td></tr>`;
+    }).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:18px;">暂无数据</td></tr>';
+
+    const assets = r.assets || {};
+    if (assets.class_distribution) {
+      $('#analysis-dist-img').src = assets.class_distribution;
+      $('#analysis-dist-media').hidden = false;
+    }
+    const confAsset = assets.confusion_matrix_normalized || assets.confusion_matrix;
+    if (confAsset) {
+      $('#analysis-conf-img').src = confAsset;
+      $('#analysis-conf-media').hidden = false;
+    }
+
+    const errors = r.error_examples || [];
+    $('#analysis-errors').innerHTML = errors.length ? errors.map(item => `
+      <div class="row-item">
+        <div><span class="badge warn">${esc(item.reason || '问题样例')}</span><span style="color:var(--muted);margin-left:8px;font-size:12px;">${esc(item.file || '')}</span></div>
+        <span class="badge green">${((item.confidence || 0) * 100).toFixed(1)}%</span>
+      </div>`).join('') : '<div class="row-item" style="justify-content:center;color:var(--muted);">未生成错误样例。运行 scripts/generate_analysis.py --with-inference 后可显示。</div>';
+
+    const notes = s.recommendations || [];
+    $('#analysis-notes').innerHTML = notes.length ? notes.map(n => `<div>• ${esc(n)}</div>`).join('') : '暂无提示';
+  } catch (e) {
+    toast('评估分析加载失败: ' + e.message, 'err');
+  }
+}
+$('#analysis-refresh')?.addEventListener('click', loadAnalysisData);
+loadAnalysisData();
+
 
 /* ===== image ===== */
 let lastImageResult = null;
