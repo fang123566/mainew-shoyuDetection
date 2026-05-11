@@ -1,0 +1,198 @@
+{
+  "generated_at": "2026-05-11T15:59:59",
+  "data_yaml": "/mnt/e/python/CVandPR/mainew-shoyuDetection/datasets/sign_language/data.yaml",
+  "weights": "/mnt/e/python/CVandPR/mainew-shoyuDetection/weights/yolov11_best.pt",
+  "metrics_csv": "/mnt/e/python/CVandPR/mainew-shoyuDetection/outputs/csv/val_results.csv",
+  "class_count": 35,
+  "splits": {
+    "train": {
+      "images": 2148,
+      "labels": 2148,
+      "boxes": 2148,
+      "class_counts": {
+        "time": 73,
+        "you/your/this": 37,
+        "morning": 51,
+        "9": 53,
+        "0": 55,
+        "happy": 74,
+        "new": 55,
+        "wish": 74,
+        "please": 43,
+        "road": 69,
+        "birthday": 78,
+        "flat": 52,
+        "safe": 68,
+        "friend": 108,
+        "8": 71,
+        "know": 97,
+        "business card": 63,
+        "marry/wife": 53,
+        "tea": 54,
+        "have": 48,
+        "flavor": 62,
+        "today": 68,
+        "door": 58,
+        "stop": 47,
+        "thank you": 48,
+        "slow": 71,
+        "walk": 54,
+        "late/night": 45,
+        "I/me": 44,
+        "love": 63,
+        "good": 45,
+        "person": 86,
+        "what": 52,
+        "name": 60,
+        "introduce": 69
+      }
+    },
+    "val": {
+      "images": 210,
+      "labels": 210,
+      "boxes": 210,
+      "class_counts": {
+        "time": 7,
+        "you/your/this": 4,
+        "morning": 4,
+        "9": 5,
+        "0": 5,
+        "happy": 6,
+        "new": 5,
+        "wish": 6,
+        "please": 8,
+        "road": 7,
+        "birthday": 8,
+        "flat": 5,
+        "safe": 7,
+        "friend": 11,
+        "8": 7,
+        "know": 9,
+        "business card": 7,
+        "marry/wife": 5,
+        "tea": 6,
+        "have": 5,
+        "flavor": 6,
+        "today": 7,
+        "door": 6,
+        "stop": 5,
+        "thank you": 5,
+        "slow": 7,
+        "walk": 5,
+        "late/night": 4,
+        "I/me": 4,
+        "love": 6,
+        "good": 4,
+        "person": 7,
+        "what": 5,
+        "name": 6,
+        "introduce": 6
+      }
+    },
+    "test": {
+      "images": 210,
+      "labels": 210,
+      "boxes": 210,
+      "class_counts": {
+        "time": 7,
+        "you/your/this": 4,
+        "morning": 4,
+        "9": 5,
+        "0": 5,
+        "happy": 6,
+        "new": 5,
+        "wish": 6,
+        "please": 8,
+        "road": 7,
+        "birthday": 8,
+        "flat": 5,
+        "safe": 7,
+        "friend": 11,
+        "8": 7,
+        "know": 9,
+        "business card": 7,
+        "marry/wife": 5,
+        "tea": 6,
+        "have": 5,
+        "flavor": 6,
+        "today": 7,
+        "door": 6,
+        "stop": 5,
+        "thank you": 5,
+        "slow": 7,
+        "walk": 5,
+        "late/night": 4,
+        "I/me": 4,
+        "love": 6,
+        "good": 4,
+        "person": 7,
+        "what": 5,
+        "name": 6,
+        "introduce": 6
+      }
+    }
+  },
+  "metrics": {
+    "precision": 0.9729710761801668,
+    "recall": 0.9831070093258126,
+    "map50": 0.9833673469387754,
+    "map50_95": 0.7985871150278293
+  },
+  "class_distribution": {
+    "top_train": [
+      {
+        "class": "friend",
+        "count": 108
+      },
+      {
+        "class": "know",
+        "count": 97
+      },
+      {
+        "class": "person",
+        "count": 86
+      },
+      {
+        "class": "birthday",
+        "count": 78
+      },
+      {
+        "class": "wish",
+        "count": 74
+      }
+    ],
+    "low_train": [
+      {
+        "class": "you/your/this",
+        "count": 37
+      },
+      {
+        "class": "please",
+        "count": 43
+      },
+      {
+        "class": "I/me",
+        "count": 44
+      },
+      {
+        "class": "late/night",
+        "count": 45
+      },
+      {
+        "class": "good",
+        "count": 45
+      }
+    ]
+  },
+  "validation_note": "当前 data.yaml 中 test 路径复用 val，本轮真实结果按验证集评估口径解读。",
+  "confusion": {
+    "iou_threshold": 0.5,
+    "confidence_threshold": 0.25,
+    "matched_instances": 209,
+    "diagonal_instances": 207,
+    "matrix_shape": [
+      35,
+      35
+    ]
+  }
+}

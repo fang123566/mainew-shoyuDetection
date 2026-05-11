@@ -103,6 +103,10 @@ outputs/
 new-shoyuDetection/static/uploads/
 new-shoyuDetection/static/results/
 new-shoyuDetection/static/videos/
+!new-shoyuDetection/static/analysis/
+!new-shoyuDetection/static/analysis/*.png
+!new-shoyuDetection/static/analysis/*.svg
+!new-shoyuDetection/static/analysis/*.json
 new-shoyuDetection/save_data/
 
 # Temporary files

@@ -1,4 +1,4 @@
-# YOLOv11 训练记录
+# YOLOv11 训练与验证记录
 
 ## 训练环境
 
@@ -14,15 +14,12 @@
 ## 数据集
 
 - 配置文件：`datasets/sign_language/data.yaml`
-- 训练集：`new-shoyuDetection/datasets/images/train`
-- 验证集：`new-shoyuDetection/datasets/images/val`
 - 类别数：35
-- 训练图片数：2148
-- 验证图片数：210
+- 训练集：2148 张图片，2148 个标注框
+- 验证集：210 张图片，210 个标注框
+- 说明：当前 `test` 路径复用 `val`，不作为独立测试集结论。
 
 ## 训练命令
-
-从仓库根目录运行：
 
 ```bash
 source ~/anaconda3/etc/profile.d/conda.sh
@@ -46,30 +43,33 @@ python train/train_yolov11.py \
 - 实际完成：63 epochs
 - EarlyStopping：连续 30 epochs 未提升后停止
 - 最佳模型 epoch：33
-- 最佳权重：`weights/yolov11_best.pt`
+- Web 默认权重：`weights/yolov11_best.pt`
 - 原始训练输出：`runs/sign_language/yolov11_sign_language_cuda/`
 
-## 验证指标
+## 本轮真实验证
 
-使用 `weights/yolov11_best.pt` 在验证集上评估：
+验证命令：
+
+```bash
+python train/val_yolov11.py --weights weights/yolov11_best.pt --data datasets/sign_language/data.yaml --imgsz 640 --batch 16 --device 0
+```
+
+验证结果：
 
 | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
-| --- | --- | --- | --- |
+| ---: | ---: | ---: | ---: |
 | 0.9730 | 0.9831 | 0.9834 | 0.7986 |
 
-验证 CSV：`outputs/csv/val_results.csv`
+验证输出：
 
-## 复用方式
+- `outputs/csv/val_results.csv`
+- `runs/sign_language/val_yolov11/`
+- `new-shoyuDetection/static/analysis/`
 
-队友拉取仓库后无需重新训练，直接使用：
-
-```bash
-python app/main.py --weights weights/yolov11_best.pt --source 0 --conf 0.5
-```
-
-或验证模型：
+## 图表生成
 
 ```bash
-python train/val_yolov11.py --weights weights/yolov11_best.pt --data datasets/sign_language/data.yaml --device 0
+python scripts/generate_analysis.py --data datasets/sign_language/data.yaml --weights weights/yolov11_best.pt
 ```
 
+图表使用 `seaborn` + `matplotlib` 生成，包含核心指标、类别分布、类别均衡、混淆矩阵和归一化混淆矩阵。

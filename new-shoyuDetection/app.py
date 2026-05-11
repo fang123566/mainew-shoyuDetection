@@ -47,6 +47,7 @@ RESULT_FOLDER = WEB_ROOT / "static" / "results"
 VIDEO_RESULT_FOLDER = WEB_ROOT / "static" / "videos"
 REPORT_SUMMARY_PATH = PROJECT_ROOT / "configs" / "report_summary.json"
 ANALYSIS_DIR = PROJECT_ROOT / "outputs" / "analysis"
+STATIC_ANALYSIS_DIR = WEB_ROOT / "static" / "analysis"
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 VIDEO_SUFFIXES = {".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv"}
 
@@ -69,6 +70,7 @@ VIDEO_RESULT_FOLDER.mkdir(parents=True, exist_ok=True)
 SAVE_PATH.mkdir(parents=True, exist_ok=True)
 VIDEO_SAVE_PATH.mkdir(parents=True, exist_ok=True)
 ANALYSIS_DIR.mkdir(parents=True, exist_ok=True)
+STATIC_ANALYSIS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 WEB_SERVICE = WebInferenceService(WEIGHTS_PATH, LABEL_MAP_PATH)
@@ -149,23 +151,38 @@ def analysis_asset(filename: str):
 
 @app.route("/analysis_data")
 def analysis_data():
-    """返回 Web 评估分析页数据；没有生成资产时回退到静态摘要。"""
+    """返回 Web 评估分析页数据；优先使用已提交的真实评估资产。"""
     summary = read_json_file(REPORT_SUMMARY_PATH, {})
-    generated_summary = read_json_file(ANALYSIS_DIR / "analysis_summary.json", {})
-    error_examples = read_json_file(ANALYSIS_DIR / "error_examples.json", [])
+    static_summary = read_json_file(STATIC_ANALYSIS_DIR / "analysis_summary.json", {})
+    generated_summary = static_summary or read_json_file(ANALYSIS_DIR / "analysis_summary.json", {})
+    error_examples = read_json_file(STATIC_ANALYSIS_DIR / "error_examples.json", [])
+    if not error_examples:
+        error_examples = read_json_file(ANALYSIS_DIR / "error_examples.json", [])
+
     assets = {}
     for filename in [
+        "metrics_summary.png",
         "class_distribution.png",
+        "class_balance_top_bottom.png",
         "confusion_matrix.png",
         "confusion_matrix_normalized.png",
     ]:
-        if (ANALYSIS_DIR / filename).exists():
-            key = Path(filename).stem
+        key = Path(filename).stem
+        if (STATIC_ANALYSIS_DIR / filename).exists():
+            assets[key] = f"/static/analysis/{filename}"
+        elif (ANALYSIS_DIR / filename).exists():
             assets[key] = f"/analysis_asset/{filename}"
+
+    merged_summary = summary.copy()
+    if generated_summary.get("metrics"):
+        merged_summary["metrics"] = generated_summary["metrics"]
+    if generated_summary.get("class_distribution"):
+        merged_summary["class_distribution"] = generated_summary["class_distribution"]
+
     return jsonify(
         {
             "success": True,
-            "summary": summary,
+            "summary": merged_summary,
             "generated_summary": generated_summary,
             "assets": assets,
             "error_examples": error_examples[:20],

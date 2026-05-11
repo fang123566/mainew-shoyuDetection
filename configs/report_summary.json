@@ -5,20 +5,24 @@
     "weights": "weights/yolov11_best.pt",
     "classes": 35,
     "best_epoch": 33,
-    "finished_epochs": 63
+    "finished_epochs": 63,
+    "default_web_entry": "new-shoyuDetection/app.py"
   },
   "dataset": {
     "data_yaml": "datasets/sign_language/data.yaml",
     "train_images": 2148,
     "val_images": 210,
     "test_images": 210,
-    "note": "test 当前复用 val 目录，后续建议拆分独立测试集。"
+    "train_boxes": 2148,
+    "val_boxes": 210,
+    "test_boxes": 210,
+    "note": "当前 data.yaml 中 test 路径复用 val，最终报告按验证集结果解读，不声称拥有独立测试集结论。"
   },
   "metrics": {
-    "precision": 0.973,
-    "recall": 0.9831,
-    "map50": 0.9834,
-    "map50_95": 0.7986
+    "precision": 0.9729710761801668,
+    "recall": 0.9831070093258126,
+    "map50": 0.9833673469387754,
+    "map50_95": 0.7985871150278293
   },
   "class_distribution": {
     "top_train": [
@@ -39,7 +43,7 @@
         "count": 78
       },
       {
-        "class": "happy",
+        "class": "wish",
         "count": 74
       }
     ],
@@ -66,9 +70,17 @@
       }
     ]
   },
+  "figures": {
+    "metrics_summary": "new-shoyuDetection/static/analysis/metrics_summary.png",
+    "class_distribution": "new-shoyuDetection/static/analysis/class_distribution.png",
+    "class_balance_top_bottom": "new-shoyuDetection/static/analysis/class_balance_top_bottom.png",
+    "confusion_matrix": "new-shoyuDetection/static/analysis/confusion_matrix.png",
+    "confusion_matrix_normalized": "new-shoyuDetection/static/analysis/confusion_matrix_normalized.png"
+  },
   "recommendations": [
-    "Web 页面作为唯一推荐演示入口，PyQt 和 CLI 保留为辅助入口。",
-    "验证指标较高，但独立 test 集尚未拆分，答辩时需要说明这一点。",
-    "真实摄像头场景建议补充自采样本并微调，以提高现场泛化能力。"
+    "Web 页面是本项目唯一推荐课程演示入口，图片、批量、视频、摄像头和评估分析都从同一页面完成。",
+    "评估图表由 seaborn + matplotlib 生成，已提交精选静态资产，clone 后无需先运行分析脚本也能展示。",
+    "验证指标较高，但 test 当前复用 val，答辩时应主动说明数据集限制，避免把验证集结果表述为独立测试结论。",
+    "现场摄像头演示建议开启 ROI、稳定窗口和重复去抖，以减少短时抖动和重复追加。"
   ]
 }

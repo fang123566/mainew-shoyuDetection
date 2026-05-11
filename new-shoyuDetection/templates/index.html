@@ -869,6 +869,15 @@ table.det tr:hover td { background: #f8fafc; }
             <div class="stat"><div class="k">mAP@0.5</div><div class="v" id="analysis-map50">-</div></div>
           </div>
 
+          <div class="panel" style="margin-top:16px; box-shadow:none;">
+            <div class="head"><h2>真实验证指标图</h2></div>
+            <div class="body">
+              <div class="media" id="analysis-metric-media" style="aspect-ratio: 16/8;" hidden>
+                <img id="analysis-metric-img" alt="validation metrics summary">
+              </div>
+            </div>
+          </div>
+
           <div class="media-grid" style="margin-top:16px;">
             <div class="panel" style="box-shadow:none; margin-top:0;">
               <div class="head"><h2>核心指标</h2></div>
@@ -899,6 +908,9 @@ table.det tr:hover td { background: #f8fafc; }
             <div class="body">
               <div class="media" id="analysis-dist-media" style="aspect-ratio: 16/8; margin-bottom:14px;" hidden>
                 <img id="analysis-dist-img" alt="class distribution">
+              </div>
+              <div class="media" id="analysis-balance-media" style="aspect-ratio: 16/9; margin-bottom:14px;" hidden>
+                <img id="analysis-balance-img" alt="class balance top bottom">
               </div>
               <div class="table-wrap">
                 <table class="det">
@@ -1093,9 +1105,17 @@ async function loadAnalysisData() {
     }).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:18px;">暂无数据</td></tr>';
 
     const assets = r.assets || {};
+    if (assets.metrics_summary) {
+      $('#analysis-metric-img').src = assets.metrics_summary;
+      $('#analysis-metric-media').hidden = false;
+    }
     if (assets.class_distribution) {
       $('#analysis-dist-img').src = assets.class_distribution;
       $('#analysis-dist-media').hidden = false;
+    }
+    if (assets.class_balance_top_bottom) {
+      $('#analysis-balance-img').src = assets.class_balance_top_bottom;
+      $('#analysis-balance-media').hidden = false;
     }
     const confAsset = assets.confusion_matrix_normalized || assets.confusion_matrix;
     if (confAsset) {
@@ -1110,7 +1130,9 @@ async function loadAnalysisData() {
         <span class="badge green">${((item.confidence || 0) * 100).toFixed(1)}%</span>
       </div>`).join('') : '<div class="row-item" style="justify-content:center;color:var(--muted);">未生成错误样例。运行 scripts/generate_analysis.py --with-inference 后可显示。</div>';
 
-    const notes = s.recommendations || [];
+    const notes = [...(s.recommendations || [])];
+    if (g.validation_note) notes.unshift(g.validation_note);
+    if (g.confusion) notes.unshift(`混淆矩阵由验证集推理匹配生成：IoU ≥ ${g.confusion.iou_threshold}，置信度阈值 ${g.confusion.confidence_threshold}，匹配实例 ${g.confusion.matched_instances} 个。`);
     $('#analysis-notes').innerHTML = notes.length ? notes.map(n => `<div>• ${esc(n)}</div>`).join('') : '暂无提示';
   } catch (e) {
     toast('评估分析加载失败: ' + e.message, 'err');
