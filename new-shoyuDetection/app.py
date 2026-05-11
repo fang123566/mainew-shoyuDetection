@@ -8,8 +8,7 @@
 from __future__ import annotations
 
 import base64
-import json
-import os
+import sys
 import time
 import uuid
 from io import BytesIO
@@ -21,10 +20,8 @@ import threading
 
 import cv2
 import numpy as np
-import torch
 from flask import Flask, Response, jsonify, render_template, request, send_from_directory
 from PIL import Image
-from ultralytics import YOLO
 
 try:
     import imageio_ffmpeg
@@ -34,6 +31,11 @@ except Exception:
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from app.web_inference import WebInferenceService
+
 WEB_ROOT = Path(__file__).resolve().parent
 WEIGHTS_PATH = PROJECT_ROOT / "weights" / "yolov11_best.pt"
 LABEL_MAP_PATH = PROJECT_ROOT / "configs" / "label_map.json"
@@ -65,27 +67,12 @@ SAVE_PATH.mkdir(parents=True, exist_ok=True)
 VIDEO_SAVE_PATH.mkdir(parents=True, exist_ok=True)
 
 
-def load_label_map() -> dict[str, str]:
-    """读取英文到中文的语义映射表。"""
-    if not LABEL_MAP_PATH.exists():
-        return {}
-    with LABEL_MAP_PATH.open("r", encoding="utf-8") as file:
-        return json.load(file)
-
-
-def load_model() -> tuple[YOLO, str]:
-    """加载 YOLOv11 权重，优先使用 GPU。"""
-    if not WEIGHTS_PATH.exists():
-        raise FileNotFoundError(f"未找到 YOLOv11 权重: {WEIGHTS_PATH}")
-    device = "0" if torch.cuda.is_available() else "cpu"
-    model = YOLO(str(WEIGHTS_PATH), task="detect")
-    model(np.zeros((48, 48, 3), dtype=np.uint8), device=device, verbose=False)
-    return model, device
-
-
-LABEL_MAP = load_label_map()
-MODEL, DEVICE = load_model()
-MODEL_NAMES = {int(k): str(v) for k, v in dict(MODEL.names).items()}
+WEB_SERVICE = WebInferenceService(WEIGHTS_PATH, LABEL_MAP_PATH)
+WEB_SERVICE.warmup()
+MODEL = WEB_SERVICE.model
+DEVICE = WEB_SERVICE.device
+MODEL_NAMES = WEB_SERVICE.model_names
+LABEL_MAP = WEB_SERVICE.label_map
 
 print("=" * 60)
 print("  多类别手语识别与无障碍交流辅助系统 - HTML 演示后端")
@@ -111,49 +98,17 @@ def pil_to_b64(img: Image.Image) -> str:
 
 def label_cn(label_en: str) -> str:
     """英文标签转中文；映射不存在时返回英文。"""
-    return LABEL_MAP.get(label_en, label_en)
+    return WEB_SERVICE.label_cn(label_en)
 
 
 def extract_detections(results) -> list[dict[str, object]]:
     """从 Ultralytics 结果中提取前端表格需要的数据。"""
-    detections: list[dict[str, object]] = []
-    boxes = results.boxes
-    if boxes is None or len(boxes) == 0:
-        return detections
-
-    xyxy = boxes.xyxy.cpu().numpy()
-    clses = boxes.cls.cpu().numpy()
-    confs = boxes.conf.cpu().numpy()
-
-    for index, box in enumerate(xyxy):
-        cls_id = int(clses[index])
-        label_en = MODEL_NAMES.get(cls_id, str(cls_id))
-        x1, y1, x2, y2 = [int(v) for v in box]
-        detections.append(
-            {
-                "id": index + 1,
-                "class_id": cls_id,
-                "class": label_en,
-                "class_cn": label_cn(label_en),
-                "confidence": round(float(confs[index]) * 100, 2),
-                "bbox": [x1, y1, x2, y2],
-            }
-        )
-    return detections
+    return WEB_SERVICE.extract_detections(results, include_id=True, confidence_percent=True)
 
 
 def run_detection(image_path: Path, conf: float, iou: float) -> dict[str, object]:
     """对单张图片执行检测，并返回前端可直接使用的结构化结果。"""
-    start = time.perf_counter()
-    result = MODEL.predict(
-        source=str(image_path),
-        conf=conf,
-        iou=iou,
-        device=DEVICE,
-        verbose=False,
-    )[0]
-    elapsed = time.perf_counter() - start
-
+    result, elapsed = WEB_SERVICE.predict_image(image_path, conf, iou)
     plotted = result.plot()
     result_name = f"result_{uuid.uuid4().hex}.jpg"
     result_path = RESULT_FOLDER / result_name
@@ -207,27 +162,8 @@ def detect_frame():
         if frame is None:
             return jsonify({"error": "decode failed"}), 400
         h, w = frame.shape[:2]
-        start = time.perf_counter()
-        result = MODEL.predict(
-            source=frame, conf=conf, iou=iou, imgsz=imgsz, device=DEVICE, verbose=False,
-        )[0]
-        elapsed = time.perf_counter() - start
-        dets = []
-        boxes = result.boxes
-        if boxes is not None and len(boxes) > 0:
-            xyxy = boxes.xyxy.cpu().numpy()
-            clses = boxes.cls.cpu().numpy()
-            confs = boxes.conf.cpu().numpy()
-            for i, box in enumerate(xyxy):
-                cls_id = int(clses[i])
-                label_en = MODEL_NAMES.get(cls_id, str(cls_id))
-                x1, y1, x2, y2 = [int(v) for v in box]
-                dets.append({
-                    "class": label_en,
-                    "class_cn": label_cn(label_en),
-                    "confidence": round(float(confs[i]) * 100, 2),
-                    "bbox": [x1, y1, x2, y2],
-                })
+        result, elapsed = WEB_SERVICE.predict_frame(frame, conf, iou, imgsz=imgsz)
+        dets = WEB_SERVICE.extract_detections(result, include_id=False, confidence_percent=True)
         return jsonify({
             "success": True,
             "width": w,
@@ -423,21 +359,12 @@ def _process_video_task(task_id: str, video_path: Path, conf: float, iou: float,
 
             run_this = (frame_idx % max(frame_skip, 1)) == 0
             if run_this:
-                result = MODEL.predict(
-                    source=frame,
-                    conf=conf,
-                    iou=iou,
-                    device=DEVICE,
-                    verbose=False,
-                )[0]
+                result, _ = WEB_SERVICE.predict_frame(frame, conf, iou)
                 last_plot = result.plot()
-                boxes = result.boxes
-                if boxes is not None and len(boxes) > 0:
-                    clses = boxes.cls.cpu().numpy()
-                    total_detections += len(clses)
-                    for cls_id in clses:
-                        name = MODEL_NAMES.get(int(cls_id), str(int(cls_id)))
-                        cls_counter[name] = cls_counter.get(name, 0) + 1
+                frame_counts = WEB_SERVICE.class_counts(result)
+                total_detections += sum(frame_counts.values())
+                for name, count in frame_counts.items():
+                    cls_counter[name] = cls_counter.get(name, 0) + count
 
             output_frame = last_plot if last_plot is not None else frame
             writer.write(output_frame)
