@@ -9,7 +9,10 @@
 from __future__ import annotations
 
 import sys
+from collections import Counter, deque
 from pathlib import Path
+
+import numpy as np
 
 try:
     from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject
@@ -48,6 +51,7 @@ try:
     from .camera import cv2, open_capture, read_image, resize_to_fit
     from .config import DEFAULT_WEIGHTS, ensure_output_dirs
     from .detector import DetectionResult, SignLanguageDetector
+    from .motion import FrameDifferencer, MotionResult
     from .recorder import RecognitionRecorder
     from .speech import SpeechEngine
     from .translator import LabelTranslator
@@ -55,6 +59,7 @@ except ImportError:
     from camera import cv2, open_capture, read_image, resize_to_fit
     from config import DEFAULT_WEIGHTS, ensure_output_dirs
     from detector import DetectionResult, SignLanguageDetector
+    from motion import FrameDifferencer, MotionResult
     from recorder import RecognitionRecorder
     from speech import SpeechEngine
     from translator import LabelTranslator
@@ -63,6 +68,44 @@ except ImportError:
 class DetectionSignals(QObject):
     """跨线程信号桥，检测线程完成后通知主线程更新界面。"""
     frame_ready = pyqtSignal(object, object)  # (annotated_frame, detections)
+
+
+def _compute_iou(box_a: tuple, box_b: tuple) -> float:
+    """计算两个边界框的 IoU。"""
+    x1_a, y1_a, x2_a, y2_a = box_a
+    x1_b, y1_b, x2_b, y2_b = box_b
+    xi1, yi1 = max(x1_a, x1_b), max(y1_a, y1_b)
+    xi2, yi2 = min(x2_a, x2_b), min(y2_a, y2_b)
+    inter = max(0, xi2 - xi1) * max(0, yi2 - yi1)
+    area_a = (x2_a - x1_a) * (y2_a - y1_a)
+    area_b = (x2_b - x1_b) * (y2_b - y1_b)
+    return inter / max(area_a + area_b - inter, 1e-6)
+
+
+class TemporalVoter:
+    """滑动窗口投票器，避免单帧误识别导致语音反复播报。"""
+
+    def __init__(self, window_size: int = 5, vote_threshold: int = 3) -> None:
+        self.window_size = window_size
+        self.vote_threshold = vote_threshold
+        self._history: deque = deque(maxlen=window_size)
+
+    def update(self, detections: list[DetectionResult]) -> list[DetectionResult]:
+        """将当前帧结果加入窗口，返回满足投票阈值的稳定结果。"""
+        if detections:
+            self._history.append(detections[0].label_en)
+        else:
+            self._history.append("__none__")
+        counts = Counter(self._history)
+        if counts.most_common(1)[0][1] < self.vote_threshold:
+            return []
+        label = counts.most_common(1)[0][0]
+        if label == "__none__":
+            return []
+        return [d for d in detections if d.label_en == label]
+
+    def reset(self) -> None:
+        self._history.clear()
 
 
 class SignLanguageAssistantUI(QMainWindow):
@@ -86,6 +129,12 @@ class SignLanguageAssistantUI(QMainWindow):
         self.frame_count = 0
         self.fps_timer = QTimer(self)
         self.fps_timer.timeout.connect(self._update_fps_display)
+
+        # 运动检测相关
+        self.differencer: FrameDifferencer | None = None
+        self.voter: TemporalVoter | None = None
+        self.current_motion_result: MotionResult | None = None
+        self.current_stable_label: str = ""
 
         ensure_output_dirs()
         self._setup_ui()
@@ -191,6 +240,38 @@ class SignLanguageAssistantUI(QMainWindow):
         btn_clear = QPushButton("清空历史")
         btn_clear.clicked.connect(self._clear_history)
 
+        # ---- 运动检测参数 ----
+        self.mode_combo = QComboBox()
+        self.mode_combo.addItems(["baseline", "motion_roi", "motion_filter"])
+        self.mode_combo.setToolTip("baseline=整图检测, motion_roi=帧差ROI检测, motion_filter=运动过滤")
+
+        self.show_motion_check = QCheckBox("显示运动区域")
+        self.show_motion_check.setChecked(False)
+
+        self.motion_threshold_spin = QSpinBox()
+        self.motion_threshold_spin.setRange(5, 100)
+        self.motion_threshold_spin.setValue(25)
+        self.motion_threshold_spin.setPrefix("帧差阈值: ")
+        self.motion_threshold_spin.setMaximumWidth(160)
+
+        self.min_motion_area_spin = QSpinBox()
+        self.min_motion_area_spin.setRange(10, 5000)
+        self.min_motion_area_spin.setValue(200)
+        self.min_motion_area_spin.setPrefix("最小运动面积: ")
+        self.min_motion_area_spin.setMaximumWidth(160)
+
+        self.vote_window_spin = QSpinBox()
+        self.vote_window_spin.setRange(2, 20)
+        self.vote_window_spin.setValue(5)
+        self.vote_window_spin.setPrefix("投票窗口: ")
+        self.vote_window_spin.setMaximumWidth(160)
+
+        self.vote_threshold_spin = QSpinBox()
+        self.vote_threshold_spin.setRange(1, 20)
+        self.vote_threshold_spin.setValue(3)
+        self.vote_threshold_spin.setPrefix("投票阈值: ")
+        self.vote_threshold_spin.setMaximumWidth(160)
+
         row = 0
         grid.addWidget(QLabel("参数设置："), row, 0, 1, 2)
         row += 1
@@ -211,6 +292,22 @@ class SignLanguageAssistantUI(QMainWindow):
         row += 1
         grid.addWidget(btn_save, row, 0)
         grid.addWidget(btn_clear, row, 1)
+
+        # ---- 运动检测参数区 ----
+        grid.addWidget(QLabel("运动检测设置："), row, 0, 1, 2)
+        row += 1
+        grid.addWidget(QLabel("检测模式："), row, 0)
+        grid.addWidget(self.mode_combo, row, 1)
+        row += 1
+        grid.addWidget(self.show_motion_check, row, 0, 1, 2)
+        row += 1
+        grid.addWidget(self.motion_threshold_spin, row, 0, 1, 2)
+        row += 1
+        grid.addWidget(self.min_motion_area_spin, row, 0, 1, 2)
+        row += 1
+        grid.addWidget(self.vote_window_spin, row, 0, 1, 2)
+        row += 1
+        grid.addWidget(self.vote_threshold_spin, row, 0, 1, 2)
 
         grid.setColumnStretch(0, 1)
         grid.setColumnStretch(1, 1)
@@ -269,9 +366,12 @@ class SignLanguageAssistantUI(QMainWindow):
         self.current_cn_label = QLabel("中文含义：-")
         self.current_conf_label = QLabel("置信度：-")
         self.current_coord_label = QLabel("坐标：-")
+        self.stable_label_text = QLabel("稳定识别：-")
+        self.motion_info_label = QLabel("运动区域：-")
 
         for label in [self.current_en_label, self.current_cn_label,
-                       self.current_conf_label, self.current_coord_label]:
+                       self.current_conf_label, self.current_coord_label,
+                       self.stable_label_text, self.motion_info_label]:
             label.setStyleSheet("font-size:14px;color:#f0f6fc;")
 
         vbox.addWidget(self.model_status_label)
@@ -279,6 +379,8 @@ class SignLanguageAssistantUI(QMainWindow):
         vbox.addWidget(self.current_cn_label)
         vbox.addWidget(self.current_conf_label)
         vbox.addWidget(self.current_coord_label)
+        vbox.addWidget(self.stable_label_text)
+        vbox.addWidget(self.motion_info_label)
 
         return group
 
@@ -418,6 +520,17 @@ class SignLanguageAssistantUI(QMainWindow):
             self.is_running = True
             self.frame_count = 0
             self.fps_value = 0.0
+            # 初始化运动检测器和投票器
+            self.differencer = FrameDifferencer(
+                diff_threshold=self.motion_threshold_spin.value(),
+                min_area=self.min_motion_area_spin.value(),
+            )
+            self.voter = TemporalVoter(
+                window_size=self.vote_window_spin.value(),
+                vote_threshold=self.vote_threshold_spin.value(),
+            )
+            self.current_motion_result = None
+            self.current_stable_label = ""
             self.timer.start(15)  # ~66 fps max
             self.fps_timer.start(1000)
             source_str = "摄像头" if isinstance(source, int) else Path(source).name
@@ -436,7 +549,7 @@ class SignLanguageAssistantUI(QMainWindow):
         self.statusBar().showMessage("检测已停止")
 
     def _update_frame(self) -> None:
-        """定时器回调：读取帧、推理、更新画面。"""
+        """定时器回调：读取帧、帧差检测、模式推理、更新画面。"""
         if self.capture is None or self.detector is None:
             return
 
@@ -445,26 +558,80 @@ class SignLanguageAssistantUI(QMainWindow):
             self._stop_detection()
             return
 
+        mode = self.mode_combo.currentText()
+        show_motion = self.show_motion_check.isChecked()
+
         try:
-            detections = self.detector.predict_frame(
-                frame, conf=self.conf_spin.value(), top1=self.top1_check.isChecked()
-            )
+            # 帧差运动检测
+            motion_result = self.differencer.update(frame) if self.differencer else None
+
+            if mode == "baseline":
+                detections = self.detector.predict_frame(
+                    frame, conf=self.conf_spin.value(), top1=self.top1_check.isChecked()
+                )
+
+            elif mode == "motion_roi":
+                if motion_result is not None and motion_result.bbox is not None:
+                    detections = self.detector.predict_roi(
+                        frame, motion_result.bbox,
+                        conf=self.conf_spin.value(), top1=self.top1_check.isChecked()
+                    )
+                else:
+                    detections = self.detector.predict_frame(
+                        frame, conf=self.conf_spin.value(), top1=self.top1_check.isChecked()
+                    )
+
+            elif mode == "motion_filter":
+                all_dets = self.detector.predict_frame(
+                    frame, conf=self.conf_spin.value(), top1=self.top1_check.isChecked()
+                )
+                if motion_result is not None and motion_result.bbox is not None and all_dets:
+                    filtered = []
+                    for det in all_dets:
+                        iou = _compute_iou(
+                            (det.xmin, det.ymin, det.xmax, det.ymax),
+                            motion_result.bbox,
+                        )
+                        if iou > 0.05:
+                            filtered.append(det)
+                    detections = filtered
+                else:
+                    detections = all_dets
+
+            else:
+                detections = self.detector.predict_frame(
+                    frame, conf=self.conf_spin.value(), top1=self.top1_check.isChecked()
+                )
+
         except Exception:
             return
 
-        self._process_detections(detections, frame)
+        # 滑动窗口投票
+        stable_dets = self.voter.update(detections) if self.voter else []
+        self.current_stable_label = (
+            self.translator.translate_label(stable_dets[0].label_en)
+            if stable_dets else ""
+        )
+        self.current_motion_result = motion_result
+
+        self._process_detections(detections, frame, mode, show_motion, motion_result)
         self.frame_count += 1
 
-    def _process_detections(self, detections: list[DetectionResult], frame) -> None:
+    def _process_detections(
+        self,
+        detections: list[DetectionResult],
+        frame,
+        mode: str = "baseline",
+        show_motion: bool = False,
+        motion_result=None,
+    ) -> None:
         """统一处理检测结果：更新界面、记录历史、语音播报。"""
         self.current_detections = detections
 
-        # 绘制结果
-        annotated = self._draw_annotations(frame, detections)
+        annotated = self._draw_annotations(frame, detections, mode, show_motion, motion_result)
         self.current_annotated = annotated
         self._show_frame(annotated)
 
-        # 更新右侧结果
         if detections:
             top = detections[0]
             label_cn = self.translator.translate_label(top.label_en)
@@ -474,7 +641,6 @@ class SignLanguageAssistantUI(QMainWindow):
             self.current_coord_label.setText(
                 f"坐标：({top.xmin}, {top.ymin}) - ({top.xmax}, {top.ymax})"
             )
-            # 语音播报
             self.speech.speak(label_cn)
         else:
             self.current_en_label.setText("英文标签：-")
@@ -482,12 +648,32 @@ class SignLanguageAssistantUI(QMainWindow):
             self.current_conf_label.setText("置信度：-")
             self.current_coord_label.setText("坐标：-")
 
-        # 记录历史
+        if self.current_stable_label:
+            self.stable_label_text.setText(f"稳定识别：{self.current_stable_label}")
+        else:
+            self.stable_label_text.setText("稳定识别：-")
+
+        if motion_result is not None and motion_result.bbox is not None:
+            x1, y1, x2, y2 = motion_result.bbox
+            area = int(motion_result.score)
+            self.motion_info_label.setText(
+                f"运动区域：({x1},{y1})-({x2},{y2}) 面积={area}"
+            )
+        else:
+            self.motion_info_label.setText("运动区域：无")
+
         self.recorder.add_many(detections, self.translator)
         self._refresh_table()
 
-    def _draw_annotations(self, frame, detections: list[DetectionResult]):
-        """在帧上绘制检测框和标签，返回标注后的帧。"""
+    def _draw_annotations(
+        self,
+        frame,
+        detections: list[DetectionResult],
+        mode: str = "baseline",
+        show_motion: bool = False,
+        motion_result=None,
+    ):
+        """在帧上绘制检测框、运动区域和标签，返回标注后的帧。"""
         try:
             from PIL import Image, ImageDraw, ImageFont
         except Exception:
@@ -499,6 +685,18 @@ class SignLanguageAssistantUI(QMainWindow):
                 text = f"{det.label_en}|{label_cn} {det.confidence:.2f}"
                 cv2.putText(frame, text, (det.xmin, max(0, det.ymin - 8)),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+            # 绘制运动区域
+            if show_motion and motion_result is not None and motion_result.mask is not None:
+                mask_colored = cv2.applyColorMap(
+                    (motion_result.mask * 0.4).astype("uint8"), cv2.COLORMAP_JET
+                )
+                frame = cv2.addWeighted(frame, 0.85, mask_colored, 0.15, 0)
+                if motion_result.bbox is not None:
+                    x1, y1, x2, y2 = motion_result.bbox
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 255), 2)
+            # 模式 OSD
+            cv2.putText(frame, f"Mode: {mode}", (16, 60),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (20, 220, 255), 1)
             return frame
 
         # 尝试加载中文字体
@@ -531,7 +729,31 @@ class SignLanguageAssistantUI(QMainWindow):
             else:
                 draw.text((det.xmin + 4, max(0, det.ymin - 26)), text, fill=(255, 255, 255))
 
-        return cv2.cvtColor(__import__("numpy").array(image), cv2.COLOR_RGB2BGR)
+        # 运动区域叠加（需要在 PIL 图像上操作，转换为 BGR 再叠加）
+        if show_motion and motion_result is not None and motion_result.mask is not None:
+            # 将 PIL 图像转回 numpy BGR 进行 OpenCV 叠加
+            frame_np = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+            mask_colored = cv2.applyColorMap(
+                (motion_result.mask * 0.4).astype("uint8"), cv2.COLORMAP_JET
+            )
+            frame_np = cv2.addWeighted(frame_np, 0.85, mask_colored, 0.15, 0)
+            if motion_result.bbox is not None:
+                x1, y1, x2, y2 = motion_result.bbox
+                cv2.rectangle(frame_np, (x1, y1), (x2, y2), (0, 255, 255), 2)
+                cv2.putText(frame_np, "Motion ROI", (x1 + 4, y1 - 8),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 1)
+            # 模式标签
+            cv2.putText(frame_np, f"Mode: {mode}", (16, 60),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (20, 220, 255), 1)
+            return frame_np
+
+        # 模式 OSD
+        np_image = np.array(image)
+        frame_np = cv2.cvtColor(np_image, cv2.COLOR_RGB2BGR)
+        cv2.putText(frame_np, f"Mode: {mode}", (16, 60),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (20, 220, 255), 1)
+
+        return frame_np
 
     def _show_frame(self, frame) -> None:
         """将帧转换为 QPixmap 并显示在 video_label 上。"""
@@ -581,6 +803,10 @@ class SignLanguageAssistantUI(QMainWindow):
         self.current_cn_label.setText("中文含义：-")
         self.current_conf_label.setText("置信度：-")
         self.current_coord_label.setText("坐标：-")
+        self.stable_label_text.setText("稳定识别：-")
+        self.motion_info_label.setText("运动区域：-")
+        if self.voter:
+            self.voter.reset()
 
     def _save_result(self) -> None:
         """保存识别历史 CSV 和当前截图。"""
