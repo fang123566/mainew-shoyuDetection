@@ -28,8 +28,11 @@ class WebInferenceService:
     def _auto_device(self) -> str:
         try:
             import torch
-
-            return "0" if torch.cuda.is_available() else "cpu"
+            if not torch.cuda.is_available():
+                return "cpu"
+            # 验证 CUDA 运行时是否真正可用（torch.cuda.is_available 只检查驱动，不检查库文件）
+            _ = torch.zeros(1).cuda()
+            return "0"
         except Exception:
             return "cpu"
 

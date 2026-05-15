@@ -7,6 +7,10 @@
 
 from __future__ import annotations
 
+import os
+# 强制禁用 CUDA，WSL 等环境下 CUDA 驱动库可能不完整，直接用 CPU 避免崩溃
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
 import base64
 import json
 import sys
