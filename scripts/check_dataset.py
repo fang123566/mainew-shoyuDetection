@@ -94,9 +94,11 @@ def resolve_split_path(data_path: Path, data: dict[str, Any], split: str) -> Pat
     if split_path.is_absolute():
         return split_path
 
-    base = Path(str(data.get("path", data_path.parent)))
-    if not base.is_absolute():
-        base = data_path.parent / base
+    base = Path(str(data.get("path", "")))
+    if base and not base.is_absolute():
+        base = PROJECT_ROOT / base
+    elif not base:
+        base = data_path.parent
     return (base / split_path).resolve()
 
 

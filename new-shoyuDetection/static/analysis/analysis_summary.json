@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T15:59:59",
+  "generated_at": "2026-05-15T23:34:10",
   "data_yaml": "/mnt/e/python/CVandPR/mainew-shoyuDetection/datasets/sign_language/data.yaml",
   "weights": "/mnt/e/python/CVandPR/mainew-shoyuDetection/weights/yolov11_best.pt",
   "metrics_csv": "/mnt/e/python/CVandPR/mainew-shoyuDetection/outputs/csv/val_results.csv",
@@ -184,15 +184,5 @@
       }
     ]
   },
-  "validation_note": "当前 data.yaml 中 test 路径复用 val，本轮真实结果按验证集评估口径解读。",
-  "confusion": {
-    "iou_threshold": 0.5,
-    "confidence_threshold": 0.25,
-    "matched_instances": 209,
-    "diagonal_instances": 207,
-    "matrix_shape": [
-      35,
-      35
-    ]
-  }
+  "validation_note": "当前 data.yaml 中 test 路径复用 val，本轮真实结果按验证集评估口径解读。"
 }

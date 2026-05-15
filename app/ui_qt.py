@@ -49,7 +49,7 @@ except ImportError as exc:
 
 try:
     from .camera import cv2, open_capture, read_image, resize_to_fit
-    from .config import DEFAULT_WEIGHTS, ensure_output_dirs
+    from .config import DEFAULT_WEIGHTS, OUTPUT_IMAGE_DIR, ensure_output_dirs
     from .detector import DetectionResult, SignLanguageDetector
     from .motion import FrameDifferencer, MotionResult
     from .recorder import RecognitionRecorder
@@ -760,7 +760,7 @@ class SignLanguageAssistantUI(QMainWindow):
         display = resize_to_fit(frame, max_width=860, max_height=600)
         rgb = cv2.cvtColor(display, cv2.COLOR_BGR2RGB)
         h, w, ch = rgb.shape
-        qimage = QImage(rgb.data, w, h, ch * w, QImage.Format_RGB888)
+        qimage = QImage(rgb.tobytes(), w, h, ch * w, QImage.Format_RGB888)
         self.video_label.setPixmap(QPixmap.fromImage(qimage))
 
     def _update_fps_display(self) -> None:
@@ -814,7 +814,6 @@ class SignLanguageAssistantUI(QMainWindow):
         msg_parts = [f"识别历史已保存：\n{history_path}"]
 
         if self.current_annotated is not None:
-            from app.config import OUTPUT_IMAGE_DIR
             OUTPUT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
             img_path = OUTPUT_IMAGE_DIR / "qt_result.jpg"
             cv2.imwrite(str(img_path), self.current_annotated)
