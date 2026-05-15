@@ -104,7 +104,68 @@ class SignLanguageDetector:
         )
         return self._parse_results(results[0], top1=top1)
 
+    def predict_roi(
+        self,
+        frame: Any,
+        roi_bbox: tuple[int, int, int, int],
+        conf: float | None = None,
+        iou: float | None = None,
+        top1: bool = False,
+    ) -> list[DetectionResult]:
+        """对 ROI 区域进行推理，并将检测框坐标映射回原图。
+
+        Args:
+            frame: 完整帧图像（BGR）。
+            roi_bbox: ROI 边界框 (x1, y1, x2, y2)。
+            conf: 置信度阈值（None 时使用构造时默认值）。
+            iou: NMS IoU 阈值（None 时使用构造时默认值）。
+            top1: 是否只返回最高置信度结果。
+
+        Returns:
+            映射到原图坐标系的 DetectionResult 列表。
+        """
+        x1, y1, x2, y2 = roi_bbox
+        roi = frame[y1:y2, x1:x2]
+        if roi.size == 0:
+            return []
+
+        roi_detections = self.predict_frame(roi, conf=conf, iou=iou, top1=top1)
+        return self._remap_boxes(roi_detections, roi_bbox)
+
+    def _remap_boxes(
+        self,
+        detections: list[DetectionResult],
+        roi_bbox: tuple[int, int, int, int],
+    ) -> list[DetectionResult]:
+        """将 ROI 内检测框的坐标映射回原图坐标系。
+
+        Args:
+            detections: ROI 内检测结果（坐标相对于 ROI 左上角）。
+            roi_bbox: ROI 在原图中的边界框 (x1, y1, x2, y2)。
+
+        Returns:
+            坐标已映射到原图的 DetectionResult 列表。
+        """
+        if not detections:
+            return []
+        x1, y1, _, _ = roi_bbox
+        remapped = []
+        for det in detections:
+            remapped.append(
+                DetectionResult(
+                    class_id=det.class_id,
+                    label_en=det.label_en,
+                    confidence=det.confidence,
+                    xmin=det.xmin + x1,
+                    ymin=det.ymin + y1,
+                    xmax=det.xmax + x1,
+                    ymax=det.ymax + y1,
+                )
+            )
+        return remapped
+
     def _parse_results(self, result: Any, top1: bool = False) -> list[DetectionResult]:
+        """解析 YOLO 推理结果为 DetectionResult 列表。"""
         detections: list[DetectionResult] = []
         boxes = getattr(result, "boxes", None)
         if boxes is None or len(boxes) == 0:
